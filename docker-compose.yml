@@ -1,0 +1,22 @@
+version: "3.8"
+services:
+  web:
+    build:
+      context: ./apps/web
+      dockerfile: Dockerfile
+    ports:
+      - "127.0.0.1:4173:4173"
+    networks:
+      - atsevofni-network
+  server:
+    build:
+      context: ./apps/server
+      dockerfile: Dockerfile
+    ports:
+      - "127.0.0.1:8000:8000"
+    networks:
+      - atsevofni-network
+
+networks:
+  atsevofni-network:
+    driver: bridge

@@ -1,9 +1,0 @@
-services:
-  web:
-    build:
-      context: ./apps/web
-      dockerfile: Dockerfile
-  server:
-    build:
-      context: ./apps/server
-      dockerfile: Dockerfile

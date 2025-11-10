@@ -1,7 +1,6 @@
 FROM node:20-alpine AS deps
 WORKDIR /app
 RUN npm install -g pnpm
-CMD ["ls"]
 COPY pnpm-workspace.yaml ./
 COPY package.json ./
 COPY pnpm-lock.yaml ./

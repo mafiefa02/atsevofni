@@ -3,25 +3,7 @@ services:
     build:
       context: ./apps/web
       dockerfile: Dockerfile
-    networks:
-      - atsevofni-network
-    healthcheck:
-      test: ["CMD", "wget", "--spider", "http://localhost"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
   server:
     build:
       context: ./apps/server
       dockerfile: Dockerfile
-    networks:
-      - atsevofni-network
-    healthcheck:
-      test: ["CMD", "wget", "--spider", "http://localhost:8000"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
-
-networks:
-  atsevofni-network:
-    driver: bridge

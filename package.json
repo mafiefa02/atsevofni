@@ -4,12 +4,13 @@
   "description": "Monorepo holding the frontend and backend apps of Atsevofni",
   "scripts": {
     "dev": "concurrently \"pnpm:dev:web\" \"pnpm:dev:server\"",
+    "start": "concurrently \"pnpm:preview:web\" \"pnpm:run:server\"",
     "install:app": "concurrently \"cd apps/server && uv venv && source .venv/bin/activate && uv sync && deactivate\" \"pnpm install\"",
     "dev:web": "pnpm --filter @atsevofni/web dev",
     "build:web": "pnpm --filter @atsevofni/web build",
     "preview:web": "pnpm --filter @atsevofni/web preview",
     "dev:server": "cd apps/server && uv run fastapi dev src/main.py",
-    "run:server": "cd apps/server && uv run fastapi run src/main.py --port 80 --host 0.0.0.0"
+    "run:server": "cd apps/server && uv run fastapi run src/main.py --port 8000"
   },
   "author": "Muhammad Afief Abdurrahman",
   "license": "ISC",

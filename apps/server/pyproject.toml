@@ -1,0 +1,12 @@
+[project]
+name = "atsevofni-be"
+version = "1.0.0"
+description = "Backend for Atsevofni's frontend challenge."
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "fastapi[standard]>=0.121.0",
+    "pandas[excel]>=2.3.3",
+    "pydantic-settings>=2.11.0",
+    "slowapi>=0.1.9",
+]

@@ -5,17 +5,27 @@ services:
       context: ./apps/web
       dockerfile: Dockerfile
     ports:
-      - "127.0.0.1:4173:4173"
+      - "4173:80"
     networks:
       - atsevofni-network
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "http://localhost"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
   server:
     build:
       context: ./apps/server
       dockerfile: Dockerfile
     ports:
-      - "127.0.0.1:8000:8000"
+      - "8000:8000"
     networks:
       - atsevofni-network
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "http://localhost:8000"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
 
 networks:
   atsevofni-network:

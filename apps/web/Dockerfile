@@ -1,9 +1,15 @@
-FROM node:20-alpine
+# Build the application
+FROM node:20-alpine AS builder
 WORKDIR /app
 COPY package.json pnpm-lock.yaml ./
 RUN npm install -g pnpm
 RUN pnpm install
 COPY . .
 RUN pnpm run build
-EXPOSE 4173
-CMD ["pnpm", "run", "preview", "--host", "0.0.0.0"]
+
+# Serve the application with Nginx
+FROM nginx:alpine
+COPY --from=builder /app/dist /usr/share/nginx/html
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]

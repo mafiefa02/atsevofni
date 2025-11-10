@@ -4,7 +4,7 @@ RUN npm install -g pnpm
 COPY pnpm-workspace.yaml ./
 COPY package.json ./
 COPY pnpm-lock.yaml ./
-COPY apps/web/package.json ./apps/web/
+COPY package.json ./
 RUN pnpm install --frozen-lockfile
 
 FROM node:20-alpine AS builder

@@ -11,9 +11,6 @@ importers:
       concurrently:
         specifier: ^9.2.1
         version: 9.2.1
-      use-debounce:
-        specifier: ^10.0.6
-        version: 10.0.6(react@19.2.0)
 
   apps/web:
     dependencies:
@@ -56,6 +53,9 @@ importers:
       tailwindcss:
         specifier: ^4.1.16
         version: 4.1.17
+      use-debounce:
+        specifier: ^10.0.6
+        version: 10.0.6(react@19.2.0)
     devDependencies:
       '@eslint/js':
         specifier: ^9.36.0

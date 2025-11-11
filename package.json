@@ -1,5 +1,5 @@
 {
-  "name": "@atsevofni",
+  "name": "atsevofni",
   "version": "1.0.0",
   "description": "Monorepo holding the frontend and backend apps of Atsevofni",
   "scripts": {
@@ -16,7 +16,6 @@
   "license": "ISC",
   "packageManager": "pnpm@10.20.0",
   "dependencies": {
-    "concurrently": "^9.2.1",
-    "use-debounce": "^10.0.6"
+    "concurrently": "^9.2.1"
   }
 }

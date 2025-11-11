@@ -32,7 +32,7 @@ def generate_pagination_metadata(
     total_items = len(data) if isinstance(data, Union[pd.DataFrame, List]) else 1
     total_pages = (
         math.ceil(total_items / pagination_params.limit)
-        if pagination_params is not None
+        if pagination_params is not None and total_items != 0
         else 1
     )
 

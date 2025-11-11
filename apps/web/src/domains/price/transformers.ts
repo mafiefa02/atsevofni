@@ -2,7 +2,7 @@ import { parse } from "date-fns";
 
 import { FormattableDate, FormattableNumber } from "-/lib/models";
 
-import type { Price, PriceFilter, PriceResponse } from "./types";
+import type { Price, PriceResponse } from "./types";
 
 export const priceResponseToPrice = (response: PriceResponse): Price => {
   return {
@@ -20,36 +20,4 @@ export const priceResponseToPrice = (response: PriceResponse): Price => {
     values: new FormattableNumber(response.values),
     volume: new FormattableNumber(response.volume),
   } as Price;
-};
-
-export const priceFiltersToFilterParam = (
-  filters: PriceFilter,
-): Record<string, string | string[]> => {
-  const queryParams: Record<string, string | string[]> = {};
-
-  if (filters.ids && filters.ids.length > 0) {
-    queryParams.portids = filters.ids;
-  }
-
-  if (filters.sector) {
-    queryParams.sector = filters.sector;
-  }
-
-  if (filters.subsector) {
-    queryParams.subsector = filters.subsector;
-  }
-
-  if (typeof filters.latest === "boolean") {
-    queryParams.latest = String(filters.latest);
-  }
-
-  if (filters.startDate) {
-    queryParams.start_date = filters.startDate.format();
-  }
-
-  if (filters.endDate) {
-    queryParams.end_date = filters.endDate.format();
-  }
-
-  return queryParams;
 };

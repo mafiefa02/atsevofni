@@ -1,4 +1,5 @@
 import type { EquityId } from "-/domains/equity/types";
+import type { PriceFilter } from "-/domains/price/view-filters/types";
 
 // Helper types
 export type UniqueBrand<T> = T & { readonly __brand: unique symbol };
@@ -17,6 +18,7 @@ export interface Response<Data> {
 }
 
 export interface PaginationParams {
+  enable?: boolean;
   page?: number;
   limit?: number;
 }
@@ -34,3 +36,4 @@ export interface Params<FilterParams> {
 
 // Domain relationship types
 export type PriceEquityId = EquityId;
+export type PriceViewFilterKey = keyof PriceFilter;

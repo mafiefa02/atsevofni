@@ -7,22 +7,22 @@ import {
 } from "-/lib/transformers";
 import type { Params, Response } from "-/lib/types";
 
-import { PriceModel } from "./models";
-import type { PriceResponse } from "./types";
-import { priceFiltersToParams } from "./view-filters/transformers";
-import type { PriceFilter } from "./view-filters/types";
+import { EquityModel } from "./models";
+import type { EquityResponse } from "./types";
+import { equityFiltersToParams } from "./view-filters/transformers";
+import type { EquityFilter } from "./view-filters/types";
 
-export class PriceServices {
+export class EquityServices {
   private readonly url: string;
 
   constructor(baseUrl: string) {
-    this.url = `${baseUrl}/prices`;
+    this.url = `${baseUrl}/equities`;
   }
 
-  private getAllPrices = async (
-    params?: Params<PriceFilter>,
-  ): Promise<Response<PriceModel[]>> => {
-    const filterSearchParams = priceFiltersToParams(params?.filters);
+  private getAllEquities = async (
+    params?: Params<EquityFilter>,
+  ): Promise<Response<EquityModel[]>> => {
+    const filterSearchParams = equityFiltersToParams(params?.filters);
     const paginationParams = paginationParamsToParams(params?.pagination);
 
     const queryParams = paramsToStringParams({
@@ -40,17 +40,17 @@ export class PriceServices {
       throw error;
     }
 
-    const result: Response<PriceResponse[]> = await response.json();
+    const result: Response<EquityResponse[]> = await response.json();
 
-    return responseToModel(result, PriceModel);
+    return responseToModel(result, EquityModel);
   };
 
   public get query() {
     return {
-      getAllPrices: (params?: Params<PriceFilter>) =>
+      getAllEquities: (params?: Params<EquityFilter>) =>
         queryOptions({
-          queryKey: ["prices", params],
-          queryFn: () => this.getAllPrices(params),
+          queryKey: ["equities", params],
+          queryFn: () => this.getAllEquities(params),
         }),
     };
   }

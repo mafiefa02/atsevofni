@@ -29,16 +29,3 @@ export interface Price {
   volume: FormattableNumber;
   values: FormattableNumber;
 }
-
-export interface PriceFilter {
-  ids?: string[];
-  sector?: string;
-  subsector?: string;
-  latest?: boolean;
-  startDate?: FormattableDate;
-  endDate?: FormattableDate;
-}
-
-export interface PriceSort {
-  sort_by: "";
-}

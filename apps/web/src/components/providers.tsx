@@ -1,4 +1,5 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { NuqsAdapter } from "nuqs/adapters/react";
 
 import { ThemeProvider } from "-/domains/theme/components/theme-provider";
 
@@ -8,8 +9,10 @@ export const Providers = ({
   children,
 }: Readonly<{ children: React.ReactNode }>) => {
   return (
-    <QueryClientProvider client={queryClient}>
-      <ThemeProvider>{children}</ThemeProvider>
-    </QueryClientProvider>
+    <NuqsAdapter>
+      <QueryClientProvider client={queryClient}>
+        <ThemeProvider>{children}</ThemeProvider>
+      </QueryClientProvider>
+    </NuqsAdapter>
   );
 };

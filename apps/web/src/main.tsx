@@ -1,17 +1,14 @@
-import { StrictMode, Suspense } from "react";
+import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 
 import { Providers } from "./components/providers";
 import "./styles.css";
-import { IndexView } from "./views";
-import { IndexLoading } from "./views/index-loading";
+import { RootAppView } from "./views";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <Providers>
-      <Suspense fallback={<IndexLoading />}>
-        <IndexView />
-      </Suspense>
+      <RootAppView />
     </Providers>
   </StrictMode>,
 );

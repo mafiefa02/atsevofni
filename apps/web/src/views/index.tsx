@@ -1,13 +1,37 @@
-import { useSuspenseQuery } from "@tanstack/react-query";
+import { Suspense } from "react";
 
-import { services } from "-/lib/services";
+import { Brand } from "-/components/brand";
+import { Sidebar } from "-/components/sidebar";
+import { SidebarContent } from "-/components/sidebar/content";
+import { PriceViewFilters } from "-/domains/price/view-filters/components/price-view-filters";
 
-export const IndexView = () => {
-  const { data: items, isError } = useSuspenseQuery(
-    services.price.query.getAllPrices(),
+import { DashboardView } from "./dashboard";
+import { DashboardLoadingView } from "./dashboard/loading";
+
+export const RootAppView = () => {
+  return (
+    <>
+      {/* Desktop/tablet view */}
+      <div className="hidden h-dvh grid-cols-[auto_1fr] overflow-hidden xl:grid">
+        <Sidebar>
+          <SidebarContent>
+            <Brand className="grayscale invert" />
+            <PriceViewFilters />
+          </SidebarContent>
+        </Sidebar>
+        <div className="overflow-x-hidden overflow-y-auto">
+          <Suspense fallback={<DashboardLoadingView />}>
+            <DashboardView />
+          </Suspense>
+        </div>
+      </div>
+
+      {/* Mobile view */}
+      <div className="overflow-x-hidden overflow-y-auto xl:hidden">
+        <Suspense fallback={<DashboardLoadingView />}>
+          <DashboardView />
+        </Suspense>
+      </div>
+    </>
   );
-
-  if (isError) return "Error!";
-
-  return <p>{JSON.stringify(items.data[0])}</p>;
 };

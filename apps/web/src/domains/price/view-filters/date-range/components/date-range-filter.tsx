@@ -30,7 +30,7 @@ export const DateRangeFilter = () => {
         <Field key={field.name}>
           <FieldLabel htmlFor={field.name}>{field.label}</FieldLabel>
           <DateRangeControl name={field.name}>
-            <div className="grid w-full grid-cols-[1fr_auto] items-center gap-2">
+            <div className="flex w-full items-center gap-2">
               <DateRangeTriggerButton
                 name={field.name}
                 placeholder={field.placeholder}

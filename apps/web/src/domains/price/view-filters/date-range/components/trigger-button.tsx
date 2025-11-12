@@ -27,7 +27,7 @@ export const DateRangeTriggerButton = ({
         id={name}
         variant="outline"
         className={cn(
-          "w-full justify-between font-normal",
+          "flex-1 justify-between font-normal",
           !date && "text-muted-foreground",
           className,
         )}

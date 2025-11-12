@@ -1,9 +1,10 @@
-import { paginationParamsKeyNameMap } from "./constants";
+import { paginationParamsKeyNameMap, sortParamsKeyNameMap } from "./constants";
 import type {
   ModelConstructor,
   PaginationParams,
   Params,
   Response,
+  SortParams,
 } from "./types";
 import { createValueGetter } from "./utils";
 
@@ -57,8 +58,28 @@ export const paginationParamsToParams = (
   return params;
 };
 
-export const paramsToStringParams = <T>(
-  arg: Record<keyof Params<T>, URLSearchParams | null>,
+export const sortParamsToParams = <D, T extends keyof D>(
+  keyMap: D,
+  sort?: SortParams<T>,
+): URLSearchParams => {
+  const params = new URLSearchParams();
+  const getParamName = createValueGetter(sortParamsKeyNameMap);
+
+  if (!sort) return params;
+
+  if (sort.order) {
+    params.set(getParamName("order"), sort.order);
+  }
+
+  if (sort.sortBy) {
+    params.set(getParamName("sortBy"), String(keyMap[sort.sortBy]));
+  }
+
+  return params;
+};
+
+export const paramsToStringParams = <F, S>(
+  arg: Record<keyof Params<F, S>, URLSearchParams | null>,
 ) => {
   return Object.values(arg)
     .filter((param) => param !== null)

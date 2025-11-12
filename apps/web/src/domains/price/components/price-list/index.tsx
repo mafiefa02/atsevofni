@@ -9,7 +9,10 @@ import { PriceListError } from "./error";
 export const PriceList = () => {
   const [filters] = usePriceViewFilters();
   const { data: prices, isError } = useSuspenseQuery(
-    services.price.query.getAllPrices({ filters }),
+    services.price.query.getAllPrices({
+      filters,
+      sort: { sortBy: "date", order: "asc" },
+    }),
   );
 
   if (isError) return <PriceListError />;

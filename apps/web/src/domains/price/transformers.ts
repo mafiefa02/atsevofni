@@ -21,3 +21,19 @@ export const priceResponseToPrice = (response: PriceResponse): Price => {
     volume: new FormattableNumber(response.volume),
   } as Price;
 };
+
+export const priceToPriceResponse = (price: Price): PriceResponse => {
+  return {
+    txtno: price.no,
+    portid: price.equityId,
+    portdate: price.date.format(),
+    bid: price.bid.valueOf(),
+    closing: price.closing.valueOf(),
+    high: price.high.valueOf(),
+    low: price.low.valueOf(),
+    offer: price.offer.valueOf(),
+    opening: price.opening.valueOf(),
+    values: price.values.valueOf(),
+    volume: price.volume.valueOf(),
+  } as PriceResponse;
+};

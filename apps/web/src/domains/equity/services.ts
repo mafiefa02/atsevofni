@@ -4,6 +4,7 @@ import {
   paginationParamsToParams,
   paramsToStringParams,
   responseToModel,
+  sortParamsToParams,
 } from "-/lib/transformers";
 import type { Params, Response } from "-/lib/types";
 
@@ -11,6 +12,8 @@ import { EquityModel } from "./models";
 import type { EquityResponse } from "./types";
 import { equityFiltersToParams } from "./view-filters/transformers";
 import type { EquityFilter } from "./view-filters/types";
+import { equitySortKeyToParamMap } from "./view-sort/constants";
+import type { EquitySortKey } from "./view-sort/types";
 
 export class EquityServices {
   private readonly url: string;
@@ -20,15 +23,19 @@ export class EquityServices {
   }
 
   private getAllEquities = async (
-    params?: Params<EquityFilter>,
+    params?: Params<EquityFilter, EquitySortKey>,
   ): Promise<Response<EquityModel[]>> => {
     const filterSearchParams = equityFiltersToParams(params?.filters);
     const paginationParams = paginationParamsToParams(params?.pagination);
+    const sortParams = sortParamsToParams(
+      equitySortKeyToParamMap,
+      params?.sort,
+    );
 
     const queryParams = paramsToStringParams({
       filters: filterSearchParams,
       pagination: paginationParams,
-      sort: null,
+      sort: sortParams,
     });
 
     const response = await fetch(`${this.url}?${queryParams}`);
@@ -47,7 +54,7 @@ export class EquityServices {
 
   public get query() {
     return {
-      getAllEquities: (params?: Params<EquityFilter>) =>
+      getAllEquities: (params?: Params<EquityFilter, EquitySortKey>) =>
         queryOptions({
           queryKey: ["equities", params],
           queryFn: () => this.getAllEquities(params),

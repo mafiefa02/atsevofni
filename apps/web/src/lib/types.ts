@@ -23,14 +23,14 @@ export interface PaginationParams {
   limit?: number;
 }
 
-export interface SortParams {
-  sortBy?: string;
+export interface SortParams<SortKey> {
+  sortBy?: SortKey;
   order?: "asc" | "desc";
 }
 
-export interface Params<FilterParams> {
+export interface Params<FilterParams, SortFields> {
   filters?: FilterParams;
-  sort?: SortParams;
+  sort?: SortParams<SortFields>;
   pagination?: PaginationParams;
 }
 

@@ -4,6 +4,7 @@ import {
   paginationParamsToParams,
   paramsToStringParams,
   responseToModel,
+  sortParamsToParams,
 } from "-/lib/transformers";
 import type { Params, Response } from "-/lib/types";
 
@@ -11,6 +12,8 @@ import { PriceModel } from "./models";
 import type { PriceResponse } from "./types";
 import { priceFiltersToParams } from "./view-filters/transformers";
 import type { PriceFilter } from "./view-filters/types";
+import { priceSortKeyToParamMap } from "./view-sort/constants";
+import type { PriceSortKey } from "./view-sort/types";
 
 export class PriceServices {
   private readonly url: string;
@@ -20,15 +23,16 @@ export class PriceServices {
   }
 
   private getAllPrices = async (
-    params?: Params<PriceFilter>,
+    params?: Params<PriceFilter, PriceSortKey>,
   ): Promise<Response<PriceModel[]>> => {
     const filterSearchParams = priceFiltersToParams(params?.filters);
     const paginationParams = paginationParamsToParams(params?.pagination);
+    const sortParams = sortParamsToParams(priceSortKeyToParamMap, params?.sort);
 
     const queryParams = paramsToStringParams({
       filters: filterSearchParams,
       pagination: paginationParams,
-      sort: null,
+      sort: sortParams,
     });
 
     const response = await fetch(`${this.url}?${queryParams}`);
@@ -47,7 +51,7 @@ export class PriceServices {
 
   public get query() {
     return {
-      getAllPrices: (params?: Params<PriceFilter>) =>
+      getAllPrices: (params?: Params<PriceFilter, PriceSortKey>) =>
         queryOptions({
           queryKey: ["prices", params],
           queryFn: () => this.getAllPrices(params),

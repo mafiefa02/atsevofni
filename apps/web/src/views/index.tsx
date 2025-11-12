@@ -15,7 +15,7 @@ export const RootAppView = () => {
       <div className="hidden h-dvh grid-cols-[auto_1fr] overflow-hidden xl:grid">
         <Sidebar>
           <SidebarContent>
-            <Brand className="grayscale invert" />
+            <Brand className="dark:grayscale dark:invert" />
             <PriceViewFilters />
           </SidebarContent>
         </Sidebar>

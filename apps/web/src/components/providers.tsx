@@ -11,7 +11,9 @@ export const Providers = ({
   return (
     <NuqsAdapter>
       <QueryClientProvider client={queryClient}>
-        <ThemeProvider>{children}</ThemeProvider>
+        <ThemeProvider defaultTheme="dark" storageKey="atsevofni-theme">
+          {children}
+        </ThemeProvider>
       </QueryClientProvider>
     </NuqsAdapter>
   );

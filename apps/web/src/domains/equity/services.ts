@@ -28,8 +28,8 @@ export class EquityServices {
     const filterSearchParams = equityFiltersToParams(params?.filters);
     const paginationParams = paginationParamsToParams(params?.pagination);
     const sortParams = sortParamsToParams(
-      equitySortKeyToParamMap,
       params?.sort,
+      equitySortKeyToParamMap,
     );
 
     const queryParams = paramsToStringParams({

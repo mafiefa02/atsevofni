@@ -27,7 +27,7 @@ export class PriceServices {
   ): Promise<APIResponse<PriceModel[]>> => {
     const filterSearchParams = priceFiltersToParams(params?.filters);
     const paginationParams = paginationParamsToParams(params?.pagination);
-    const sortParams = sortParamsToParams(priceSortKeyToParamMap, params?.sort);
+    const sortParams = sortParamsToParams(params?.sort, priceSortKeyToParamMap);
 
     const queryParams = paramsToStringParams({
       filters: filterSearchParams,

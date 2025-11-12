@@ -3,7 +3,9 @@ import { createValueGetter } from "-/lib/utils";
 import { priceFilterKeyNameMap } from "./constants";
 import type { PriceFilter } from "./types";
 
-export const priceFiltersToParams = (filter?: PriceFilter): URLSearchParams => {
+export const priceFiltersToParams = (
+  filter: PriceFilter | undefined,
+): URLSearchParams => {
   const params = new URLSearchParams();
   const getParamName = createValueGetter(priceFilterKeyNameMap);
 

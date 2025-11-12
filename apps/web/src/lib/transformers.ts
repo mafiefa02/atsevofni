@@ -33,7 +33,7 @@ export function responseToModel<T, D>(
 }
 
 export const paginationParamsToParams = (
-  pagination?: PaginationParams,
+  pagination: PaginationParams | undefined,
 ): URLSearchParams => {
   const params = new URLSearchParams();
   const getParamName = createValueGetter(paginationParamsKeyNameMap);
@@ -59,8 +59,8 @@ export const paginationParamsToParams = (
 };
 
 export const sortParamsToParams = <D, T extends keyof D>(
+  sort: SortParams<T> | undefined,
   keyMap: D,
-  sort?: SortParams<T>,
 ): URLSearchParams => {
   const params = new URLSearchParams();
   const getParamName = createValueGetter(sortParamsKeyNameMap);

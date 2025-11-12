@@ -20,6 +20,7 @@ export const DateRangeControl = ({
   shouldCloseAfterSelect = true,
 }: DateRangeControlProps) => {
   const [open, setOpen] = useState(false);
+
   const handleAfterSelect = useCallback(
     () => (shouldCloseAfterSelect ? setOpen(false) : null),
     [shouldCloseAfterSelect],
@@ -27,6 +28,15 @@ export const DateRangeControl = ({
 
   const [{ [name]: date }, setFilter] = usePriceViewFilters();
   const disabledDates = useGetDisabledDates(name);
+
+  const handleSelect = useCallback(
+    (date: Date | undefined) => {
+      if (!date) return setFilter({ [name]: null });
+      const dateModel = new FormattableDate(date);
+      setFilter({ [name]: dateModel });
+    },
+    [name, setFilter],
+  );
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -37,11 +47,7 @@ export const DateRangeControl = ({
           selected={date ?? undefined}
           captionLayout="dropdown"
           onSelect={(date) => {
-            if (!date) return setFilter({ [name]: null });
-
-            const dateModel = new FormattableDate(date);
-            setFilter({ [name]: dateModel });
-
+            handleSelect(date);
             handleAfterSelect();
           }}
           disabled={disabledDates}

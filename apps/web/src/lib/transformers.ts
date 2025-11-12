@@ -39,8 +39,11 @@ export const paginationParamsToParams = (
 
   if (!pagination) return params;
 
-  if (typeof pagination.enable === "boolean") {
-    params.set(getParamName("enable"), String(pagination.enable));
+  if (typeof pagination.enablePagination === "boolean") {
+    params.set(
+      getParamName("enablePagination"),
+      String(pagination.enablePagination),
+    );
   }
 
   if (pagination.page && !isNaN(pagination.page)) {

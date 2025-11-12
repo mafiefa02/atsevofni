@@ -22,7 +22,7 @@ export const EquityTickerList = ({ search }: EquityTickerListProps) => {
   const { data: equities, isError } = useSuspenseQuery(
     services.equity.query.getAllEquities({
       filters: { search: searchFilter },
-      pagination: { enable: false },
+      pagination: { enablePagination: false },
     }),
   );
 

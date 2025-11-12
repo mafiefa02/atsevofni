@@ -6,7 +6,7 @@ export const paginationParamsKeyNameMap: Record<
   keyof PaginationParams,
   string
 > = {
-  enable: "enable",
+  enablePagination: "enablePagination",
   limit: "limit",
   page: "page",
 };

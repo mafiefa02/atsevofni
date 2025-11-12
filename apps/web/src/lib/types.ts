@@ -18,7 +18,7 @@ export interface Response<Data> {
 }
 
 export interface PaginationParams {
-  enable?: boolean;
+  enablePagination?: boolean;
   page?: number;
   limit?: number;
 }

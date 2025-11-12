@@ -45,6 +45,9 @@ export const parseAsFormattableDate = createParser({
   },
 });
 
+/** Parse query params as a set of T
+ * @example const [set] = useQueryState("key", parseAsSetOf(parseAsString))
+ */
 export const parseAsSetOf = <T>(parser: ReturnType<typeof createParser<T>>) =>
   createParser({
     parse(queryValue) {

@@ -13,7 +13,7 @@ class SortParams(BaseModel):
 
 
 class PaginationParams(BaseModel):
-    enable: bool = True
+    enablePagination: bool = True
     page: Annotated[int, Field(ge=1)] = 1
     limit: Annotated[int, Field(ge=1)] = settings.default_item_per_page
 

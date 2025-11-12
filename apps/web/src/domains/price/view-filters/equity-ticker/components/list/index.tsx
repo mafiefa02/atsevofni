@@ -1,7 +1,12 @@
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { useDebounce } from "use-debounce";
 
-import { TooltipProvider } from "-/components/ui/tooltip";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "-/components/ui/tooltip";
 import { services } from "-/lib/services";
 
 import { EquityTickerListEmpty } from "./empty";
@@ -29,7 +34,14 @@ export const EquityTickerList = ({ search }: EquityTickerListProps) => {
     <div className="flex flex-col gap-2">
       <TooltipProvider>
         {equities.data.map((equity) => (
-          <EquityTickerToggle key={equity.getEquity("id")} equity={equity} />
+          <Tooltip delayDuration={300} key={equity.getEquity("id")}>
+            <EquityTickerToggle equity={equity}>
+              <TooltipTrigger>{equity.getEquity("id")}</TooltipTrigger>
+            </EquityTickerToggle>
+            <TooltipContent side="right">
+              {equity.getEquity("name")}
+            </TooltipContent>
+          </Tooltip>
         ))}
       </TooltipProvider>
     </div>

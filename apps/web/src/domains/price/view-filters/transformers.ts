@@ -9,7 +9,7 @@ export const priceFiltersToParams = (filter?: PriceFilter): URLSearchParams => {
 
   if (!filter) return params;
 
-  if (filter.equities && filter.equities.size > 0) {
+  if (filter.equities && filter.equities.length > 0) {
     filter.equities.forEach((equity) =>
       params.append(getParamName("equities"), equity),
     );

@@ -1,11 +1,16 @@
-import { parseAsBoolean, parseAsString, useQueryStates } from "nuqs";
+import {
+  parseAsArrayOf,
+  parseAsBoolean,
+  parseAsString,
+  useQueryStates,
+} from "nuqs";
 
-import { parseAsFormattableDate, parseAsSetOf } from "-/lib/utils";
+import { parseAsFormattableDate } from "-/lib/utils";
 
 import type { PriceFilter } from "./types";
 
 export const filterQueryStates = {
-  equities: parseAsSetOf(parseAsString),
+  equities: parseAsArrayOf(parseAsString),
   equitySector: parseAsString,
   equitySubsector: parseAsString,
   startDate: parseAsFormattableDate,

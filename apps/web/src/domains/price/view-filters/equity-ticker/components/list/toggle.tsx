@@ -1,47 +1,52 @@
 import { useCallback } from "react";
 
 import { Toggle } from "-/components/ui/toggle";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "-/components/ui/tooltip";
 import type { EquityModel } from "-/domains/equity/models";
 
 import { usePriceViewFilters } from "../../../hooks";
 
-export const EquityTickerToggle = ({ equity }: { equity: EquityModel }) => {
+interface EquityTickerToggleProps {
+  equity: EquityModel;
+  children: React.ReactNode;
+}
+
+export const EquityTickerToggle = ({
+  equity,
+  children,
+}: EquityTickerToggleProps) => {
   const [{ equities: equitiesFilter }, setFilter] = usePriceViewFilters();
 
   const equityId = equity.getEquity("id");
-  const isActive = equitiesFilter?.has(equityId) ?? false;
+  const isActive = equitiesFilter?.includes(equityId) ?? false;
 
   const handleToggle = (pressed: boolean) =>
     setFilter(({ equities: prev, ...rest }) => {
       const newEquities = new Set(prev);
+
       if (pressed) {
         newEquities.add(equityId);
       } else {
         newEquities.delete(equityId);
       }
-      return { ...rest, equities: newEquities.size > 0 ? newEquities : null };
+
+      return {
+        ...rest,
+        equities: newEquities.size > 0 ? Array.from(newEquities) : null,
+      };
     });
 
   const onToggle = useCallback(handleToggle, [setFilter, equityId]);
 
   return (
-    <Tooltip delayDuration={300} key={equityId}>
-      <Toggle
-        pressed={isActive}
-        onPressedChange={onToggle}
-        className="justify-start"
-        aria-label={`Toggle ${equityId}`}
-        variant="outline"
-        asChild
-      >
-        <TooltipTrigger>{equityId}</TooltipTrigger>
-      </Toggle>
-      <TooltipContent side="right">{equity.getEquity("name")}</TooltipContent>
-    </Tooltip>
+    <Toggle
+      pressed={isActive}
+      onPressedChange={onToggle}
+      className="justify-start"
+      aria-label={`Toggle ${equityId}`}
+      variant="outline"
+      asChild
+    >
+      {children}
+    </Toggle>
   );
 };

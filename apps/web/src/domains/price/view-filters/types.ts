@@ -1,7 +1,7 @@
 import type { FormattableDate } from "-/lib/models";
 
 export interface PriceFilter {
-  equities: Set<string> | null;
+  equities: string[] | null;
   equitySector: string | null;
   equitySubsector: string | null;
   latest: boolean | null;

@@ -26,7 +26,11 @@ export const DateRangeTriggerButton = ({
       <Button
         id={name}
         variant="outline"
-        className={cn("w-full justify-between font-normal", className)}
+        className={cn(
+          "w-full justify-between font-normal",
+          !date && "text-muted-foreground",
+          className,
+        )}
       >
         {date ? format(date, "PP") : placeholder}
         <ChevronDownIcon />

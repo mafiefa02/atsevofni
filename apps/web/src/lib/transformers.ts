@@ -1,28 +1,28 @@
 import { paginationParamsKeyNameMap, sortParamsKeyNameMap } from "./constants";
 import type {
+  APIResponse,
   ModelConstructor,
   PaginationParams,
   Params,
-  Response,
   SortParams,
 } from "./types";
 import { createValueGetter } from "./utils";
 
 export function responseToModel<T, D>(
-  response: Response<D>,
+  response: APIResponse<D>,
   Model: ModelConstructor<T, D>,
   ...args: unknown[]
-): Response<T>;
+): APIResponse<T>;
 export function responseToModel<T, D>(
-  response: Response<D[]>,
+  response: APIResponse<D[]>,
   Model: ModelConstructor<T, D>,
   ...args: unknown[]
-): Response<T[]>;
+): APIResponse<T[]>;
 export function responseToModel<T, D>(
-  response: Response<D | D[]>,
+  response: APIResponse<D | D[]>,
   Model: ModelConstructor<T, D>,
   ...args: unknown[]
-): Response<T | T[]> {
+): APIResponse<T | T[]> {
   return {
     ...response,
     data:

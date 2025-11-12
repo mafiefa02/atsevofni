@@ -6,7 +6,7 @@ import {
   responseToModel,
   sortParamsToParams,
 } from "-/lib/transformers";
-import type { Params, Response } from "-/lib/types";
+import type { APIResponse, Params } from "-/lib/types";
 
 import { EquityModel } from "./models";
 import type { EquityResponse } from "./types";
@@ -24,7 +24,7 @@ export class EquityServices {
 
   private getAllEquities = async (
     params?: Params<EquityFilter, EquitySortKey>,
-  ): Promise<Response<EquityModel[]>> => {
+  ): Promise<APIResponse<EquityModel[]>> => {
     const filterSearchParams = equityFiltersToParams(params?.filters);
     const paginationParams = paginationParamsToParams(params?.pagination);
     const sortParams = sortParamsToParams(
@@ -47,7 +47,7 @@ export class EquityServices {
       throw error;
     }
 
-    const result: Response<EquityResponse[]> = await response.json();
+    const result: APIResponse<EquityResponse[]> = await response.json();
 
     return responseToModel(result, EquityModel);
   };

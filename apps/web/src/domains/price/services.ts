@@ -6,7 +6,7 @@ import {
   responseToModel,
   sortParamsToParams,
 } from "-/lib/transformers";
-import type { Params, Response } from "-/lib/types";
+import type { APIResponse, Params } from "-/lib/types";
 
 import { PriceModel } from "./models";
 import type { PriceResponse } from "./types";
@@ -24,7 +24,7 @@ export class PriceServices {
 
   private getAllPrices = async (
     params?: Params<PriceFilter, PriceSortKey>,
-  ): Promise<Response<PriceModel[]>> => {
+  ): Promise<APIResponse<PriceModel[]>> => {
     const filterSearchParams = priceFiltersToParams(params?.filters);
     const paginationParams = paginationParamsToParams(params?.pagination);
     const sortParams = sortParamsToParams(priceSortKeyToParamMap, params?.sort);
@@ -44,7 +44,7 @@ export class PriceServices {
       throw error;
     }
 
-    const result: Response<PriceResponse[]> = await response.json();
+    const result: APIResponse<PriceResponse[]> = await response.json();
 
     return responseToModel(result, PriceModel);
   };

@@ -31,7 +31,7 @@ def generate_pagination_metadata(
 
     total_items = len(data) if isinstance(data, Union[pd.DataFrame, List]) else 1
 
-    if not pagination_params.enablePagination:
+    if not pagination_params.enable_pagination:
         return {"total_items": total_items, "total_pages": 1}
 
     total_pages = (

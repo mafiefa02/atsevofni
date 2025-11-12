@@ -1,17 +1,12 @@
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { useDebounce } from "use-debounce";
 
-import { Toggle } from "-/components/ui/toggle";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "-/components/ui/tooltip";
+import { TooltipProvider } from "-/components/ui/tooltip";
 import { services } from "-/lib/services";
 
 import { EquityTickerListEmpty } from "./empty";
 import { EquityTickerListError } from "./error";
+import { EquityTickerToggle } from "./toggle";
 
 interface EquityTickerListProps {
   search: string | null;
@@ -34,19 +29,7 @@ export const EquityTickerList = ({ search }: EquityTickerListProps) => {
     <div className="flex flex-col gap-2">
       <TooltipProvider>
         {equities.data.map((equity) => (
-          <Tooltip delayDuration={300} key={equity.getEquity("id")}>
-            <Toggle
-              className="justify-start"
-              aria-label={`Toggle ${equity.getEquity("id")}`}
-              variant="outline"
-              asChild
-            >
-              <TooltipTrigger>{equity.getEquity("id")}</TooltipTrigger>
-            </Toggle>
-            <TooltipContent side="right">
-              {equity.getEquity("name")}
-            </TooltipContent>
-          </Tooltip>
+          <EquityTickerToggle key={equity.getEquity("id")} equity={equity} />
         ))}
       </TooltipProvider>
     </div>

@@ -44,3 +44,19 @@ export const parseAsFormattableDate = createParser({
     return new FormattableDate(value).format("yyyy-MM-dd");
   },
 });
+
+export const parseAsSetOf = <T>(parser: ReturnType<typeof createParser<T>>) =>
+  createParser({
+    parse(queryValue) {
+      if (!queryValue) return null;
+      const values = queryValue.split(",").map((v) => parser.parse(v));
+      if (values.some((v) => v === null)) return null;
+      return new Set(values as T[]);
+    },
+    serialize(value: Set<T> | null) {
+      if (!value || value.size === 0) return "";
+      return Array.from(value)
+        .map((v) => parser.serialize(v))
+        .join(",");
+    },
+  });

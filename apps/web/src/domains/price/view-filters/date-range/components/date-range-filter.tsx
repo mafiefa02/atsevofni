@@ -24,7 +24,7 @@ const dateRangeFields = [
 
 export const DateRangeFilter = () => {
   return (
-    <FieldSet className="-space-y-2">
+    <FieldSet>
       <FieldLegend>Date Range</FieldLegend>
       {dateRangeFields.map((field) => (
         <Field key={field.name}>

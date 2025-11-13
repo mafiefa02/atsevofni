@@ -12,7 +12,7 @@ export const RootAppView = () => {
     <>
       {/* Desktop/tablet view */}
       <div className="hidden h-dvh grid-cols-[auto_1fr] overflow-hidden xl:grid">
-        <Sidebar>
+        <Sidebar className="overflow-y-auto">
           <SidebarContent>
             <Brand className="dark:grayscale dark:invert" />
             <div className="flex w-full flex-col gap-7">

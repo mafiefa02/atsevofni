@@ -14,5 +14,5 @@ runs:
         enable-cache: true
 
     - name: Install dependencies
-      run: pnpm install:server
+      run: npm run install:server
       shell: bash

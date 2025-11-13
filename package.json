@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "concurrently \"pnpm:dev:web\" \"pnpm:dev:server\"",
     "start": "concurrently \"pnpm:preview:web\" \"pnpm:run:server\"",
-    "install:app": "concurrently \"cd apps/server && uv venv && source .venv/bin/activate && uv sync && deactivate\" \"pnpm install\"",
+    "install:app": "concurrently \"pnpm:install:server\" \"pnpm install\"",
+    "install:server": "cd apps/server && uv venv && source .venv/bin/activate && uv sync && deactivate",
     "format:app": "concurrently \"pnpm:format:web\" \"pnpm:format:server\"",
     "dev:web": "pnpm --filter @atsevofni/web dev",
     "build:web": "pnpm --filter @atsevofni/web build",

@@ -11,10 +11,10 @@ jobs:
         uses: ./.github/actions/install-uv-dependencies
 
       - name: Format (server)
-        run: pnpm format:server --fix
+        run: cd apps/server && uv run ruff format
 
       - name: Check (server)
-        run: pnpm check:server --fix
+        run: cd apps/server && uv run ruff check --fix
 
   format-and-lint-web:
     runs-on: ubuntu-latest
@@ -26,7 +26,7 @@ jobs:
         uses: ./.github/actions/install-pnpm-dependencies
 
       - name: Lint (@atsevofni/web)
-        run: pnpm lint:web
+        run: pnpm lint:web --fix .
 
       - name: Format (@atsevofni/web)
-        run: pnpm format:web --fix
+        run: pnpm format:web --fix .

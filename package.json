@@ -26,12 +26,12 @@
   },
   "lint-staged": {
     "apps/server/src/**/*.py": [
-      "format:server",
-      "check:server --fix"
+      "pnpm format:server",
+      "pnpm check:server --fix"
     ],
     "apps/web/src/**/*.{js,jsx,ts,tsx,json,css}": [
-      "format:web . --write --ignore-unknown",
-      "lint:web . --quiet --fix"
+      "pnpm format:web . --write --ignore-unknown",
+      "pnpm lint:web . --quiet --fix"
     ]
   },
   "author": "Muhammad Afief Abdurrahman",

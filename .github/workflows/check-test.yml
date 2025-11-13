@@ -4,6 +4,9 @@ jobs:
   lint:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
       - name: Install dependencies
         uses: ./.github/workflows/install-dependencies.yml
 
@@ -15,6 +18,9 @@ jobs:
   format:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
       - name: Install dependencies
         uses: ./.github/workflows/install-dependencies.yml
 

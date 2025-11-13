@@ -5,8 +5,9 @@ import {
   paramsToStringParams,
   responseToModel,
   sortParamsToParams,
+  transformRawResponse,
 } from "-/lib/transformers";
-import type { APIResponse, Params } from "-/lib/types";
+import type { APIRawResponse, APIResponse, Params } from "-/lib/types";
 
 import { EquityModel } from "./models";
 import type { EquityResponse } from "./types";
@@ -47,9 +48,10 @@ export class EquityServices {
       throw error;
     }
 
-    const result: APIResponse<EquityResponse[]> = await response.json();
+    const result: APIRawResponse<EquityResponse[]> = await response.json();
+    const transformedResponse = transformRawResponse(result);
 
-    return responseToModel(result, EquityModel);
+    return responseToModel(transformedResponse, EquityModel);
   };
 
   public get query() {

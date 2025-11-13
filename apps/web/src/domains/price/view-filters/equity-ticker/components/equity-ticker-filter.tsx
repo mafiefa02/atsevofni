@@ -8,13 +8,16 @@ import { EquityTickerSearch } from "./search";
 
 export const EquityTickerFilter = () => {
   const [search, setSearch] = useState("");
+
   return (
     <FieldSet>
       <FieldLegend>Tickers</FieldLegend>
       <EquityTickerSearch search={search} setSearch={setSearch} />
-      <Suspense fallback={<EquityTickerListLoading />}>
-        <EquityTickerList search={search} />
-      </Suspense>
+      <div className="flex flex-col gap-2">
+        <Suspense fallback={<EquityTickerListLoading />}>
+          <EquityTickerList search={search} />
+        </Suspense>
+      </div>
     </FieldSet>
   );
 };

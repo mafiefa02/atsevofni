@@ -1,5 +1,6 @@
 import { paginationParamsKeyNameMap, sortParamsKeyNameMap } from "./constants";
 import type {
+  APIRawResponse,
   APIResponse,
   ModelConstructor,
   PaginationParams,
@@ -29,6 +30,24 @@ export function responseToModel<T, D>(
       response.data instanceof Array
         ? response.data.map((data) => new Model(data, ...args))
         : new Model(response.data, ...args),
+  };
+}
+
+export function transformRawResponse<D>(
+  response: APIRawResponse<D>,
+): APIResponse<D> {
+  const { data, meta } = response;
+  return {
+    data,
+    meta: {
+      pagination: {
+        enablePagination: meta.pagination.enable_pagination,
+        page: meta.pagination.page,
+        limit: meta.pagination.limit,
+      },
+      totalItems: meta.total_items,
+      totalPage: meta.total_pages,
+    },
   };
 }
 

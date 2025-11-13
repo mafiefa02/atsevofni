@@ -5,8 +5,9 @@ import {
   paramsToStringParams,
   responseToModel,
   sortParamsToParams,
+  transformRawResponse,
 } from "-/lib/transformers";
-import type { APIResponse, Params } from "-/lib/types";
+import type { APIRawResponse, APIResponse, Params } from "-/lib/types";
 
 import { PriceModel } from "./models";
 import type { PriceResponse } from "./types";
@@ -44,9 +45,10 @@ export class PriceServices {
       throw error;
     }
 
-    const result: APIResponse<PriceResponse[]> = await response.json();
+    const result: APIRawResponse<PriceResponse[]> = await response.json();
+    const transformedResponse = transformRawResponse(result);
 
-    return responseToModel(result, PriceModel);
+    return responseToModel(transformedResponse, PriceModel);
   };
 
   public get query() {

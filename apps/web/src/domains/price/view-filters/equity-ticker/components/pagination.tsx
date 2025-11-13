@@ -1,0 +1,48 @@
+import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
+import { useCallback } from "react";
+
+import { Button } from "-/components/ui/button";
+import type { APIResponseMeta } from "-/lib/types";
+
+interface EquityTickerPaginationProps {
+  page: number;
+  setPage: React.Dispatch<React.SetStateAction<number>>;
+  meta: APIResponseMeta;
+}
+
+export const EquityTickerPagination = ({
+  page,
+  setPage,
+  meta,
+}: EquityTickerPaginationProps) => {
+  const goToPrev = () =>
+    setPage((current) => (current === 1 ? current : current - 1));
+  const goToNext = () =>
+    setPage((current) => (current === meta.totalPage ? current : current + 1));
+
+  const handlePrev = useCallback(goToPrev, [setPage]);
+  const handleNext = useCallback(goToNext, [setPage, meta.totalPage]);
+
+  return (
+    <div className="grid grid-rows-[1fr_auto] gap-3">
+      <div className="grid grid-cols-2 gap-3">
+        <Button disabled={page === 1} onClick={handlePrev} variant="secondary">
+          <ChevronLeftIcon /> Prev
+        </Button>
+        <Button
+          disabled={page === meta.totalPage}
+          onClick={handleNext}
+          variant="secondary"
+        >
+          Next <ChevronRightIcon />
+        </Button>
+      </div>
+      <div className="text-muted-foreground flex items-center justify-between gap-4 text-xs">
+        <p>Total {meta.totalItems} tickers</p>
+        <p>
+          Page {page} / {meta.totalPage}
+        </p>
+      </div>
+    </div>
+  );
+};

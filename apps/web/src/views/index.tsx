@@ -1,5 +1,3 @@
-import { Suspense } from "react";
-
 import { Brand } from "-/components/brand";
 import { Footer } from "-/components/footer";
 import { Sidebar } from "-/components/sidebar";
@@ -8,7 +6,6 @@ import { PriceViewFilters } from "-/domains/price/view-filters/components/price-
 import { PriceViewSort } from "-/domains/price/view-sort/components/price-view-sort";
 
 import { DashboardView } from "./dashboard";
-import { DashboardLoadingView } from "./dashboard/loading";
 
 export const RootAppView = () => {
   return (
@@ -18,15 +15,15 @@ export const RootAppView = () => {
         <Sidebar>
           <SidebarContent>
             <Brand className="dark:grayscale dark:invert" />
-            <PriceViewSort />
-            <PriceViewFilters />
+            <div className="flex w-full flex-col gap-7">
+              <PriceViewSort />
+              <PriceViewFilters />
+            </div>
           </SidebarContent>
         </Sidebar>
         <div className="grid h-dvh grid-rows-[1fr_auto] overflow-y-auto">
           <div className="overflow-x-hidden overflow-y-auto">
-            <Suspense fallback={<DashboardLoadingView />}>
-              <DashboardView />
-            </Suspense>
+            <DashboardView />
           </div>
           <Footer />
         </div>
@@ -34,9 +31,7 @@ export const RootAppView = () => {
 
       {/* Mobile view */}
       <div className="overflow-x-hidden overflow-y-auto xl:hidden">
-        <Suspense fallback={<DashboardLoadingView />}>
-          <DashboardView />
-        </Suspense>
+        <DashboardView />
       </div>
     </>
   );

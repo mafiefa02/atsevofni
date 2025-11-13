@@ -1,4 +1,5 @@
 import { useSuspenseQuery } from "@tanstack/react-query";
+import { useState } from "react";
 import { useDebounce } from "use-debounce";
 
 import {
@@ -9,6 +10,7 @@ import {
 } from "-/components/ui/tooltip";
 import { services } from "-/lib/services";
 
+import { EquityTickerPagination } from "../pagination";
 import { EquityTickerListEmpty } from "./empty";
 import { EquityTickerListError } from "./error";
 import { EquityTickerToggle } from "./toggle";
@@ -18,11 +20,12 @@ interface EquityTickerListProps {
 }
 
 export const EquityTickerList = ({ search }: EquityTickerListProps) => {
+  const [page, setPage] = useState(1);
   const [searchFilter] = useDebounce(search, 300);
   const { data: equities, isError } = useSuspenseQuery(
     services.equity.query.getAllEquities({
       filters: { search: searchFilter },
-      pagination: { enablePagination: false },
+      pagination: { limit: 5 },
     }),
   );
 
@@ -31,7 +34,7 @@ export const EquityTickerList = ({ search }: EquityTickerListProps) => {
     return <EquityTickerListEmpty />;
 
   return (
-    <div className="flex flex-col gap-2">
+    <>
       <TooltipProvider>
         {equities.data.map((equity) => (
           <Tooltip delayDuration={300} key={equity.getEquity("id")}>
@@ -44,6 +47,11 @@ export const EquityTickerList = ({ search }: EquityTickerListProps) => {
           </Tooltip>
         ))}
       </TooltipProvider>
-    </div>
+      <EquityTickerPagination
+        page={page}
+        setPage={setPage}
+        meta={equities.meta}
+      />
+    </>
   );
 };

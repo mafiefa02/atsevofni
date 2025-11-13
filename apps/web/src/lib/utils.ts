@@ -63,3 +63,29 @@ export const parseAsSetOf = <T>(parser: ReturnType<typeof createParser<T>>) =>
         .join(",");
     },
   });
+
+/**
+ * Generates an array of unique random integers.
+ * The values will range from 0 to maxLength.
+ *
+ * Note: This works well if your range is small enough (up to 100)
+ */
+export const generateUniqueRandomIntArray = (
+  minLength: number,
+  maxLength: number,
+): number[] => {
+  const arrayLength =
+    Math.floor(Math.random() * (maxLength - minLength + 1)) + minLength;
+
+  // We use maxLength as the implied upper bound to ensure we always
+  // have enough unique numbers to fill the array.
+  const pool = Array.from({ length: maxLength + 1 }, (_, i) => i);
+
+  // Partial Fisher-Yates shuffle
+  for (let i = 0; i < arrayLength; i++) {
+    const j = i + Math.floor(Math.random() * (pool.length - i));
+    [pool[i], pool[j]] = [pool[j], pool[i]];
+  }
+
+  return pool.slice(0, arrayLength);
+};

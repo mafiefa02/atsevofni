@@ -6,6 +6,19 @@ export type UniqueBrand<T> = T & { readonly __brand: unique symbol };
 export type ModelConstructor<T, D> = new (data: D, ...args: unknown[]) => T;
 
 // General types
+export interface APIRawResponse<Data> {
+  data: Data;
+  meta: {
+    pagination: {
+      enable_pagination: boolean;
+      page: number;
+      limit: number;
+    };
+    total_items: number;
+    total_pages: number;
+  };
+}
+
 export interface APIResponseMeta {
   pagination: PaginationParams;
   totalItems: number;

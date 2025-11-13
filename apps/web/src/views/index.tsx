@@ -21,8 +21,8 @@ export const RootAppView = () => {
             </div>
           </SidebarContent>
         </Sidebar>
-        <div className="grid h-dvh grid-rows-[1fr_auto] overflow-y-auto">
-          <div className="overflow-x-hidden overflow-y-auto">
+        <div className="flex flex-1 flex-col overflow-y-auto">
+          <div className="flex-1 overflow-x-hidden overflow-y-auto">
             <DashboardView />
           </div>
           <Footer />

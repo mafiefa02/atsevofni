@@ -1,6 +1,7 @@
 import { Suspense } from "react";
 
 import { Brand } from "-/components/brand";
+import { Footer } from "-/components/footer";
 import { Sidebar } from "-/components/sidebar";
 import { SidebarContent } from "-/components/sidebar/content";
 import { PriceViewFilters } from "-/domains/price/view-filters/components/price-view-filters";
@@ -21,10 +22,13 @@ export const RootAppView = () => {
             <PriceViewFilters />
           </SidebarContent>
         </Sidebar>
-        <div className="overflow-x-hidden overflow-y-auto">
-          <Suspense fallback={<DashboardLoadingView />}>
-            <DashboardView />
-          </Suspense>
+        <div className="grid h-dvh grid-rows-[1fr_auto] overflow-y-auto">
+          <div className="overflow-x-hidden overflow-y-auto">
+            <Suspense fallback={<DashboardLoadingView />}>
+              <DashboardView />
+            </Suspense>
+          </div>
+          <Footer />
         </div>
       </div>
 

@@ -1,6 +1,7 @@
 import { useCallback } from "react";
 
 import { Select } from "-/components/ui/select";
+import { DEFAULT_SORT_ORDER } from "-/lib/constants";
 import type { SortOrder } from "-/lib/types";
 
 import { usePriceViewSort } from "../../hooks";
@@ -24,7 +25,7 @@ export const PriceViewSortOrderControl = ({
   if (!sortBy) return;
 
   return (
-    <Select value={order ?? "desc"} onValueChange={handleChange}>
+    <Select value={order ?? DEFAULT_SORT_ORDER} onValueChange={handleChange}>
       {children}
     </Select>
   );

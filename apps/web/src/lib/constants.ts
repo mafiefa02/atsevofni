@@ -11,6 +11,8 @@ export const paginationParamsKeyNameMap: Record<
   page: "page",
 };
 
+export const DEFAULT_SORT_ORDER: SortOrder = "desc";
+
 export const sortParamsKeyNameMap: Record<keyof SortParams<unknown>, string> = {
   order: "order",
   sortBy: "sort_by",

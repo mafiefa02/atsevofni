@@ -9,7 +9,7 @@ import { parseAsFormattableDate } from "-/lib/utils";
 
 import type { PriceFilter } from "./types";
 
-export const filterQueryStates = {
+const filterQueryStates = {
   equities: parseAsArrayOf(parseAsString),
   equitySector: parseAsString,
   equitySubsector: parseAsString,

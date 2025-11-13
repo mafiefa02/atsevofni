@@ -23,9 +23,11 @@ export interface PaginationParams {
   limit?: number;
 }
 
+export type SortOrder = "asc" | "desc";
+
 export interface SortParams<SortKey> {
-  sortBy?: SortKey;
-  order?: "asc" | "desc";
+  sortBy: SortKey | null;
+  order: SortOrder | null;
 }
 
 export interface Params<FilterParams, SortFields> {

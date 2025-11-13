@@ -4,6 +4,7 @@ import { Brand } from "-/components/brand";
 import { Sidebar } from "-/components/sidebar";
 import { SidebarContent } from "-/components/sidebar/content";
 import { PriceViewFilters } from "-/domains/price/view-filters/components/price-view-filters";
+import { PriceViewSort } from "-/domains/price/view-sort/components/price-view-sort";
 
 import { DashboardView } from "./dashboard";
 import { DashboardLoadingView } from "./dashboard/loading";
@@ -16,6 +17,7 @@ export const RootAppView = () => {
         <Sidebar>
           <SidebarContent>
             <Brand className="dark:grayscale dark:invert" />
+            <PriceViewSort />
             <PriceViewFilters />
           </SidebarContent>
         </Sidebar>

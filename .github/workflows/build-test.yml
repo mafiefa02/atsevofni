@@ -1,12 +1,11 @@
-name: Build frontend on push
+name: Build Test
 on: push
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v5
-      - name: Dependency Install
-        run: pnpm install
-      - name: Building the Frontend
+      - name: Install dependencies
+        uses: ./.github/workflows/install-dependencies.yml
+
+      - name: Frontend build
         run: pnpm build:web

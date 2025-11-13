@@ -1,0 +1,25 @@
+name: Lint and format on push
+on: push
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+      - name: Dependency Install
+        run: pnpm install
+      - name: Linting (@atsevofni/web)
+        run: pnpm lint:web
+      - name: Check (server)
+        run: pnpm check:server --fix
+  format:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+      - name: Dependency Install
+        run: pnpm install
+      - name: Format (@atsevofni/web)
+        run: pnpm format:web --fix
+      - name: Format (server)
+        run: pnpm format:server --fix

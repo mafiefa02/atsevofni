@@ -30,8 +30,8 @@
       "check:server --fix"
     ],
     "apps/web/src/**/*.{js,jsx,ts,tsx,json,css}": [
-      "format:web --write --ignore-unknown",
-      "lint:web --quiet --fix"
+      "format:web . --write --ignore-unknown",
+      "lint:web . --quiet --fix"
     ]
   },
   "author": "Muhammad Afief Abdurrahman",

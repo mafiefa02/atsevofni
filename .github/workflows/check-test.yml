@@ -8,13 +8,14 @@ jobs:
         uses: actions/checkout@v5
 
       - name: Install dependencies
-        uses: ./.github/workflows/install-dependencies.yml
+        uses: ./.github/actions/install-dependencies
 
       - name: Linting (@atsevofni/web)
         run: pnpm lint:web
 
       - name: Check (server)
         run: pnpm check:server --fix
+
   format:
     runs-on: ubuntu-latest
     steps:
@@ -22,7 +23,7 @@ jobs:
         uses: actions/checkout@v5
 
       - name: Install dependencies
-        uses: ./.github/workflows/install-dependencies.yml
+        uses: ./.github/actions/install-dependencies
 
       - name: Format (@atsevofni/web)
         run: pnpm format:web --fix

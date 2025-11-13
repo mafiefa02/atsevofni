@@ -6,7 +6,7 @@ runs:
     - name: Set up Python
       uses: actions/setup-python@v6
       with:
-        python-version-file: "./apps/server/.pyproject.toml"
+        python-version-file: "./apps/server/pyproject.toml"
 
     - name: Install uv
       uses: astral-sh/setup-uv@v6

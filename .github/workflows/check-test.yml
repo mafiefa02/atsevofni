@@ -23,7 +23,7 @@ jobs:
       - name: Check (server)
         run: cd apps/server && uv run ruff check --fix
 
-      - uses: autofix-ci/action
+      - uses: autofix-ci/action@635ffb0c9798bd160680f18fd73371e355b85f27
 
   format-and-lint-web:
     runs-on: ubuntu-latest
@@ -40,4 +40,4 @@ jobs:
       - name: Format (@atsevofni/web)
         run: pnpm format:web . --write
 
-      - uses: autofix-ci/action
+      - uses: autofix-ci/action@635ffb0c9798bd160680f18fd73371e355b85f27

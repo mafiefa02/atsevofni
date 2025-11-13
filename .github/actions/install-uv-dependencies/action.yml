@@ -1,0 +1,16 @@
+name: "Cache and Install Dependencies with uv"
+description: "A composite action to set up Python, uv, and install dependencies."
+runs:
+  using: "composite"
+  steps:
+    - name: Set up Python
+      uses: actions/setup-python@v6
+      with:
+        python-version-file: "./apps/server/.pyproject.toml"
+
+    - name: Install uv
+      uses: astral-sh/setup-uv@v6
+
+    - name: Install dependencies
+      run: uv sync
+      shell: bash

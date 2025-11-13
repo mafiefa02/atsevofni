@@ -1,32 +1,32 @@
 name: Check
 on: push
 jobs:
-  lint:
+  format-and-lint-server:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v5
 
       - name: Install dependencies
-        uses: ./.github/actions/install-dependencies
+        uses: ./.github/actions/install-uv-dependencies
 
-      - name: Linting (@atsevofni/web)
-        run: pnpm lint:web
+      - name: Format (server)
+        run: pnpm format:server --fix
 
       - name: Check (server)
         run: pnpm check:server --fix
 
-  format:
+  format-and-lint-web:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v5
 
       - name: Install dependencies
-        uses: ./.github/actions/install-dependencies
+        uses: ./.github/actions/install-pnpm-dependencies
+
+      - name: Lint (@atsevofni/web)
+        run: pnpm lint:web
 
       - name: Format (@atsevofni/web)
         run: pnpm format:web --fix
-
-      - name: Format (server)
-        run: pnpm format:server --fix

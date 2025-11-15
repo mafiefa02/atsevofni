@@ -1,9 +1,9 @@
 import type { IconProps } from "-/lib/types";
+import { cn } from "-/lib/utils";
 
 export const DoubleChevronRightIcon = ({
   size = 48,
-  color = "#FFFFFF",
-  strokeWidth = undefined,
+  strokeWidth = 2.5,
   background = "transparent",
   opacity = 1,
   rotation = 0,
@@ -11,6 +11,7 @@ export const DoubleChevronRightIcon = ({
   flipHorizontal = false,
   flipVertical = false,
   padding = 0,
+  className,
   ...props
 }: IconProps) => {
   const transforms = [];
@@ -29,7 +30,6 @@ export const DoubleChevronRightIcon = ({
       width={size}
       height={size}
       fill="none"
-      stroke={color}
       strokeWidth={strokeWidth}
       strokeLinecap="round"
       strokeLinejoin="round"
@@ -42,12 +42,17 @@ export const DoubleChevronRightIcon = ({
             : undefined,
         backgroundColor: background !== "transparent" ? background : undefined,
       }}
+      className={cn("stroke-foreground", className)}
       {...props}
     >
-      <g fill="currentColor" fill-rule="evenodd" clip-rule="evenodd">
-        <path d="M13.28 11.47a.75.75 0 0 1 0 1.06l-7.5 7.5a.75.75 0 0 1-1.06-1.06L11.69 12L4.72 5.03a.75.75 0 0 1 1.06-1.06z" />
-        <path d="M19.28 11.47a.75.75 0 0 1 0 1.06l-7.5 7.5a.75.75 0 1 1-1.06-1.06L17.69 12l-6.97-6.97a.75.75 0 0 1 1.06-1.06z" />
-      </g>
+      <path
+        fill="none"
+        stroke="currentColor"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        strokeWidth={strokeWidth}
+        d="m5.25 4.5l7.5 7.5l-7.5 7.5m6-15l7.5 7.5l-7.5 7.5"
+      />
     </svg>
   );
 };

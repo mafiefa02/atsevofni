@@ -1,8 +1,8 @@
 import type { IconProps } from "-/lib/types";
 
-export const ChevronDownIcon = ({
+export const CircleIcon = ({
   size = 48,
-  strokeWidth = 2.5,
+  strokeWidth = undefined,
   background = "transparent",
   opacity = 1,
   rotation = 0,
@@ -42,13 +42,13 @@ export const ChevronDownIcon = ({
       }}
       {...props}
     >
-      <path
+      <circle
+        cx="12"
+        cy="12"
+        r="10"
         fill="none"
         stroke="currentColor"
-        stroke-linecap="round"
-        stroke-linejoin="round"
         strokeWidth={strokeWidth}
-        d="m4 9l8 8l8-8"
       />
     </svg>
   );

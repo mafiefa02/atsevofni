@@ -1,6 +1,7 @@
 import { GithubFillIcon } from "./icons/github";
 import { GlobeIcon } from "./icons/globe";
 import { LinkedinIcon } from "./icons/linkedin";
+import { ThemeToggle } from "./theme-toggle";
 import { buttonVariants } from "./ui/button/button-variants";
 import {
   Tooltip,
@@ -52,6 +53,7 @@ export const Footer = () => {
               <TooltipContent>{media.label}</TooltipContent>
             </Tooltip>
           ))}
+          <ThemeToggle />
         </TooltipProvider>
       </div>
     </div>

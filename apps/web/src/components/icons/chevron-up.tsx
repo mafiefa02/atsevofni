@@ -2,8 +2,7 @@ import type { IconProps } from "-/lib/types";
 
 export const ChevronUpIcon = ({
   size = 48,
-  color = "#000000",
-  strokeWidth = 3,
+  strokeWidth = 2.5,
   background = "transparent",
   opacity = 1,
   rotation = 0,
@@ -29,7 +28,6 @@ export const ChevronUpIcon = ({
       width={size}
       height={size}
       fill="none"
-      stroke={color}
       strokeWidth={strokeWidth}
       strokeLinecap="round"
       strokeLinejoin="round"

@@ -13,7 +13,7 @@ import { DashboardLoadingView } from "./dashboard/loading";
 
 export const RootAppView = () => {
   return (
-    <>
+    <ErrorBoundary fallback="Root error boundary">
       {/* Desktop/tablet view */}
       <div className="hidden h-dvh grid-cols-[auto_1fr] overflow-hidden xl:grid">
         <Sidebar className="overflow-y-auto">
@@ -45,6 +45,6 @@ export const RootAppView = () => {
           </Suspense>
         </ErrorBoundary>
       </div>
-    </>
+    </ErrorBoundary>
   );
 };

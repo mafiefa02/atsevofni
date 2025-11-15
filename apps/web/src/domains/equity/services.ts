@@ -11,10 +11,10 @@ import type { APIRawResponse, APIResponse, Params } from "-/lib/types";
 
 import { EquityModel } from "./models";
 import type { EquityResponse } from "./types";
-import { equityFiltersToParams } from "./view-filters/transformers";
-import type { EquityFilter } from "./view-filters/types";
-import { equitySortKeyToParamMap } from "./view-sort/constants";
-import type { EquitySortKey } from "./view-sort/types";
+import { equityFiltersToParams } from "./views/filters/transformers";
+import type { EquityFilter } from "./views/filters/types";
+import { equitySortKeyToParamMap } from "./views/sort/constants";
+import type { EquitySortKey } from "./views/sort/types";
 
 export class EquityServices {
   private readonly url: string;

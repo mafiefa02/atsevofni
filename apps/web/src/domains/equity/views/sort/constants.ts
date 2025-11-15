@@ -1,4 +1,4 @@
-import type { EquityResponse } from "../types";
+import type { EquityResponse } from "../../types";
 import type { EquitySortKey } from "./types";
 
 export const equitySortKeyToParamMap: Record<

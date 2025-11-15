@@ -3,7 +3,7 @@ import type { IconProps } from "-/lib/types";
 export const GlobeIcon = ({
   size = 48,
   color = "#FFFFFF",
-  strokeWidth = undefined,
+  strokeWidth = 2.5,
   background = "transparent",
   opacity = 1,
   rotation = 0,

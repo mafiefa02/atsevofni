@@ -1,8 +1,9 @@
-import { ChevronDownIcon } from "lucide-react";
 import * as React from "react";
 
 import type { SortParams } from "-/lib/types";
 import { cn } from "-/lib/utils";
+
+import { ChevronDownIcon } from "../icons/chevron-down";
 
 function Table({ className, ...props }: React.ComponentProps<"table">) {
   return (

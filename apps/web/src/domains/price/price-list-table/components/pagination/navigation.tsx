@@ -1,11 +1,9 @@
-import {
-  ChevronLeftIcon,
-  ChevronRightIcon,
-  ChevronsLeftIcon,
-  ChevronsRightIcon,
-} from "lucide-react";
 import { useCallback, useMemo } from "react";
 
+import { ChevronLeftIcon } from "-/components/icons/chevron-left";
+import { ChevronRightIcon } from "-/components/icons/chevron-right";
+import { DoubleChevronLeftIcon } from "-/components/icons/double-chevron-left";
+import { DoubleChevronRightIcon } from "-/components/icons/double-chevron-right";
 import { Button } from "-/components/ui/button";
 import { ButtonGroup } from "-/components/ui/button-group";
 import { usePriceViewPagination } from "-/domains/price/view-pagination/hooks";
@@ -67,7 +65,7 @@ export const PriceListTableNavigation = ({
           onMouseEnter={firstPagePrefetch.onMouseEnter}
           onMouseLeave={firstPagePrefetch.onMouseLeave}
         >
-          <ChevronsLeftIcon /> First
+          <DoubleChevronLeftIcon /> First
         </Button>
       )}
       {currentPage > 1 && (
@@ -77,7 +75,7 @@ export const PriceListTableNavigation = ({
           onMouseEnter={prevPagePrefetch.onMouseEnter}
           onMouseLeave={prevPagePrefetch.onMouseLeave}
         >
-          <ChevronLeftIcon /> Prev
+          <ChevronLeftIcon />
         </Button>
       )}
       {pageSteps.map((step, index) => (
@@ -106,7 +104,7 @@ export const PriceListTableNavigation = ({
           onMouseLeave={lastPagePrefetch.onMouseLeave}
         >
           Last
-          <ChevronsRightIcon />
+          <DoubleChevronRightIcon />
         </Button>
       )}
     </ButtonGroup>

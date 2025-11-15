@@ -1,6 +1,6 @@
-import { RotateCcwIcon } from "lucide-react";
 import { useCallback } from "react";
 
+import { ArrowCounterClockwiseIcon } from "-/components/icons/arrow-counter-clockwise";
 import { Button } from "-/components/ui/button";
 
 import { usePriceViewSort } from "../hooks";
@@ -17,7 +17,7 @@ export const PriceViewSortReset = () => {
 
   return (
     <Button onClick={clearState} variant="outline" size="icon-sm">
-      <RotateCcwIcon />
+      <ArrowCounterClockwiseIcon />
     </Button>
   );
 };

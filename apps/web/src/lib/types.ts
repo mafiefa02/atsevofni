@@ -52,3 +52,17 @@ export interface Params<FilterParams, SortFields> {
 // Domain relationship types
 export type PriceEquityId = EquityId;
 export type PriceViewFilterKey = keyof PriceFilter;
+
+// General component prop types
+export interface IconProps extends React.ComponentPropsWithRef<"svg"> {
+  size?: number;
+  color?: string;
+  background?: string;
+  opacity?: number;
+  rotation?: number;
+  shadow?: number;
+  flipHorizontal?: boolean;
+  flipVertical?: boolean;
+  padding?: number;
+  className?: string;
+}

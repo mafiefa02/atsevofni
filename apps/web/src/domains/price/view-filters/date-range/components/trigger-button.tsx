@@ -1,6 +1,6 @@
 import { format } from "date-fns";
-import { ChevronDownIcon } from "lucide-react";
 
+import { ChevronDownIcon } from "-/components/icons/chevron-down";
 import { Button } from "-/components/ui/button";
 import { PopoverTrigger } from "-/components/ui/popover";
 import { cn } from "-/lib/utils";

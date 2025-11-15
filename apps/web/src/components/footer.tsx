@@ -1,5 +1,6 @@
-import { GithubIcon, GlobeIcon, LinkedinIcon } from "lucide-react";
-
+import { GithubFillIcon } from "./icons/github";
+import { GlobeIcon } from "./icons/globe";
+import { LinkedinIcon } from "./icons/linkedin";
 import { buttonVariants } from "./ui/button/button-variants";
 import {
   Tooltip,
@@ -11,7 +12,7 @@ import {
 const SOCIAL_MEDIAS = [
   {
     label: "GitHub",
-    icon: <GithubIcon />,
+    icon: <GithubFillIcon />,
     href: "https://github.com/mafiefa02",
   },
   {

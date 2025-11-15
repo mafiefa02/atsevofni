@@ -1,6 +1,7 @@
-import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
 import { useCallback } from "react";
 
+import { ChevronLeftIcon } from "-/components/icons/chevron-left";
+import { ChevronRightIcon } from "-/components/icons/chevron-right";
 import { Button } from "-/components/ui/button";
 import type { APIResponseMeta } from "-/lib/types";
 

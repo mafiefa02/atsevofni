@@ -2,7 +2,7 @@ import { Button } from "-/components/ui/button";
 
 import { usePrefetchPage } from "../../hooks";
 
-interface StepButtonProps {
+interface StepButtonProps extends React.ComponentProps<"button"> {
   step: number;
   isActive: boolean;
   handleNavigate: (step: number) => void;
@@ -12,6 +12,7 @@ export const StepButton = ({
   step,
   isActive,
   handleNavigate,
+  ...props
 }: StepButtonProps) => {
   const { onMouseEnter, onMouseLeave } = usePrefetchPage(step);
   return (
@@ -21,6 +22,7 @@ export const StepButton = ({
       onClick={() => handleNavigate(step)}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
+      {...props}
     >
       {step}
     </Button>

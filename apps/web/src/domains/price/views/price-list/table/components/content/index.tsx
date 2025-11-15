@@ -16,11 +16,7 @@ export const PriceListTableContent = () => {
   const [pagination] = usePriceViewPagination();
 
   const { data: prices, isError } = useSuspenseQuery(
-    services.price.query.getAllPrices({
-      filters,
-      sort,
-      pagination: { ...pagination, limit: 10 },
-    }),
+    services.price.query.getAllPrices({ filters, sort, pagination }),
   );
 
   if (isError) return <ErrorTableRow numOfColumn={NUM_OF_COLUMNS} />;

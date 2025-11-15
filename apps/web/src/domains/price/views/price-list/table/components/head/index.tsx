@@ -26,7 +26,7 @@ export const PriceListTableHead = ({
     return services.price.query.getAllPrices({
       filters,
       sort: getNextSortState(sortParams.sortBy, sortParams.order, sortKey),
-      pagination: { ...pagination, limit: 10 },
+      pagination,
     });
   }, [filters, sortParams, sortKey, pagination]);
 

@@ -21,7 +21,7 @@ export const PriceListTableNavigation = ({
   currentPage,
   totalPage,
 }: PriceListTableNavigationProps) => {
-  const [, setPagination] = usePriceViewPagination();
+  const [{ enablePagination }, setPagination] = usePriceViewPagination();
 
   const firstPagePrefetch = usePrefetchPage(1);
   const prevPagePrefetch = usePrefetchPage(currentPage - 1);
@@ -56,6 +56,8 @@ export const PriceListTableNavigation = ({
     [currentPage, totalPage],
   );
 
+  if (enablePagination === false) return;
+
   return (
     <ButtonGroup>
       {currentPage !== 1 && (
@@ -76,6 +78,7 @@ export const PriceListTableNavigation = ({
           onMouseLeave={prevPagePrefetch.onMouseLeave}
         >
           <ChevronLeftIcon />
+          <span>Previous</span>
         </Button>
       )}
       {pageSteps.map((step, index) => (
@@ -93,6 +96,7 @@ export const PriceListTableNavigation = ({
           onMouseEnter={nextPagePrefetch.onMouseEnter}
           onMouseLeave={nextPagePrefetch.onMouseLeave}
         >
+          <span>Next</span>
           <ChevronRightIcon />
         </Button>
       )}

@@ -1,12 +1,11 @@
 import { parseAsBoolean, parseAsInteger, useQueryStates } from "nuqs";
 
-import { DEFAULT_PAGINATION_LIMIT } from "-/lib/constants";
 import type { PaginationParams } from "-/lib/types";
 
 const paginationQueryStates = {
   enablePagination: parseAsBoolean,
-  page: parseAsInteger,
-  limit: parseAsInteger.withDefault(DEFAULT_PAGINATION_LIMIT),
+  page: parseAsInteger.withDefault(1),
+  limit: parseAsInteger.withDefault(10),
 } satisfies Record<keyof PaginationParams, unknown>;
 
 export const usePriceViewPagination = () =>

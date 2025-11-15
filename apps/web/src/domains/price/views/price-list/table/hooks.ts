@@ -12,15 +12,15 @@ export const usePrefetchPage = (page: number) => {
   const [sort] = usePriceViewSort();
   const [pagination] = usePriceViewPagination();
 
-  const queryOptions = useMemo(
+  const nextQueryOptions = useMemo(
     () =>
       services.price.query.getAllPrices({
         filters,
         sort,
-        pagination: { ...pagination, page, limit: 10 },
+        pagination: { ...pagination, page },
       }),
     [filters, sort, pagination, page],
   );
 
-  return usePrefetchOnHover({ queryOptions });
+  return usePrefetchOnHover({ queryOptions: nextQueryOptions });
 };

@@ -5,6 +5,7 @@ import { usePriceViewPagination } from "-/domains/price/views/pagination/hooks";
 import { usePriceViewSort } from "-/domains/price/views/sort/hooks";
 import { services } from "-/lib/services";
 
+import { PriceListTableControl } from "./control";
 import { PriceListTableNavigation } from "./navigation";
 
 export const PriceListTablePagination = () => {
@@ -13,25 +14,18 @@ export const PriceListTablePagination = () => {
   const [pagination] = usePriceViewPagination();
 
   const { data: prices } = useSuspenseQuery(
-    services.price.query.getAllPrices({
-      filters,
-      sort,
-      pagination: { ...pagination, limit: 10 },
-    }),
+    services.price.query.getAllPrices({ filters, sort, pagination }),
   );
 
-  if (pagination.enablePagination === false || prices.meta.totalItems === 0)
-    return;
+  if (prices.meta.totalItems === 0) return;
 
   return (
     <div className="flex items-center justify-between gap-4 text-sm">
-      <p className="text-muted-foreground">
-        Total {prices.meta.totalItems} items found
-      </p>
       <PriceListTableNavigation
         currentPage={pagination.page ?? 1}
         totalPage={prices.meta.totalPage}
       />
+      <PriceListTableControl />
     </div>
   );
 };

@@ -7,9 +7,13 @@ import { Table, TableBody, TableHeader, TableRow } from "-/components/ui/table";
 import { priceSortKeyToLabel } from "../../../sort/constants";
 import type { PriceSortKey } from "../../../sort/types";
 import { PriceListTableContent } from "./content";
+import { PriceListTableContentError } from "./content/error";
 import { PriceListContentLoading } from "./content/loading";
 import { PriceListTableHead } from "./head";
+import { PriceListTableHeadError } from "./head/error";
+import { PriceListTableHeadLoading } from "./head/loading";
 import { PriceListTablePagination } from "./pagination";
+import { PriceListTablePaginationError } from "./pagination/error";
 import { PriceListTablePaginationLoading } from "./pagination/loading";
 
 export const PriceListTable = () => {
@@ -19,18 +23,22 @@ export const PriceListTable = () => {
         <div className="overflow-hidden rounded-lg">
           <Table>
             <TableHeader>
-              <TableRow>
-                {Object.entries(priceSortKeyToLabel).map(([key, label]) => (
-                  <PriceListTableHead
-                    key={key}
-                    sortKey={key as PriceSortKey}
-                    label={label}
-                  />
-                ))}
-              </TableRow>
+              <ErrorBoundary fallback={<PriceListTableHeadError />}>
+                <Suspense fallback={<PriceListTableHeadLoading />}>
+                  <TableRow>
+                    {Object.entries(priceSortKeyToLabel).map(([key, label]) => (
+                      <PriceListTableHead
+                        key={key}
+                        sortKey={key as PriceSortKey}
+                        label={label}
+                      />
+                    ))}
+                  </TableRow>
+                </Suspense>
+              </ErrorBoundary>
             </TableHeader>
             <TableBody>
-              <ErrorBoundary fallback="Error price list">
+              <ErrorBoundary fallback={<PriceListTableContentError />}>
                 <Suspense fallback={<PriceListContentLoading />}>
                   <PriceListTableContent />
                 </Suspense>
@@ -39,7 +47,7 @@ export const PriceListTable = () => {
           </Table>
         </div>
       </Card>
-      <ErrorBoundary fallback="Error">
+      <ErrorBoundary fallback={<PriceListTablePaginationError />}>
         <Suspense fallback={<PriceListTablePaginationLoading />}>
           <PriceListTablePagination />
         </Suspense>

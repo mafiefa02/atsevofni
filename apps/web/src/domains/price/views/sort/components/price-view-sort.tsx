@@ -1,7 +1,7 @@
 import { FieldGroup, FieldLegend, FieldSet } from "-/components/ui/field";
 
 import { PriceViewSortOrder } from "./order/order-select";
-import { PriceViewSortBy } from "./sort-by/price-view-sort";
+import { PriceViewSortBy } from "./sort-by/price-view-sort-by";
 
 export const PriceViewSort = () => {
   return (

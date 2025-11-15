@@ -31,11 +31,13 @@ export function ThemeProvider({
         : "light";
 
       root.classList.add(systemTheme);
+      localStorage.setItem(storageKey, systemTheme);
       return;
     }
 
     root.classList.add(theme);
-  }, [theme]);
+    localStorage.setItem(storageKey, theme);
+  }, [theme, storageKey]);
 
   const value = {
     theme,

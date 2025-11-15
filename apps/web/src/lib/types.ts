@@ -31,9 +31,9 @@ export interface APIResponse<Data> {
 }
 
 export interface PaginationParams {
-  enablePagination?: boolean;
-  page?: number;
-  limit?: number;
+  enablePagination: boolean | null;
+  page: number | null;
+  limit: number | null;
 }
 
 export type SortOrder = "asc" | "desc";

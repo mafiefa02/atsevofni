@@ -1,4 +1,4 @@
-import { queryOptions } from "@tanstack/react-query";
+import { type QueryKey, queryOptions } from "@tanstack/react-query";
 
 import {
   paginationParamsToParams,
@@ -58,7 +58,7 @@ export class EquityServices {
     return {
       getAllEquities: (params?: Params<EquityFilter, EquitySortKey>) =>
         queryOptions({
-          queryKey: ["equities", params],
+          queryKey: ["equities", params] as QueryKey,
           queryFn: () => this.getAllEquities(params),
         }),
     };

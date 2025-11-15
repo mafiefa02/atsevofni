@@ -2,7 +2,9 @@ import { type ClassValue, clsx } from "clsx";
 import { createParser } from "nuqs";
 import { twMerge } from "tailwind-merge";
 
+import { DEFAULT_SORT_ORDER } from "./constants";
 import { FormattableDate } from "./models";
+import type { SortOrder } from "./types";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -88,4 +90,32 @@ export const generateUniqueRandomIntArray = (
   }
 
   return pool.slice(0, arrayLength);
+};
+
+/**
+ * Determine the next sort state
+ *
+ * Cycle: Default -> Inverse -> Null (Reset) -> Default
+ */
+export const getNextSortState = <T extends string>(
+  currentKey: T | null,
+  currentOrder: SortOrder | null,
+  targetKey: T,
+): { sortBy: T | null; order: SortOrder | null } => {
+  const isSameColumn = currentKey === targetKey;
+
+  if (!isSameColumn) {
+    return { sortBy: targetKey, order: DEFAULT_SORT_ORDER };
+  }
+
+  // If same column: Toggle Default -> Inverse -> Null
+  if (currentOrder === DEFAULT_SORT_ORDER) {
+    return {
+      sortBy: targetKey,
+      order: DEFAULT_SORT_ORDER === "asc" ? "desc" : "asc",
+    };
+  }
+
+  // If we are currently inverted, reset to null
+  return { sortBy: null, order: null };
 };

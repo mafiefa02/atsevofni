@@ -1,6 +1,6 @@
 import { Suspense } from "react";
+import { ErrorBoundary } from "react-error-boundary";
 
-import { Card, CardContent } from "-/components/ui/card";
 import { PriceList } from "-/domains/price/components/price-list";
 import { PriceListLoading } from "-/domains/price/components/price-list/loading";
 
@@ -16,13 +16,11 @@ export const DashboardView = () => {
             </p>
           </div>
         </div>
-        <Card>
-          <CardContent>
-            <Suspense fallback={<PriceListLoading />}>
-              <PriceList />
-            </Suspense>
-          </CardContent>
-        </Card>
+        <ErrorBoundary fallback="Error">
+          <Suspense fallback={<PriceListLoading />}>
+            <PriceList />
+          </Suspense>
+        </ErrorBoundary>
       </div>
     </main>
   );

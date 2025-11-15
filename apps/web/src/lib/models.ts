@@ -12,7 +12,13 @@ export class FormattableDate extends Date {
 export class FormattableNumber extends Number {
   public format = (
     locales?: Intl.LocalesArgument,
-    options: Intl.NumberFormatOptions = { style: "currency" },
+    options: Intl.NumberFormatOptions = {
+      style: "currency",
+      currency: "IDR",
+      currencyDisplay: "narrowSymbol",
+      maximumFractionDigits: 0,
+      minimumFractionDigits: 0,
+    },
   ) => {
     return new Intl.NumberFormat(locales, options).format(this.valueOf());
   };

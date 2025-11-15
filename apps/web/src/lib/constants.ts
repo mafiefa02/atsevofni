@@ -12,6 +12,7 @@ export const paginationParamsKeyNameMap: Record<
 };
 
 export const DEFAULT_SORT_ORDER: SortOrder = "desc";
+export const DEFAULT_PAGINATION_LIMIT = 50;
 
 export const sortParamsKeyNameMap: Record<keyof SortParams<unknown>, string> = {
   order: "order",

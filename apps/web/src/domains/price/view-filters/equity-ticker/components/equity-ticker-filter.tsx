@@ -1,4 +1,5 @@
 import { Suspense, useState } from "react";
+import { ErrorBoundary } from "react-error-boundary";
 
 import { FieldLegend, FieldSet } from "-/components/ui/field";
 
@@ -14,9 +15,11 @@ export const EquityTickerFilter = () => {
       <FieldLegend>Tickers</FieldLegend>
       <EquityTickerSearch search={search} setSearch={setSearch} />
       <div className="flex flex-col gap-2">
-        <Suspense fallback={<EquityTickerListLoading />}>
-          <EquityTickerList search={search} />
-        </Suspense>
+        <ErrorBoundary fallback="Error">
+          <Suspense fallback={<EquityTickerListLoading />}>
+            <EquityTickerList search={search} />
+          </Suspense>
+        </ErrorBoundary>
       </div>
     </FieldSet>
   );

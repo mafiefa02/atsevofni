@@ -1,3 +1,6 @@
+import { Suspense } from "react";
+import { ErrorBoundary } from "react-error-boundary";
+
 import { Brand } from "-/components/brand";
 import { Footer } from "-/components/footer";
 import { Sidebar } from "-/components/sidebar";
@@ -6,6 +9,7 @@ import { PriceViewFilters } from "-/domains/price/view-filters/components/price-
 import { PriceViewSort } from "-/domains/price/view-sort/components/price-view-sort";
 
 import { DashboardView } from "./dashboard";
+import { DashboardLoadingView } from "./dashboard/loading";
 
 export const RootAppView = () => {
   return (
@@ -23,7 +27,11 @@ export const RootAppView = () => {
         </Sidebar>
         <div className="flex flex-1 flex-col overflow-y-auto">
           <div className="flex-1 overflow-x-hidden overflow-y-auto">
-            <DashboardView />
+            <ErrorBoundary fallback="error">
+              <Suspense fallback={<DashboardLoadingView />}>
+                <DashboardView />
+              </Suspense>
+            </ErrorBoundary>
           </div>
           <Footer />
         </div>
@@ -31,7 +39,11 @@ export const RootAppView = () => {
 
       {/* Mobile view */}
       <div className="overflow-x-hidden overflow-y-auto xl:hidden">
-        <DashboardView />
+        <ErrorBoundary fallback="error">
+          <Suspense fallback={<DashboardLoadingView />}>
+            <DashboardView />
+          </Suspense>
+        </ErrorBoundary>
       </div>
     </>
   );

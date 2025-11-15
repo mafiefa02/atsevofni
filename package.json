@@ -38,7 +38,8 @@
   "license": "ISC",
   "packageManager": "pnpm@10.20.0",
   "dependencies": {
-    "concurrently": "^9.2.1"
+    "concurrently": "^9.2.1",
+    "next-themes": "^0.4.6"
   },
   "devDependencies": {
     "husky": "^9.1.7",

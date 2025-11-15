@@ -15,13 +15,18 @@ export const EquityTickerPagination = ({
   setPage,
   meta,
 }: EquityTickerPaginationProps) => {
-  const goToPrev = () =>
-    setPage((current) => (current === 1 ? current : current - 1));
-  const goToNext = () =>
-    setPage((current) => (current === meta.totalPage ? current : current + 1));
+  const handlePrev = useCallback(
+    () => setPage((current) => (current === 1 ? current : current - 1)),
+    [setPage],
+  );
 
-  const handlePrev = useCallback(goToPrev, [setPage]);
-  const handleNext = useCallback(goToNext, [setPage, meta.totalPage]);
+  const handleNext = useCallback(
+    () =>
+      setPage((current) =>
+        current === meta.totalPage ? current : current + 1,
+      ),
+    [setPage, meta.totalPage],
+  );
 
   return (
     <div className="grid grid-rows-[1fr_auto] gap-3">

@@ -1,4 +1,4 @@
-import { queryOptions } from "@tanstack/react-query";
+import { type QueryKey, queryOptions } from "@tanstack/react-query";
 
 import {
   paginationParamsToParams,
@@ -55,7 +55,7 @@ export class PriceServices {
     return {
       getAllPrices: (params?: Params<PriceFilter, PriceSortKey>) =>
         queryOptions({
-          queryKey: ["prices", params],
+          queryKey: ["prices", params] as QueryKey,
           queryFn: () => this.getAllPrices(params),
         }),
     };

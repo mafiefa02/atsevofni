@@ -5,8 +5,8 @@ import { Brand } from "-/components/brand";
 import { Footer } from "-/components/footer";
 import { Sidebar } from "-/components/sidebar";
 import { SidebarContent } from "-/components/sidebar/content";
-import { PriceViewFilters } from "-/domains/price/view-filters/components/price-view-filters";
-import { PriceViewSort } from "-/domains/price/view-sort/components/price-view-sort";
+import { PriceViewFilters } from "-/domains/price/views/filters/components/price-view-filters";
+import { PriceViewSort } from "-/domains/price/views/sort/components/price-view-sort";
 
 import { DashboardView } from "./dashboard";
 import { DashboardLoadingView } from "./dashboard/loading";

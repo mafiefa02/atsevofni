@@ -3,9 +3,9 @@ import { ErrorBoundary } from "react-error-boundary";
 
 import { Card } from "-/components/ui/card";
 import { Table, TableBody, TableHeader, TableRow } from "-/components/ui/table";
-import { priceSortKeyToLabel } from "-/domains/price/view-sort/constants";
-import type { PriceSortKey } from "-/domains/price/view-sort/types";
 
+import { priceSortKeyToLabel } from "../../../sort/constants";
+import type { PriceSortKey } from "../../../sort/types";
 import { PriceListTableContent } from "./content";
 import { PriceListContentLoading } from "./content/loading";
 import { PriceListTableHead } from "./head";

@@ -1,6 +1,6 @@
 import type { SortOrder } from "-/lib/types";
 
-import type { PriceResponse } from "../types";
+import type { PriceResponse } from "../../types";
 import type { PriceSortKey } from "./types";
 
 export const priceSortKeyToParamMap: Record<PriceSortKey, keyof PriceResponse> =

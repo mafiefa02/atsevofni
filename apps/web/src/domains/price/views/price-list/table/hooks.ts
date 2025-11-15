@@ -3,9 +3,9 @@ import { useMemo } from "react";
 import { usePrefetchOnHover } from "-/lib/hooks";
 import { services } from "-/lib/services";
 
-import { usePriceViewFilters } from "../view-filters/hooks";
-import { usePriceViewPagination } from "../view-pagination/hooks";
-import { usePriceViewSort } from "../view-sort/hooks";
+import { usePriceViewFilters } from "../../filters/hooks";
+import { usePriceViewPagination } from "../../pagination/hooks";
+import { usePriceViewSort } from "../../sort/hooks";
 
 export const usePrefetchPage = (page: number) => {
   const [filters] = usePriceViewFilters();

@@ -1,8 +1,8 @@
 import { Suspense } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 
-import { PriceList } from "-/domains/price/components/price-list";
-import { PriceListLoading } from "-/domains/price/components/price-list/loading";
+import { PriceListLoading } from "-/domains/price/views/price-list/components/loading";
+import { PriceList } from "-/domains/price/views/price-list/components/price-list";
 
 export const DashboardView = () => {
   return (

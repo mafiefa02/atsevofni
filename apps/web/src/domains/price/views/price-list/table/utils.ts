@@ -1,6 +1,5 @@
+import type { Price } from "-/domains/price/types";
 import { FormattableDate, FormattableNumber } from "-/lib/models";
-
-import type { Price } from "../types";
 
 export const formatCell = <T extends keyof Price>(value: Price[T]) => {
   if (value instanceof FormattableDate) return value.format();

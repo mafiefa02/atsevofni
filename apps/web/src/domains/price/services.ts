@@ -11,10 +11,10 @@ import type { APIRawResponse, APIResponse, Params } from "-/lib/types";
 
 import { PriceModel } from "./models";
 import type { PriceResponse } from "./types";
-import { priceFiltersToParams } from "./view-filters/transformers";
-import type { PriceFilter } from "./view-filters/types";
-import { priceSortKeyToParamMap } from "./view-sort/constants";
-import type { PriceSortKey } from "./view-sort/types";
+import { priceFiltersToParams } from "./views/filters/transformers";
+import type { PriceFilter } from "./views/filters/types";
+import { priceSortKeyToParamMap } from "./views/sort/constants";
+import type { PriceSortKey } from "./views/sort/types";
 
 export class PriceServices {
   private readonly url: string;

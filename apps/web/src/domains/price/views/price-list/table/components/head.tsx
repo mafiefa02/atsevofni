@@ -1,14 +1,14 @@
 import { useCallback, useMemo } from "react";
 
 import { TableSortableHead } from "-/components/ui/table";
-import { usePriceViewFilters } from "-/domains/price/view-filters/hooks";
-import { usePriceViewSort } from "-/domains/price/view-sort/hooks";
-import type { PriceSortKey } from "-/domains/price/view-sort/types";
 import { usePrefetchOnHover } from "-/lib/hooks";
 import { services } from "-/lib/services";
 import { getNextSortState } from "-/lib/utils";
 
-import { usePriceViewPagination } from "../../view-pagination/hooks";
+import { usePriceViewFilters } from "../../../filters/hooks";
+import { usePriceViewPagination } from "../../../pagination/hooks";
+import { usePriceViewSort } from "../../../sort/hooks";
+import type { PriceSortKey } from "../../../sort/types";
 
 interface PriceListTableHeadProps {
   sortKey: PriceSortKey;

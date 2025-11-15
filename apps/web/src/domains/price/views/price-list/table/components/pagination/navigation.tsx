@@ -6,7 +6,7 @@ import { DoubleChevronLeftIcon } from "-/components/icons/double-chevron-left";
 import { DoubleChevronRightIcon } from "-/components/icons/double-chevron-right";
 import { Button } from "-/components/ui/button";
 import { ButtonGroup } from "-/components/ui/button-group";
-import { usePriceViewPagination } from "-/domains/price/view-pagination/hooks";
+import { usePriceViewPagination } from "-/domains/price/views/pagination/hooks";
 
 import { usePrefetchPage } from "../../hooks";
 import { generatePageSteps } from "../../utils";

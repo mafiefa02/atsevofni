@@ -1,5 +1,5 @@
 import type { EquityId } from "-/domains/equity/types";
-import type { PriceFilter } from "-/domains/price/view-filters/types";
+import type { PriceFilter } from "-/domains/price/views/filters/types";
 
 // Helper types
 export type UniqueBrand<T> = T & { readonly __brand: unique symbol };

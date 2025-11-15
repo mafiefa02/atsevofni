@@ -1,8 +1,8 @@
 import { useSuspenseQuery } from "@tanstack/react-query";
 
-import { usePriceViewFilters } from "-/domains/price/view-filters/hooks";
-import { usePriceViewPagination } from "-/domains/price/view-pagination/hooks";
-import { usePriceViewSort } from "-/domains/price/view-sort/hooks";
+import { usePriceViewFilters } from "-/domains/price/views/filters/hooks";
+import { usePriceViewPagination } from "-/domains/price/views/pagination/hooks";
+import { usePriceViewSort } from "-/domains/price/views/sort/hooks";
 import { services } from "-/lib/services";
 
 import { PriceListTableNavigation } from "./navigation";

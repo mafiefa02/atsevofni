@@ -20,7 +20,10 @@ export interface APIRawResponse<Data> {
 }
 
 export interface APIResponseMeta {
-  pagination: PaginationParams;
+  pagination: Record<
+    keyof PaginationParams,
+    NonNullable<PaginationParams[keyof PaginationParams]>
+  >;
   totalItems: number;
   totalPage: number;
 }

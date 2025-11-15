@@ -45,8 +45,8 @@ export const GlobeIcon = ({
       <g
         fill="none"
         stroke="currentColor"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeLinecap="round"
+        strokeLinejoin="round"
         strokeWidth={strokeWidth}
       >
         <circle cx="12" cy="12" r="10" />

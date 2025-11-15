@@ -48,8 +48,8 @@ export const DoubleChevronRightIcon = ({
       <path
         fill="none"
         stroke="currentColor"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeLinecap="round"
+        strokeLinejoin="round"
         strokeWidth={strokeWidth}
         d="m5.25 4.5l7.5 7.5l-7.5 7.5m6-15l7.5 7.5l-7.5 7.5"
       />

@@ -45,7 +45,7 @@ export const XIcon = ({
       <path
         fill="none"
         stroke="currentColor"
-        stroke-linecap="round"
+        strokeLinecap="round"
         strokeWidth={strokeWidth}
         d="M17 17L7 7m10 0L7 17"
       />

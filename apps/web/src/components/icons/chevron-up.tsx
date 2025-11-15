@@ -45,8 +45,8 @@ export const ChevronUpIcon = ({
       <path
         fill="none"
         stroke="currentColor"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeLinecap="round"
+        strokeLinejoin="round"
         strokeWidth={strokeWidth}
         d="m4 15l8-8l8 8"
       />

@@ -2,7 +2,7 @@ import type { IconProps } from "-/lib/types";
 
 export const CheckIcon = ({
   size = 48,
-  strokeWidth = undefined,
+  strokeWidth = 2.5,
   background = "transparent",
   opacity = 1,
   rotation = 0,
@@ -45,8 +45,8 @@ export const CheckIcon = ({
       <path
         fill="none"
         stroke="currentColor"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeLinecap="round"
+        strokeLinejoin="round"
         strokeWidth={strokeWidth}
         d="m4 12l6 6L20 6"
       />

@@ -5,7 +5,7 @@ import { generateUniqueRandomIntArray } from "-/lib/utils";
 import { NUM_OF_COLUMNS } from "../../constants";
 
 export const PriceListContentLoading = () => {
-  const skeletons = generateUniqueRandomIntArray(5, 10);
+  const skeletons = generateUniqueRandomIntArray(9, 9);
   return skeletons.map((skeleton) => (
     <TableRow key={`${skeleton}-skeleton-pricelistcontent`}>
       <TableSpanningRowCell className="p-0 py-1" numOfColumn={NUM_OF_COLUMNS}>

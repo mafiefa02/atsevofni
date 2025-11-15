@@ -1,9 +1,15 @@
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import {
+  QueryClient,
+  QueryClientProvider,
+  keepPreviousData,
+} from "@tanstack/react-query";
 import { NuqsAdapter } from "nuqs/adapters/react";
 
 import { ThemeProvider } from "-/domains/theme/components/theme-provider";
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: { queries: { placeholderData: keepPreviousData } },
+});
 
 export const Providers = ({
   children,

@@ -147,7 +147,8 @@ const TableSortableHead = <T extends string>({
         {children}
         {isActive && (
           <ChevronDownIcon
-            size={16}
+            size={12}
+            strokeWidth={3}
             className={cn(
               "transition-transform ease-out",
               currentParams.order === "asc" ? "rotate-180" : "rotate-0",

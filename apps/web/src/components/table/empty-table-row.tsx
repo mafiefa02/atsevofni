@@ -17,7 +17,10 @@ export const EmptyTableRow = ({
         className="place-items-center space-y-4"
         numOfColumn={numOfColumn}
       >
-        <img className="pointer-events-none size-36 grayscale" src={emptyBox} />
+        <img
+          className="pointer-events-none size-36 dark:grayscale"
+          src={emptyBox}
+        />
         <strong className="text-base">No data found!</strong>
         <p className="mt-1">
           We can&apos;t find the data you&apos;re looking for.

@@ -56,7 +56,7 @@ export const PriceListTableNavigation = ({
     [currentPage, totalPage],
   );
 
-  if (enablePagination === false) return;
+  if (enablePagination === false || totalPage === 1) return;
 
   return (
     <ButtonGroup>

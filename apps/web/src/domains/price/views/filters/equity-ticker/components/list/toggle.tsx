@@ -1,11 +1,13 @@
 import { useCallback } from "react";
 
+import { CheckIcon } from "-/components/icons/check";
 import { Toggle } from "-/components/ui/toggle";
 import type { EquityModel } from "-/domains/equity/models";
 
 import { usePriceViewFilters } from "../../../hooks";
 
-interface EquityTickerToggleProps {
+interface EquityTickerToggleProps
+  extends React.ComponentPropsWithRef<typeof Toggle> {
   equity: EquityModel;
   children: React.ReactNode;
 }
@@ -13,6 +15,7 @@ interface EquityTickerToggleProps {
 export const EquityTickerToggle = ({
   equity,
   children,
+  ...props
 }: EquityTickerToggleProps) => {
   const [{ equities: equitiesFilter }, setFilter] = usePriceViewFilters();
 
@@ -41,12 +44,12 @@ export const EquityTickerToggle = ({
     <Toggle
       pressed={isActive}
       onPressedChange={onToggle}
-      className="justify-start"
+      className="w-full justify-start"
       aria-label={`Toggle ${equityId}`}
       variant="outline"
-      asChild
+      {...props}
     >
-      {children}
+      {children} {isActive && <CheckIcon className="ml-auto" />}
     </Toggle>
   );
 };

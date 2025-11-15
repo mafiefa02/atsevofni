@@ -26,11 +26,11 @@ export const PriceListTableControl = () => {
     [setPagination],
   );
   return (
-    <FieldSet>
+    <FieldSet className="ml-auto">
       <Field orientation="horizontal">
-        <FieldLabel>Items per page</FieldLabel>
+        <FieldLabel htmlFor="items-per-page">Items per page</FieldLabel>
         <Select value={String(limit)} onValueChange={handleChange}>
-          <SelectTrigger size="sm">
+          <SelectTrigger id="items-per-page" size="sm">
             <SelectValue />
           </SelectTrigger>
           <SelectContent>

@@ -7,8 +7,8 @@ export const useGetDisabledDates = (key?: DateRangeType): Matcher => {
   const [{ startDate, endDate }] = usePriceViewFilters();
 
   if (key === "startDate") {
-    const after = endDate ? new Date(endDate) : undefined;
-    return after ? { after } : false;
+    const after = endDate ? new Date(endDate) : new Date();
+    return { after };
   }
 
   if (key === "endDate") {

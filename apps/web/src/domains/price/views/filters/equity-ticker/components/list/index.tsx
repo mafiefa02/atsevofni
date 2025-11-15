@@ -36,9 +36,11 @@ export const EquityTickerList = ({ search }: EquityTickerListProps) => {
       <TooltipProvider>
         {equities.data.map((equity) => (
           <Tooltip delayDuration={300} key={equity.getEquity("id")}>
-            <EquityTickerToggle equity={equity}>
-              <TooltipTrigger>{equity.getEquity("id")}</TooltipTrigger>
-            </EquityTickerToggle>
+            <TooltipTrigger asChild>
+              <EquityTickerToggle equity={equity}>
+                {equity.getEquity("id")}
+              </EquityTickerToggle>
+            </TooltipTrigger>
             <TooltipContent side="right">
               {equity.getEquity("name")}
             </TooltipContent>

@@ -5,12 +5,15 @@ import {
   Select,
   SelectContent,
   SelectGroup,
-  SelectItem,
   SelectLabel,
   SelectTrigger,
   SelectValue,
 } from "-/components/ui/select";
 import { usePriceViewPagination } from "-/domains/price/views/pagination/hooks";
+
+import { PriceListTableControlItem } from "./item";
+
+const AMOUNTS = [5, 10, 20, 50];
 
 export const PriceListTableControl = () => {
   const [{ limit }, setPagination] = usePriceViewPagination();
@@ -33,10 +36,14 @@ export const PriceListTableControl = () => {
           <SelectContent>
             <SelectGroup>
               <SelectLabel>Amount of items per page</SelectLabel>
-              <SelectItem value="5">5 items</SelectItem>
-              <SelectItem value="10">10 items</SelectItem>
-              <SelectItem value="20">20 items</SelectItem>
-              <SelectItem value="50">50 items</SelectItem>
+              {AMOUNTS.map((amount) => (
+                <PriceListTableControlItem
+                  key={`amount-${amount}`}
+                  value={String(amount)}
+                >
+                  {amount} items
+                </PriceListTableControlItem>
+              ))}
             </SelectGroup>
           </SelectContent>
         </Select>

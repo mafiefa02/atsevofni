@@ -1,6 +1,6 @@
 import { Button } from "-/components/ui/button";
 
-import { usePrefetchPage } from "../../hooks";
+import { usePrefetchPagination } from "../../hooks";
 
 interface StepButtonProps extends React.ComponentProps<"button"> {
   step: number;
@@ -14,7 +14,7 @@ export const StepButton = ({
   handleNavigate,
   ...props
 }: StepButtonProps) => {
-  const { onMouseEnter, onMouseLeave } = usePrefetchPage(step);
+  const { onMouseEnter, onMouseLeave } = usePrefetchPagination({ page: step });
   return (
     <Button
       variant={isActive ? "secondary" : "outline"}

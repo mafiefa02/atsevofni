@@ -8,7 +8,7 @@ import { Button } from "-/components/ui/button";
 import { ButtonGroup } from "-/components/ui/button-group";
 import { usePriceViewPagination } from "-/domains/price/views/pagination/hooks";
 
-import { usePrefetchPage } from "../../hooks";
+import { usePrefetchPagination } from "../../hooks";
 import { generatePageSteps } from "../../utils";
 import { StepButton } from "./step-button";
 
@@ -23,10 +23,10 @@ export const PriceListTableNavigation = ({
 }: PriceListTableNavigationProps) => {
   const [{ enablePagination }, setPagination] = usePriceViewPagination();
 
-  const firstPagePrefetch = usePrefetchPage(1);
-  const prevPagePrefetch = usePrefetchPage(currentPage - 1);
-  const nextPagePrefetch = usePrefetchPage(currentPage + 1);
-  const lastPagePrefetch = usePrefetchPage(totalPage);
+  const firstPagePrefetch = usePrefetchPagination({ page: 1 });
+  const prevPagePrefetch = usePrefetchPagination({ page: currentPage - 1 });
+  const nextPagePrefetch = usePrefetchPagination({ page: currentPage + 1 });
+  const lastPagePrefetch = usePrefetchPagination({ page: totalPage });
 
   const handlePrev = useCallback(() => {
     prevPagePrefetch.restartPrefetchTimer();

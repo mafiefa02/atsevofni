@@ -1,6 +1,6 @@
 SELECT
-  id,
-  name,
-  "listedDate"
+  e.id,
+  e.name,
+  e."listedDate"
 FROM
-  "Equity"
+  "Equity" e

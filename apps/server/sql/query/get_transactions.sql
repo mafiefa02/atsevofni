@@ -1,13 +1,13 @@
 SELECT
-  "equityId",
-  "tradeDate",
-  opening,
-  high,
-  low,
-  closing,
-  bid,
-  offer,
-  volume,
-  "tradedValue" AS "values"
+  t."equityId",
+  t."tradeDate",
+  t.opening,
+  t.high,
+  t.low,
+  t.closing,
+  t.bid,
+  t.offer,
+  t.volume,
+  t."tradedValue"
 FROM
-  "Transaction"
+  "Transaction" t

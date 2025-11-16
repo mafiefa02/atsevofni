@@ -1,6 +1,6 @@
 from typing import Annotated, List
 
-from fastapi import APIRouter, Depends, Request
+from fastapi import APIRouter, Depends, Query, Request
 from fastapi_cache.decorator import cache
 
 from src.configs import settings
@@ -21,17 +21,18 @@ router = APIRouter()
 
 
 @router.get("", response_model=Response[List[Price]])
-@cache(expire=3600)
+@cache(expire=180)
 @rate_limiter.limit(settings.app_rate_limit)
 def get_stocks(
     request: Request,
-    filter_params: Annotated[PriceFilterParams, Depends()],
+    filter_params: Annotated[PriceFilterParams, Query()],
     pagination_params: Annotated[PaginationParams, Depends()],
     sorting_params: Annotated[SortParams, Depends()],
 ):
     """Get all stock prices"""
     conn = get_db_connection()
     cursor = conn.cursor()
+    print(filter_params)
 
     base_query = read_query("get_transactions.sql")
     filtered_query, params = apply_filtering(base_query, filter_params)

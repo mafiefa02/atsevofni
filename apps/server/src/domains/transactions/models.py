@@ -14,11 +14,11 @@ class Price(BaseModel):
     bid: float
     offer: float
     volume: int
-    values: int
+    tradedValue: int
 
 
 class PriceFilterParams(BaseModel):
-    portids: Optional[
+    equities: Optional[
         List[Annotated[str, StringConstraints(to_upper=True, strip_whitespace=True)]]
     ] = None
     sector: Optional[

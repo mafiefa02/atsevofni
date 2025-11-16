@@ -7,10 +7,19 @@ def apply_filtering(
     params = []
     conditions = []
 
-    if filter_params.portids:
-        placeholders = ",".join("?" for _ in filter_params.portids)
-        conditions.append(f"e.id IN ({placeholders})")
-        params.extend(filter_params.portids)
+    needs_joins = any([filter_params.sector, filter_params.subsector])
+
+    if needs_joins:
+        base_query += """
+        JOIN "Equity" e ON t."equityId" = e.id
+        LEFT JOIN "EquitySector" es ON e."sectorId" = es.id
+        LEFT JOIN "EquitySubsector" ess ON e."subsectorId" = ess.id
+        """
+
+    if filter_params.equities:
+        placeholders = ",".join("?" for _ in filter_params.equities)
+        conditions.append(f't."equityId" IN ({placeholders})')
+        params.extend(filter_params.equities)
 
     if filter_params.sector:
         conditions.append("es.code = ?")

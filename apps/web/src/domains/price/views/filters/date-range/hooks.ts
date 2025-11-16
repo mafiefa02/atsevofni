@@ -58,7 +58,7 @@ export const usePrefetchDate = ({
 
       const queryOptions = services.price.query.getAllPrices({
         filters: { ...filters, ...newRangeOption },
-        pagination,
+        pagination: { ...pagination, page: 1 },
         sort,
       });
       queryClient.prefetchQuery(queryOptions);

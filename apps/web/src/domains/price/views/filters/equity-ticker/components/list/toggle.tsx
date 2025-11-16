@@ -6,6 +6,7 @@ import type { BaseEquityModel } from "-/domains/equity/models";
 import { usePriceViewPagination } from "-/domains/price/views/pagination/hooks";
 
 import { usePriceViewFilters } from "../../../hooks";
+import { usePrefetchEquity } from "../../hooks";
 
 interface EquityTickerToggleProps
   extends React.ComponentPropsWithRef<typeof Toggle> {
@@ -48,10 +49,17 @@ export const EquityTickerToggle = ({
     setPagination,
   ]);
 
+  const { onMouseEnter, onMouseLeave, restartTimer } = usePrefetchEquity();
+
   return (
     <Toggle
       pressed={isActive}
-      onPressedChange={onToggle}
+      onPressedChange={(pressed) => {
+        restartTimer(equity);
+        onToggle(pressed);
+      }}
+      onMouseEnter={() => onMouseEnter(equity)}
+      onMouseLeave={onMouseLeave}
       className="w-full justify-start"
       aria-label={`Toggle ${equityId}`}
       variant="outline"

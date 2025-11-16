@@ -26,10 +26,13 @@ export const usePrefetchPrice = (options: PriceParamsOverride) => {
       pagination: overridePagination,
     } = options;
 
+    const paginationReset =
+      overrideFilters === undefined ? undefined : { page: 1 };
+
     return services.price.query.getAllPrices({
       filters: { ...filters, ...overrideFilters },
       sort: { ...sort, ...overrideSort },
-      pagination: { ...pagination, ...overridePagination },
+      pagination: { ...pagination, ...paginationReset, ...overridePagination },
     });
   }, [filters, sort, pagination, options]);
 

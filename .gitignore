@@ -6,11 +6,9 @@
 **/logs
 **/npm-debug.log*
 **/pnpm-debug.log*
-
 **/node_modules
 **/dist-ssr
 **/*.local
-
 **/__pycache__/
 **/*.py[oc]
 **/build/
@@ -19,5 +17,5 @@
 **/*.egg-info
 **/.ropeproject/
 **/*.local
-
 **/.venv
+**/.ruff_cache

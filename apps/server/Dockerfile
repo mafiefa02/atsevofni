@@ -11,4 +11,4 @@ WORKDIR /app
 RUN uv sync --frozen --no-cache
 
 # Run the application.
-CMD ["gunicorn", "-w", "4", "-k", "uvicorn.workers.UvicornWorker", "src.main:app", "--bind", "0.0.0.0:80"]
+CMD ["fastapi", "run", "src.main:app", "--port", "80", "--host", "0.0.0.0", "--workers", "4"]

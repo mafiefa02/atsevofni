@@ -43,7 +43,7 @@ interface UsePrefetchDateProps {
 
 export const usePrefetchDate = ({
   name,
-  options = { delayMs: 200 },
+  options = { delayMs: 100 },
 }: UsePrefetchDateProps) => {
   const queryClient = useQueryClient();
   const [filters] = usePriceViewFilters();

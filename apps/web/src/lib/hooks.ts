@@ -66,7 +66,6 @@ interface UsePrefetchOnHoverProps<T> {
   queryOptions: FetchQueryOptions<T>;
   options?: {
     delayMs?: number;
-    enabled?: boolean;
   };
 }
 

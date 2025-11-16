@@ -21,8 +21,7 @@ app.add_middleware(
     CORSMiddleware,
     allow_origins=settings.cors_origin,
     allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
+    allow_methods=["GET"],
 )
 
 app.include_router(app_router)

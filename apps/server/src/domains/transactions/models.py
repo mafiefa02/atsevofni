@@ -5,7 +5,6 @@ from pydantic import BaseModel, StringConstraints, model_validator
 
 
 class Price(BaseModel):
-    id: int
     equityId: Annotated[str, StringConstraints(to_upper=True, strip_whitespace=True)]
     tradeDate: date
     opening: float

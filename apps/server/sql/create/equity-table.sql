@@ -6,5 +6,5 @@ CREATE TABLE "Equity" (
   "subSectorId" INTEGER,
   PRIMARY KEY ("id"),
   FOREIGN KEY ("sectorId") REFERENCES "EquitySector" ("id") ON DELETE RESTRICT,
-  FOREIGN KEY ("subSectorId") REFERENCES "EquitySector" ("id") ON DELETE RESTRICT
+  FOREIGN KEY ("subSectorId") REFERENCES "EquitySubsector" ("id") ON DELETE RESTRICT
 )

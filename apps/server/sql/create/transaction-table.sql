@@ -1,17 +1,14 @@
 CREATE TABLE "Transaction" (
-  "id" INTEGER UNIQUE,
-  "tradeDate" DATE NOT NULL,
+  "equityId" TEXT NOT NULL,
+  "tradeDate" NUMERIC NOT NULL,
   "opening" REAL,
   "high" REAL,
   "low" REAL,
   "closing" REAL,
   "bid" REAL,
   "offer" REAL,
-  "volume" BIGINT,
-  "tradedValue" BIGINT,
-  "equityId" TEXT,
-  UNIQUE ("equityId", "tradeDate"),
-  PRIMARY KEY ("id" AUTOINCREMENT)
-  ON CONFLICT FAIL,
+  "volume" INTEGER,
+  "tradedValue" INTEGER,
+  PRIMARY KEY ("equityId", "tradeDate"),
   FOREIGN KEY ("equityId") REFERENCES "Equity" ("id") ON DELETE CASCADE
-)
+) WITHOUT ROWID

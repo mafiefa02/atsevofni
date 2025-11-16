@@ -5,7 +5,7 @@ import { Popover, PopoverContent } from "-/components/ui/popover";
 import { FormattableDate } from "-/lib/models";
 
 import { usePriceViewFilters } from "../../hooks";
-import { useGetDisabledDates } from "../hooks";
+import { useGetDisabledDates, usePrefetchDate } from "../hooks";
 import type { DateRangeType } from "../types";
 
 interface DateRangeControlProps {
@@ -38,6 +38,10 @@ export const DateRangeControl = ({
     [name, setFilter],
   );
 
+  const { onMouseEnter, onMouseLeave, restartTimer } = usePrefetchDate({
+    name,
+  });
+
   return (
     <Popover open={open} onOpenChange={setOpen}>
       {children}
@@ -47,9 +51,12 @@ export const DateRangeControl = ({
           selected={date ?? undefined}
           captionLayout="dropdown"
           onSelect={(date) => {
+            restartTimer(date);
             handleSelect(date);
             handleAfterSelect();
           }}
+          onDayMouseEnter={onMouseEnter}
+          onDayMouseLeave={onMouseLeave}
           disabled={disabledDates}
         />
       </PopoverContent>

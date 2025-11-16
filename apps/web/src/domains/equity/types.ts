@@ -1,5 +1,8 @@
 import type { FormattableDate } from "-/lib/models";
-import type { UniqueBrand } from "-/lib/types";
+import type { Params, UniqueBrand } from "-/lib/types";
+
+import type { EquityFilter } from "./views/filters/types";
+import type { EquitySortKey } from "./views/sort/types";
 
 export interface EquityResponse {
   portid: string;
@@ -32,3 +35,5 @@ export interface Equity {
   name: EquityName;
   dateListed: FormattableDate;
 }
+
+export type EquityParams = Params<EquityFilter, EquitySortKey>;

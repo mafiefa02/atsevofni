@@ -1,6 +1,6 @@
 import { SelectItem } from "-/components/ui/select";
 
-import { usePrefetchPagination } from "../../../hooks";
+import { usePrefetchPrice } from "../../../hooks";
 
 interface PriceListTableControlItemProps {
   value: string;
@@ -12,12 +12,14 @@ export const PriceListTableControlItem = ({
   children,
 }: PriceListTableControlItemProps) => {
   const limit = isNaN(Number(value)) ? null : Number(value);
-  const { onMouseEnter, onMouseLeave } = usePrefetchPagination({ limit });
+  const { onMouseEnter, onMouseLeave } = usePrefetchPrice({
+    pagination: { limit },
+  });
   return (
     <SelectItem
       value={value}
-      onMouseEnter={onMouseEnter}
-      onMouseLeave={onMouseLeave}
+      onMouseEnter={() => onMouseEnter()}
+      onMouseLeave={() => onMouseLeave()}
     >
       {children}
     </SelectItem>

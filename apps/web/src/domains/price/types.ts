@@ -1,5 +1,8 @@
 import type { FormattableDate, FormattableNumber } from "-/lib/models";
-import type { PriceEquityId, UniqueBrand } from "-/lib/types";
+import type { Params, PriceEquityId, UniqueBrand } from "-/lib/types";
+
+import type { PriceFilter } from "./views/filters/types";
+import type { PriceSortKey } from "./views/sort/types";
 
 export interface PriceResponse {
   txtno: number;
@@ -29,3 +32,5 @@ export interface Price {
   volume: FormattableNumber;
   values: FormattableNumber;
 }
+
+export type PriceParams = Params<PriceFilter, PriceSortKey>;

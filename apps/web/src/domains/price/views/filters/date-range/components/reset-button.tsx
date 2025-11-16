@@ -4,6 +4,7 @@ import { ArrowCounterClockwiseIcon } from "-/components/icons/arrow-counter-cloc
 import { Button } from "-/components/ui/button";
 
 import { usePriceViewFilters } from "../../hooks";
+import { usePrefetchDate } from "../hooks";
 import type { DateRangeType } from "../types";
 
 interface DateRangeResetButtonProps {
@@ -12,16 +13,25 @@ interface DateRangeResetButtonProps {
 
 export const DateRangeResetButton = ({ name }: DateRangeResetButtonProps) => {
   const [{ [name]: date }, setFilter] = usePriceViewFilters();
+  const { onMouseEnter, onMouseLeave, restartTimer } = usePrefetchDate({
+    name,
+  });
 
-  const clearState = useCallback(
-    () => setFilter({ [name]: null }),
-    [name, setFilter],
-  );
+  const clearState = useCallback(() => {
+    restartTimer();
+    setFilter({ [name]: null });
+  }, [name, setFilter, restartTimer]);
 
   if (!date) return;
 
   return (
-    <Button onClick={clearState} variant="outline" size="icon-sm">
+    <Button
+      onMouseEnter={() => onMouseEnter()}
+      onMouseLeave={onMouseLeave}
+      onClick={clearState}
+      variant="outline"
+      size="icon-sm"
+    >
       <ArrowCounterClockwiseIcon />
     </Button>
   );

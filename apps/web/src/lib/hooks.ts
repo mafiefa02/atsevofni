@@ -4,29 +4,24 @@ import { useEffect, useLayoutEffect, useState } from "react";
 
 import { IS_SERVER } from "./constants";
 
-interface UsePrefetchOnHoverProps<T> {
-  queryOptions: FetchQueryOptions<T>;
-  delayMs?: number;
-  enabled?: boolean;
+interface UseHoverDelayedTriggerProps<T> {
+  onTrigger: (data: T) => void;
+  options?: {
+    delayMs?: number;
+  };
 }
 
-export const usePrefetchOnHover = <T>({
-  queryOptions,
-  delayMs = 200,
-  enabled = true,
-}: UsePrefetchOnHoverProps<T>) => {
-  const queryClient = useQueryClient();
-
-  const optionsRef = useRef(queryOptions);
-  optionsRef.current = queryOptions; // update on every render
-
+export const useHoverDelayedTrigger = <T = void>({
+  onTrigger,
+  options,
+}: UseHoverDelayedTriggerProps<T>) => {
   const isHoveringRef = useRef(false);
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  const triggerPrefetch = useCallback(() => {
-    if (!enabled) return;
-    queryClient.prefetchQuery(optionsRef.current);
-  }, [queryClient, enabled]);
+  // avoid resetting the timer if the parent component re-renders
+  // such as when the filter changes
+  const onTriggerRef = useRef(onTrigger);
+  onTriggerRef.current = onTrigger;
 
   const cancel = useCallback(() => {
     if (timeoutRef.current) {
@@ -35,32 +30,63 @@ export const usePrefetchOnHover = <T>({
     }
   }, []);
 
-  const startTimer = useCallback(() => {
-    cancel();
-    // only start if actually hovering
-    if (isHoveringRef.current) {
-      timeoutRef.current = setTimeout(triggerPrefetch, delayMs);
-    }
-  }, [cancel, triggerPrefetch, delayMs]);
+  const startTimer = useCallback(
+    (data: T) => {
+      cancel();
+      if (isHoveringRef.current) {
+        timeoutRef.current = setTimeout(() => {
+          onTriggerRef.current(data);
+        }, options?.delayMs);
+      }
+    },
+    [cancel, options],
+  );
 
-  const onMouseEnter = useCallback(() => {
-    isHoveringRef.current = true;
-    startTimer();
-  }, [startTimer]);
+  const onMouseEnter = useCallback(
+    (data: T) => {
+      isHoveringRef.current = true;
+      startTimer(data);
+    },
+    [startTimer],
+  );
 
   const onMouseLeave = useCallback(() => {
     isHoveringRef.current = false;
     cancel();
   }, [cancel]);
 
-  const restartPrefetchTimer = useCallback(() => {
-    startTimer();
-  }, [startTimer]);
+  return {
+    onMouseEnter,
+    onMouseLeave,
+    restartTimer: startTimer,
+  };
+};
+
+interface UsePrefetchOnHoverProps<T> {
+  queryOptions: FetchQueryOptions<T>;
+  options?: {
+    delayMs?: number;
+    enabled?: boolean;
+  };
+}
+
+export const usePrefetchOnHover = <T>({
+  queryOptions,
+  options,
+}: UsePrefetchOnHoverProps<T>) => {
+  const queryClient = useQueryClient();
+
+  const prefetchAction = useCallback(() => {
+    queryClient.prefetchQuery(queryOptions);
+  }, [queryClient, queryOptions]);
+
+  const { onMouseEnter, onMouseLeave, restartTimer } =
+    useHoverDelayedTrigger<void>({ onTrigger: prefetchAction, options });
 
   return {
     onMouseEnter,
     onMouseLeave,
-    restartPrefetchTimer,
+    restartTimer,
   };
 };
 

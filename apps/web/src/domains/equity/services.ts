@@ -7,14 +7,12 @@ import {
   sortParamsToParams,
   transformRawResponse,
 } from "-/lib/transformers";
-import type { APIRawResponse, APIResponse, Params } from "-/lib/types";
+import type { APIRawResponse, APIResponse } from "-/lib/types";
 
 import { EquityModel } from "./models";
-import type { EquityResponse } from "./types";
+import type { EquityParams, EquityResponse } from "./types";
 import { equityFiltersToParams } from "./views/filters/transformers";
-import type { EquityFilter } from "./views/filters/types";
 import { equitySortKeyToParamMap } from "./views/sort/constants";
-import type { EquitySortKey } from "./views/sort/types";
 
 export class EquityServices {
   private readonly url: string;
@@ -24,7 +22,7 @@ export class EquityServices {
   }
 
   private getAllEquities = async (
-    params?: Params<EquityFilter, EquitySortKey>,
+    params?: EquityParams,
   ): Promise<APIResponse<EquityModel[]>> => {
     const filterSearchParams = equityFiltersToParams(params?.filters);
     const paginationParams = paginationParamsToParams(params?.pagination);
@@ -56,7 +54,7 @@ export class EquityServices {
 
   public get query() {
     return {
-      getAllEquities: (params?: Params<EquityFilter, EquitySortKey>) =>
+      getAllEquities: (params?: EquityParams) =>
         queryOptions({
           queryKey: ["equities", params] as QueryKey,
           queryFn: () => this.getAllEquities(params),

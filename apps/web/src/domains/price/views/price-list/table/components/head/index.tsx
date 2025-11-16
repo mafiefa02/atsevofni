@@ -1,13 +1,11 @@
-import { useCallback, useMemo } from "react";
+import { useCallback } from "react";
 
 import { TableSortableHead } from "-/components/ui/table";
-import { usePriceViewFilters } from "-/domains/price/views/filters/hooks";
-import { usePriceViewPagination } from "-/domains/price/views/pagination/hooks";
 import { usePriceViewSort } from "-/domains/price/views/sort/hooks";
 import type { PriceSortKey } from "-/domains/price/views/sort/types";
-import { usePrefetchOnHover } from "-/lib/hooks";
-import { services } from "-/lib/services";
 import { getNextSortState } from "-/lib/utils";
+
+import { usePrefetchPrice } from "../../hooks";
 
 interface PriceListTableHeadProps {
   sortKey: PriceSortKey;
@@ -18,34 +16,23 @@ export const PriceListTableHead = ({
   sortKey,
   label,
 }: PriceListTableHeadProps) => {
-  const [filters] = usePriceViewFilters();
-  const [sortParams, setSort] = usePriceViewSort();
-  const [pagination] = usePriceViewPagination();
+  const [sort, setSort] = usePriceViewSort();
 
-  const nextQueryOptions = useMemo(() => {
-    return services.price.query.getAllPrices({
-      filters,
-      sort: getNextSortState(sortParams.sortBy, sortParams.order, sortKey),
-      pagination,
-    });
-  }, [filters, sortParams, sortKey, pagination]);
-
-  const { onMouseEnter, onMouseLeave, restartPrefetchTimer } =
-    usePrefetchOnHover({
-      queryOptions: nextQueryOptions,
-    });
+  const { onMouseEnter, onMouseLeave, restartTimer } = usePrefetchPrice({
+    sort: getNextSortState(sort.sortBy, sort.order, sortKey),
+  });
 
   const handleSort = useCallback(() => {
     setSort((prev) => getNextSortState(prev.sortBy, prev.order, sortKey));
-    restartPrefetchTimer();
-  }, [sortKey, setSort, restartPrefetchTimer]);
+    restartTimer();
+  }, [sortKey, setSort, restartTimer]);
 
   return (
     <TableSortableHead
       sortKey={sortKey}
-      currentParams={sortParams}
+      currentParams={sort}
       onClick={handleSort}
-      onMouseEnter={onMouseEnter}
+      onMouseEnter={() => onMouseEnter()}
       onMouseLeave={onMouseLeave}
     >
       {label}

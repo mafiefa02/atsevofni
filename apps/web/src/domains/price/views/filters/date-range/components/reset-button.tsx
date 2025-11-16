@@ -22,7 +22,7 @@ export const DateRangeResetButton = ({ name }: DateRangeResetButtonProps) => {
     setFilter({ [name]: null });
   }, [name, setFilter, restartTimer]);
 
-  if (!date) return;
+  if (!date) return null;
 
   return (
     <Button

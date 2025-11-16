@@ -22,7 +22,7 @@ export const PriceViewSortOrderControl = ({
     [setSort],
   );
 
-  if (!sortBy) return;
+  if (!sortBy) return null;
 
   return (
     <Select value={order ?? DEFAULT_SORT_ORDER} onValueChange={handleChange}>

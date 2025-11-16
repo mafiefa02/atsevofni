@@ -13,7 +13,7 @@ export const PriceViewSortReset = () => {
     [setSort],
   );
 
-  if (!sortBy) return;
+  if (!sortBy) return null;
 
   return (
     <Button onClick={clearState} variant="outline" size="icon-sm">

@@ -17,7 +17,7 @@ export const PriceListTablePagination = () => {
     services.price.query.getAllPrices({ filters, sort, pagination }),
   );
 
-  if (prices.meta.totalItems === 0) return;
+  if (prices.meta.totalItems === 0) return null;
 
   return (
     <div className="flex items-center justify-between gap-4 text-sm">

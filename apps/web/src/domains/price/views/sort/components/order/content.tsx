@@ -11,7 +11,7 @@ import { usePriceViewSort } from "../../hooks";
 export const PriceViewSortOrderContent = () => {
   const [{ sortBy }] = usePriceViewSort();
 
-  if (!sortBy) return;
+  if (!sortBy) return null;
 
   const items = Object.entries(sortKeyOrderLabel[sortBy]);
 

@@ -18,7 +18,7 @@ export class PriceServices {
   private readonly url: string;
 
   constructor(baseUrl: string) {
-    this.url = `${baseUrl}/prices`;
+    this.url = `${baseUrl}/transactions`;
   }
 
   private getAllPrices = async (

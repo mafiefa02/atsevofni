@@ -6,10 +6,9 @@ import type { Price, PriceResponse } from "./types";
 
 export const priceResponseToPrice = (response: PriceResponse): Price => {
   return {
-    no: response.txtno,
-    equityId: response.portid,
+    equityId: response.equityId,
     date: new FormattableDate(
-      parse(response.portdate, "yyyy-MM-dd", new Date()),
+      parse(response.tradeDate, "yyyy-MM-dd", new Date()),
     ),
     bid: new FormattableNumber(response.bid),
     closing: new FormattableNumber(response.closing),
@@ -17,23 +16,22 @@ export const priceResponseToPrice = (response: PriceResponse): Price => {
     low: new FormattableNumber(response.low),
     offer: new FormattableNumber(response.offer),
     opening: new FormattableNumber(response.opening),
-    values: new FormattableNumber(response.values),
+    values: new FormattableNumber(response.tradedValue),
     volume: new FormattableNumber(response.volume),
   } as Price;
 };
 
 export const priceToPriceResponse = (price: Price): PriceResponse => {
   return {
-    txtno: price.no,
-    portid: price.equityId,
-    portdate: price.date.format(),
+    equityId: price.equityId,
+    tradeDate: price.date.format(),
     bid: price.bid.valueOf(),
     closing: price.closing.valueOf(),
     high: price.high.valueOf(),
     low: price.low.valueOf(),
     offer: price.offer.valueOf(),
     opening: price.opening.valueOf(),
-    values: price.values.valueOf(),
+    tradedValue: price.values.valueOf(),
     volume: price.volume.valueOf(),
   } as PriceResponse;
 };

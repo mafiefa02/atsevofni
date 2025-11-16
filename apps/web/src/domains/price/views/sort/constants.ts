@@ -5,21 +5,19 @@ import type { PriceSortKey } from "./types";
 
 export const priceSortKeyToParamMap: Record<PriceSortKey, keyof PriceResponse> =
   {
-    no: "txtno",
-    equityId: "portid",
-    date: "portdate",
+    equityId: "equityId",
+    date: "tradeDate",
     bid: "bid",
     closing: "closing",
     high: "high",
     low: "low",
     offer: "offer",
     opening: "opening",
-    values: "values",
+    values: "tradedValue",
     volume: "volume",
   };
 
 export const priceSortKeyToLabel: Record<PriceSortKey, string> = {
-  no: "Number",
   equityId: "Equity ID",
   date: "Date",
   bid: "Bid",
@@ -38,7 +36,6 @@ export const sortKeyOrderLabel: Record<
   PriceSortKey,
   Record<SortOrder, string>
 > = {
-  no: { asc: "Low to high", desc: "High to low" },
   equityId: { asc: "Ascending", desc: "Descending" },
   date: { asc: "Earliest to latest", desc: "Latest to earliest" },
   bid: { asc: "Low to high", desc: "High to low" },

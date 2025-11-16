@@ -21,6 +21,7 @@ export const PriceListTableControl = () => {
     (value: string) =>
       setPagination((prev) => ({
         ...prev,
+        page: 1,
         limit: isNaN(Number(value)) ? null : Number(value),
       })),
     [setPagination],

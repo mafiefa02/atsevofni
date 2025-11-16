@@ -12,7 +12,9 @@ export const PriceListTableRow = ({ price }: PriceListTableRowProps) => {
   return (
     <TableRow>
       {TABLE_COLUMN_KEYS.map((key) => (
-        <TableCell key={`${price.getPrice("no")}-${key}`}>
+        <TableCell
+          key={`${price.getPrice("equityId")}-${price.getPrice("date")}-${key}`}
+        >
           {formatCell(price.getPrice(key))}
         </TableCell>
       ))}

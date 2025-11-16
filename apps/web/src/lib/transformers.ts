@@ -41,12 +41,10 @@ export function transformRawResponse<D>(
     data,
     meta: {
       pagination: {
-        enablePagination: meta.pagination.enable_pagination,
-        page: meta.pagination.page,
-        limit: meta.pagination.limit,
+        params: meta.pagination.params,
+        totalItems: meta.pagination.total_items,
+        totalPage: meta.pagination.total_pages,
       },
-      totalItems: meta.total_items,
-      totalPage: meta.total_pages,
     },
   };
 }

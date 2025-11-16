@@ -4,19 +4,31 @@ import {
   equityResponseToEquitySubsector,
 } from "./transformers";
 import type {
+  BaseEquityResponse,
   Equity,
   EquityResponse,
   EquitySector,
   EquitySubsector,
 } from "./types";
 
-export class EquityModel {
-  private readonly equity: Equity;
+export class BaseEquityModel {
+  readonly equity: Equity;
+
+  constructor(response: BaseEquityResponse) {
+    this.equity = equityResponseToEquity(response);
+  }
+
+  public getEquity = <K extends keyof Equity>(key: K) => {
+    return this.equity[key];
+  };
+}
+
+export class EquityModel extends BaseEquityModel {
   private readonly sector: EquitySector;
   private readonly subsector: EquitySubsector;
 
   constructor(response: EquityResponse) {
-    this.equity = equityResponseToEquity(response);
+    super(response);
     this.sector = equityResponseToEquitySector(response);
     this.subsector = equityResponseToEquitySubsector(response);
   }

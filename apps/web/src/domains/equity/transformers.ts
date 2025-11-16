@@ -3,6 +3,7 @@ import { parse } from "date-fns";
 import { FormattableDate } from "-/lib/models";
 
 import type {
+  BaseEquityResponse,
   Equity,
   EquityResponse,
   EquitySector,
@@ -10,29 +11,31 @@ import type {
 } from "./types";
 
 export const equityResponseToEquitySector = (
-  response: Pick<EquityResponse, "sector" | "sectorid">,
+  response: EquityResponse,
 ): EquitySector => {
   return {
-    id: response.sectorid,
+    id: response.sectorId,
     name: response.sector,
   } as EquitySector;
 };
 
 export const equityResponseToEquitySubsector = (
-  response: Pick<EquityResponse, "subsector" | "subsectorid">,
+  response: EquityResponse,
 ): EquitySubsector => {
   return {
-    id: response.subsectorid,
+    id: response.subsectorId,
     name: response.subsector,
   } as EquitySubsector;
 };
 
-export const equityResponseToEquity = (response: EquityResponse): Equity => {
+export const equityResponseToEquity = (
+  response: BaseEquityResponse,
+): Equity => {
   return {
-    id: response.portid,
-    name: response.portname,
+    id: response.id,
+    name: response.name,
     dateListed: new FormattableDate(
-      parse(response.listeddate, "yyyy-MM-dd", new Date()),
+      parse(response.listedDate, "yyyy-MM-dd", new Date()),
     ),
   } as Equity;
 };

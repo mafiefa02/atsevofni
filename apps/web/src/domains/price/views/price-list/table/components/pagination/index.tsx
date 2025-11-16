@@ -17,13 +17,13 @@ export const PriceListTablePagination = () => {
     services.price.query.getAllPrices({ filters, sort, pagination }),
   );
 
-  if (prices.meta.totalItems === 0) return null;
+  if (prices.meta.pagination === null) return null;
 
   return (
     <div className="flex items-center justify-between gap-4 text-sm">
       <PriceListTableNavigation
         currentPage={pagination.page ?? 1}
-        totalPage={prices.meta.totalPage}
+        totalPage={prices.meta.pagination.totalPage}
       />
       <PriceListTableControl />
     </div>

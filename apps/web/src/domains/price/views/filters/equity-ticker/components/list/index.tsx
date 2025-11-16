@@ -47,11 +47,14 @@ export const EquityTickerList = ({ search }: EquityTickerListProps) => {
           </Tooltip>
         ))}
       </TooltipProvider>
-      <EquityTickerPagination
-        page={page}
-        setPage={setPage}
-        meta={equities.meta}
-      />
+      {equities.meta.pagination !== null && (
+        <EquityTickerPagination
+          page={page}
+          setPage={setPage}
+          totalItems={equities.meta.pagination.totalItems}
+          totalPage={equities.meta.pagination.totalPage}
+        />
+      )}
     </>
   );
 };

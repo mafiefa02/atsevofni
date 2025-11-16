@@ -5,11 +5,11 @@ export const equitySortKeyToParamMap: Record<
   EquitySortKey,
   keyof EquityResponse
 > = {
-  equityId: "portid",
-  equityName: "portname",
-  equityDateListed: "listeddate",
-  equitySectorId: "sectorid",
+  equityId: "id",
+  equityName: "name",
+  equityDateListed: "listedDate",
+  equitySectorId: "sectorId",
   equitySectorName: "sector",
-  equitySubsectorId: "subsectorid",
+  equitySubsectorId: "subsectorId",
   equitySubsectorName: "subsector",
 };

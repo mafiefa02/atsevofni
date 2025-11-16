@@ -2,13 +2,14 @@ import { useCallback } from "react";
 
 import { CheckIcon } from "-/components/icons/check";
 import { Toggle } from "-/components/ui/toggle";
-import type { EquityModel } from "-/domains/equity/models";
+import type { BaseEquityModel } from "-/domains/equity/models";
+import { usePriceViewPagination } from "-/domains/price/views/pagination/hooks";
 
 import { usePriceViewFilters } from "../../../hooks";
 
 interface EquityTickerToggleProps
   extends React.ComponentPropsWithRef<typeof Toggle> {
-  equity: EquityModel;
+  equity: BaseEquityModel;
   children: React.ReactNode;
 }
 
@@ -18,11 +19,12 @@ export const EquityTickerToggle = ({
   ...props
 }: EquityTickerToggleProps) => {
   const [{ equities: equitiesFilter }, setFilter] = usePriceViewFilters();
+  const [, setPagination] = usePriceViewPagination();
 
   const equityId = equity.getEquity("id");
   const isActive = equitiesFilter?.includes(equityId) ?? false;
 
-  const handleToggle = (pressed: boolean) =>
+  const handleToggle = (pressed: boolean) => {
     setFilter(({ equities: prev, ...rest }) => {
       const newEquities = new Set(prev);
 
@@ -37,8 +39,14 @@ export const EquityTickerToggle = ({
         equities: newEquities.size > 0 ? Array.from(newEquities) : null,
       };
     });
+    setPagination({ page: 1 });
+  };
 
-  const onToggle = useCallback(handleToggle, [setFilter, equityId]);
+  const onToggle = useCallback(handleToggle, [
+    setFilter,
+    equityId,
+    setPagination,
+  ]);
 
   return (
     <Toggle

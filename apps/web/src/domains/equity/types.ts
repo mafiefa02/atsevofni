@@ -4,14 +4,17 @@ import type { Params, UniqueBrand } from "-/lib/types";
 import type { EquityFilter } from "./views/filters/types";
 import type { EquitySortKey } from "./views/sort/types";
 
-export interface EquityResponse {
-  portid: string;
-  portname: string;
-  sectorid: string;
-  sector: string;
-  subsectorid: string;
-  subsector: string;
-  listeddate: string;
+export interface BaseEquityResponse {
+  id: string;
+  name: string;
+  listedDate: string;
+}
+
+export interface EquityResponse extends BaseEquityResponse {
+  sectorId: EquitySectorId;
+  sector: EquitySectorName;
+  subsectorId: EquitySubsectorId;
+  subsector: EquitySubsectorName;
 }
 
 export type EquitySectorId = UniqueBrand<string>;

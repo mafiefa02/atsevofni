@@ -10,23 +10,29 @@ export interface APIRawResponse<Data> {
   data: Data;
   meta: {
     pagination: {
-      enable_pagination: boolean;
-      page: number;
-      limit: number;
+      params: {
+        page: number;
+        limit: number;
+      };
+      total_items: number;
+      total_pages: number;
     };
-    total_items: number;
-    total_pages: number;
   };
 }
 
-export interface APIResponseMeta {
-  pagination: Record<
-    keyof PaginationParams,
-    NonNullable<PaginationParams[keyof PaginationParams]>
-  >;
-  totalItems: number;
-  totalPage: number;
-}
+export type APIResponseMeta = {
+  pagination: {
+    params: Omit<
+      Record<
+        keyof PaginationParams,
+        NonNullable<PaginationParams[keyof PaginationParams]>
+      >,
+      "enablePagination"
+    >;
+    totalItems: number;
+    totalPage: number;
+  } | null;
+};
 
 export interface APIResponse<Data> {
   data: Data;

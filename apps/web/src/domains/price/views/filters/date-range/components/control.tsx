@@ -4,6 +4,7 @@ import { Calendar } from "-/components/ui/calendar";
 import { Popover, PopoverContent } from "-/components/ui/popover";
 import { FormattableDate } from "-/lib/models";
 
+import { usePriceViewPagination } from "../../../pagination/hooks";
 import { usePriceViewFilters } from "../../hooks";
 import { useGetDisabledDates, usePrefetchDate } from "../hooks";
 import type { DateRangeType } from "../types";
@@ -27,15 +28,21 @@ export const DateRangeControl = ({
   );
 
   const [{ [name]: date }, setFilter] = usePriceViewFilters();
+  const [, setPagination] = usePriceViewPagination();
   const disabledDates = useGetDisabledDates(name);
 
   const handleSelect = useCallback(
     (date: Date | undefined) => {
-      if (!date) return setFilter({ [name]: null });
+      if (!date) {
+        setFilter({ [name]: null });
+        setPagination({ page: 1 });
+        return;
+      }
       const dateModel = new FormattableDate(date);
       setFilter({ [name]: dateModel });
+      setPagination({ page: 1 });
     },
-    [name, setFilter],
+    [name, setFilter, setPagination],
   );
 
   const { onMouseEnter, onMouseLeave, restartTimer } = usePrefetchDate({

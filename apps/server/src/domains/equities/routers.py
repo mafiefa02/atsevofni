@@ -1,77 +1,77 @@
 from typing import Annotated, List
 
-from fastapi import APIRouter, Depends, HTTPException, Query, Request, status
+from fastapi import APIRouter, Depends, HTTPException, Request, status
 from pydantic import StringConstraints
 
 from src.configs import settings
-from src.constants import ExceptionMessages
-from src.loaders import df_equities
+from src.database import get_db_connection
 from src.middlewares import rate_limiter
 from src.models import PaginationParams, Response, SortParams
 from src.utils import (
-    get_paginated_data,
-    get_response_meta,
-    sort_data,
+    apply_sorting_and_pagination,
+    generate_pagination_metadata,
+    get_total_items,
+    read_query,
 )
 
-from .models import Equity, EquityFilterParams
-from .utils import filter_data
+from .models import Equity, EquityBase, EquityFilterParams
+from .utils import apply_filtering
 
 router = APIRouter()
 
 
-@router.get("", response_model=Response[List[Equity]])
+@router.get("", response_model=Response[List[EquityBase]])
 @rate_limiter.limit(settings.app_rate_limit)
 def get_equities(
     request: Request,
-    filter_params: Annotated[EquityFilterParams, Query()],
+    filter_params: Annotated[EquityFilterParams, Depends()],
     pagination_params: Annotated[PaginationParams, Depends()],
     sorting_params: Annotated[SortParams, Depends()],
 ):
     """Get all equities"""
-    data = df_equities
+    conn = get_db_connection()
+    cursor = conn.cursor()
 
-    if data is None:
-        raise HTTPException(
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail=ExceptionMessages.DATA_LOADING_FAILED,
-        )
+    base_query = read_query("get_equities.sql")
+    filtered_query, params = apply_filtering(base_query, filter_params)
 
-    data = filter_data(data, filter_params)
-    data = sort_data(data, sorting_params)
+    total_items = get_total_items(cursor, filtered_query, params)
 
-    returned_data = get_paginated_data(data, pagination_params).to_dict("records")
+    final_query, final_params = apply_sorting_and_pagination(
+        filtered_query, params, sorting_params, pagination_params
+    )
 
-    return {
-        "data": returned_data,
-        "meta": get_response_meta(data, pagination_params=pagination_params),
-    }
+    cursor.execute(final_query, final_params)
+    equities = [dict(row) for row in cursor.fetchall()]
+    conn.close()
+
+    meta = {"pagination": generate_pagination_metadata(total_items, pagination_params)}
+
+    return {"data": equities, "meta": meta}
 
 
-@router.get("/{portid}", response_model=Response[Equity])
+@router.get("/{id}", response_model=Response[Equity])
 @rate_limiter.limit(settings.app_rate_limit)
 def get_equity_by_portid(
-    request: Request, portid: Annotated[str, StringConstraints(to_upper=True)]
+    request: Request,
+    id: Annotated[str, StringConstraints(to_upper=True)],
+    pagination_params: Annotated[PaginationParams, Depends()],
 ):
-    """Get detailed equity information by its portid"""
-    data = df_equities
+    """Get detailed equity information by its id"""
+    conn = get_db_connection()
+    cursor = conn.cursor()
 
-    if data is None:
-        raise HTTPException(
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail=ExceptionMessages.DATA_LOADING_FAILED,
-        )
+    query = read_query("get_equity_by_id.sql")
+    cursor.execute(query, (id,))
+    equity = cursor.fetchone()
+    conn.close()
 
-    data = data[data["portid"] == portid]
-    returned_data = data.to_dict("records")
-
-    if not returned_data:
+    if not equity:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
-            detail=f"Equity with portid '{portid}' not found.",
+            detail=f"Equity with id '{id}' not found.",
         )
 
-    return {
-        "data": returned_data[0],
-        "meta": get_response_meta(data),
-    }
+    meta = {"pagination": generate_pagination_metadata(1, None)}
+
+    return {"data": dict(equity), "meta": meta}

@@ -1,0 +1,6 @@
+CREATE TABLE "EquitySector" (
+  "id" INTEGER NOT NULL UNIQUE,
+  "code" TEXT UNIQUE,
+  "name" TEXT NOT NULL,
+  PRIMARY KEY ("id" AUTOINCREMENT)
+)

@@ -1,16 +1,16 @@
 from fastapi import APIRouter
 
 from src.domains.equities.routers import router as equities_router
-from src.domains.prices.routers import router as prices_router
+from src.domains.transactions.routers import router as transactions_router
 
 from .configs import settings
 
 app_router = APIRouter()
 
 app_router.include_router(
-    prices_router,
-    prefix="/prices",
-    tags=["prices"],
+    transactions_router,
+    prefix="/transactions",
+    tags=["transactions"],
 )
 app_router.include_router(
     equities_router,

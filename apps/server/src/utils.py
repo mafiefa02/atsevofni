@@ -1,72 +1,47 @@
 import math
-from typing import Any, Dict, List, Optional, Union
+from typing import Optional
 
-import pandas as pd
-
-from .models import PaginationParams, ResponseMeta, SortParams
+from src.models import PaginationMeta, PaginationParams, SortParams
 
 
-def load_csv_data(
-    filepath: str, parse_dates: Optional[List[str]] = None
-) -> Optional[pd.DataFrame]:
-    """Load respective data from a CSV file into a pandas DataFrame."""
-    try:
-        df = pd.read_csv(filepath, parse_dates=parse_dates)
-        return df
-    except FileNotFoundError:
-        print(f"Error: File not found at {filepath}")
-        return None
-    except Exception as e:
-        print(f"An error occurred: {e}")
-        return None
+def read_query(filename: str) -> str:
+    if not filename.endswith(".sql"):
+        raise ValueError("Please point to the .sql file query!")
+    with open(f"sql/query/{filename}", "r") as f:
+        return f.read()
 
 
 def generate_pagination_metadata(
-    data: Optional[Any],
-    pagination_params: Optional[PaginationParams] = None,
-) -> Dict[str, int]:
+    total_items: int, params: Optional[PaginationParams]
+) -> PaginationMeta:
     """Generate metadata for pagination."""
-    if data is None:
-        return {"total_items": 0, "total_pages": 1}
-
-    total_items = len(data) if isinstance(data, Union[pd.DataFrame, List]) else 1
-
-    if not pagination_params.enable_pagination:
-        return {"total_items": total_items, "total_pages": 1}
-
-    total_pages = (
-        math.ceil(total_items / pagination_params.limit)
-        if pagination_params is not None and total_items != 0
-        else 1
-    )
-
-    return {"total_items": total_items, "total_pages": total_pages}
+    if params is None or not params.enable_pagination:
+        return None
+    total_pages = math.ceil(total_items / params.limit) if total_items > 0 else 1
+    return {"params": params, "total_items": total_items, "total_pages": total_pages}
 
 
-def get_paginated_data(
-    dataframe: pd.DataFrame, pagination_params: PaginationParams
-) -> pd.DataFrame:
-    """Return paginated data for a certain page and limit."""
-    skip = (pagination_params.page - 1) * pagination_params.limit
-    data = dataframe.iloc[skip : skip + pagination_params.limit]
-
-    return data
+def get_total_items(cursor, filtered_query: str, params: list) -> int:
+    count_query = "SELECT COUNT(*) FROM ({})".format(filtered_query)
+    cursor.execute(count_query, params)
+    return cursor.fetchone()[0]
 
 
-def sort_data(dataframe: pd.DataFrame, sort: SortParams) -> pd.DataFrame:
-    """Sort a pandas DataFrame based on SortParams."""
-    if sort.sort_by:
-        return dataframe.sort_values(
-            by=sort.sort_by, ascending=sort.order == "asc", inplace=False
+def apply_sorting_and_pagination(
+    base_query: str,
+    params: list,
+    sorting_params: SortParams,
+    pagination_params: PaginationParams,
+) -> tuple[str, list]:
+    if sorting_params.sort_by:
+        base_query += f" ORDER BY {sorting_params.sort_by} {sorting_params.order}"
+
+    if pagination_params.enable_pagination:
+        base_query += " LIMIT ? OFFSET ?"
+        params.extend(
+            [
+                pagination_params.limit,
+                (pagination_params.page - 1) * pagination_params.limit,
+            ]
         )
-    return dataframe
-
-
-def get_response_meta(
-    data: Optional[Any], pagination_params: Optional[PaginationParams] = None
-) -> ResponseMeta:
-    pagination_meta = generate_pagination_metadata(data, pagination_params)
-    return {
-        "pagination": pagination_params,
-        **pagination_meta,
-    }
+    return base_query, params

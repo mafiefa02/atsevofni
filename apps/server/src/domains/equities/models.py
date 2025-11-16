@@ -4,14 +4,17 @@ from typing import Annotated, Optional
 from pydantic import BaseModel, StringConstraints
 
 
-class Equity(BaseModel):
-    portid: Annotated[str, StringConstraints(to_upper=True, strip_whitespace=True)]
-    portname: str
-    sectorid: Annotated[str, StringConstraints(to_upper=True)]
+class EquityBase(BaseModel):
+    id: Annotated[str, StringConstraints(to_upper=True, strip_whitespace=True)]
+    name: str
+    listedDate: date
+
+
+class Equity(EquityBase):
+    sectorId: Annotated[str, StringConstraints(to_upper=True)]
     sector: Annotated[str, StringConstraints(to_upper=True)]
+    subsectorId: Annotated[str, StringConstraints(to_upper=True)]
     subsector: Annotated[str, StringConstraints(to_upper=True)]
-    subsectorid: Annotated[str, StringConstraints(to_upper=True)]
-    listeddate: date
 
 
 class EquityFilterParams(BaseModel):

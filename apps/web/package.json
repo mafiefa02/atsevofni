@@ -11,7 +11,7 @@
     "preview": "vite preview"
   },
   "engines": {
-    "node": "25.1.0"
+    "node": ">=25"
   },
   "packageManager": "pnpm@10.22.0",
   "dependencies": {

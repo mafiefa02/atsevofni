@@ -2,7 +2,7 @@ import type { IconProps } from "-/lib/types";
 
 export const SunIcon = ({
   size = 48,
-  strokeWidth = undefined,
+  strokeWidth = 2.5,
   background = "transparent",
   opacity = 1,
   rotation = 0,

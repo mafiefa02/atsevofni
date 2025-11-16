@@ -1,6 +1,7 @@
 from typing import Annotated, List
 
 from fastapi import APIRouter, Depends, Request
+from fastapi_cache.decorator import cache
 
 from src.configs import settings
 from src.database import get_db_connection
@@ -20,6 +21,7 @@ router = APIRouter()
 
 
 @router.get("", response_model=Response[List[Price]])
+@cache(expire=3600)
 @rate_limiter.limit(settings.app_rate_limit)
 def get_stocks(
     request: Request,

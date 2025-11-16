@@ -1,6 +1,7 @@
 from typing import Annotated, List
 
 from fastapi import APIRouter, Depends, HTTPException, Request, status
+from fastapi_cache.decorator import cache
 from pydantic import StringConstraints
 
 from src.configs import settings
@@ -21,6 +22,7 @@ router = APIRouter()
 
 
 @router.get("", response_model=Response[List[EquityBase]])
+@cache(expire=3600)
 @rate_limiter.limit(settings.app_rate_limit)
 def get_equities(
     request: Request,
@@ -51,6 +53,7 @@ def get_equities(
 
 
 @router.get("/{id}", response_model=Response[Equity])
+@cache(expire=3600)
 @rate_limiter.limit(settings.app_rate_limit)
 def get_equity_by_portid(
     request: Request,

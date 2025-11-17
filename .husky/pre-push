@@ -1,1 +1,57 @@
-pnpm build:web
+#!/bin/sh
+set -e
+
+# This script is run by husky before a push.
+# It checks if any of the pushed commits modify files in 'apps/web'.
+# If so, it runs 'pnpm build:web'.
+
+# Collect all commits being pushed.
+all_pushed_commits=""
+while read local_ref local_sha remote_ref remote_sha; do
+  # Skip branch deletions.
+  if [ "$local_sha" = "0000000000000000000000000000000000000000" ]; then
+    continue
+  fi
+
+  # For new branches, find a reasonable base to compare against.
+  if [ "$remote_sha" = "0000000000000000000000000000000000000000" ]; then
+    # Use merge-base with a common default branch.
+    base=$(git merge-base HEAD origin/main 2>/dev/null) || \
+    base=$(git merge-base HEAD origin/master 2>/dev/null) || \
+    base=""
+
+    if [ -n "$base" ]; then
+      range="$base..$local_sha"
+    else
+      # As a fallback, check all commits on the new branch.
+      # This can be slow on large histories but is safe.
+      range=$local_sha
+    fi
+  else
+    # For existing branches, check the range of pushed commits.
+    range="$remote_sha..$local_sha"
+  fi
+
+  # Get the list of commits in the range.
+  if [ -n "$range" ]; then
+    commits=$(git rev-list "$range" 2>/dev/null) || commits=""
+    if [ -n "$commits" ]; then
+        all_pushed_commits="$all_pushed_commits $commits"
+    fi
+  fi
+done
+
+# If there are no commits to check, exit.
+if [ -z "$all_pushed_commits" ]; then
+  echo "No commits to push or only deleting branches. Skipping build."
+  exit 0
+fi
+
+# Check if any of the collected commits touched the 'apps/web' directory.
+# Using `git show` to list the files changed in the commits.
+if git show --no-patch --oneline --name-only $all_pushed_commits | grep -q '^apps/web/'; then
+  echo "Changes detected in apps/web. Running 'pnpm build:web'."
+  pnpm build:web
+else
+  echo "No changes in apps/web. Skipping build."
+fi

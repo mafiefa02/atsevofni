@@ -6,7 +6,7 @@ import { DesktopRootView } from "./desktop";
 import { MobileRootView } from "./mobile";
 
 export const RootAppView = () => {
-  const isDesktop = useMediaQuery("(min-width: 80rem)");
+  const isDesktop = useMediaQuery("(min-width: 76rem)");
   const isMobile = !isDesktop;
 
   return (

@@ -7,7 +7,6 @@ SELECT
   t.closing,
   t.bid,
   t.offer,
-  t.volume,
-  t."tradedValue"
+  t.volume
 FROM
   "Transaction" t

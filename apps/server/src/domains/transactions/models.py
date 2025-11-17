@@ -14,7 +14,6 @@ class Price(BaseModel):
     bid: float
     offer: float
     volume: int
-    tradedValue: int
 
 
 class PriceFilterParams(BaseModel):

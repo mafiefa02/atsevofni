@@ -2,7 +2,7 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 class Settings(BaseSettings):
-    app_name: str = "Atsevofni Backend"
+    app_name: str = "Atsevofni API"
     app_health_check_route: str = "/health"
     default_item_per_page: int = 10
     app_rate_limit: str = "5/minutes"

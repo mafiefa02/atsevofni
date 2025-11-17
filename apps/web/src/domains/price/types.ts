@@ -14,7 +14,6 @@ export interface PriceResponse {
   bid: number;
   offer: number;
   volume: number;
-  tradedValue: number;
 }
 
 export interface Price {
@@ -27,7 +26,6 @@ export interface Price {
   bid: FormattableNumber;
   offer: FormattableNumber;
   volume: FormattableNumber;
-  values: FormattableNumber;
 }
 
 export type PriceParams = Params<PriceFilter, PriceSortKey>;

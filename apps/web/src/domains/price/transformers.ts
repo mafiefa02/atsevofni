@@ -16,7 +16,6 @@ export const priceResponseToPrice = (response: PriceResponse): Price => {
     low: new FormattableNumber(response.low),
     offer: new FormattableNumber(response.offer),
     opening: new FormattableNumber(response.opening),
-    values: new FormattableNumber(response.tradedValue),
     volume: new FormattableNumber(response.volume),
   } as Price;
 };
@@ -31,7 +30,6 @@ export const priceToPriceResponse = (price: Price): PriceResponse => {
     low: price.low.valueOf(),
     offer: price.offer.valueOf(),
     opening: price.opening.valueOf(),
-    tradedValue: price.values.valueOf(),
     volume: price.volume.valueOf(),
   } as PriceResponse;
 };

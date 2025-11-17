@@ -13,7 +13,6 @@ export const priceSortKeyToParamMap: Record<PriceSortKey, keyof PriceResponse> =
     low: "low",
     offer: "offer",
     opening: "opening",
-    values: "tradedValue",
     volume: "volume",
   };
 
@@ -26,7 +25,6 @@ export const priceSortKeyToLabel: Record<PriceSortKey, string> = {
   low: "Low",
   offer: "Offer",
   opening: "Opening",
-  values: "Values",
   volume: "Volume",
 };
 
@@ -44,6 +42,5 @@ export const sortKeyOrderLabel: Record<
   low: { asc: "Low to high", desc: "High to low" },
   offer: { asc: "Low to high", desc: "High to low" },
   opening: { asc: "Low to high", desc: "High to low" },
-  values: { asc: "Low to high", desc: "High to low" },
   volume: { asc: "Low to high", desc: "High to low" },
 };

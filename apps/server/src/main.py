@@ -1,4 +1,6 @@
-from fastapi import FastAPI
+import time
+
+from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi_cache import FastAPICache
 from fastapi_cache.backends.inmemory import InMemoryBackend
@@ -17,6 +19,16 @@ app = FastAPI(
     root_path="/api/v1",
 )
 FastAPICache.init(InMemoryBackend())
+
+
+@app.middleware("http")
+async def add_process_time_header(request: Request, call_next):
+    start_time = time.perf_counter()
+    response = await call_next(request)
+    process_time = time.perf_counter() - start_time
+    response.headers["X-Process-Time"] = str(process_time)
+    return response
+
 
 app.state.limiter = rate_limiter
 app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)

@@ -1,14 +1,21 @@
-import sqlite3
+from sqlite3 import Connection, Row, connect
 
 from src.configs import settings
 
+conn: Connection = None
 
-def get_db_connection():
-    conn = sqlite3.connect(settings.database_url, check_same_thread=False)
-    conn.row_factory = sqlite3.Row
+
+def get_db_connection() -> Connection:
     return conn
 
 
-def get_db_cursor():
-    conn = get_db_connection()
-    return conn.cursor()
+def connect_to_db():
+    global conn
+    conn = connect(settings.database_url, check_same_thread=False)
+    conn.row_factory = Row
+
+
+def close_db_connection():
+    global conn
+    if conn:
+        conn.close()

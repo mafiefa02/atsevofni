@@ -5,6 +5,7 @@ from fastapi_cache.backends.inmemory import InMemoryBackend
 from slowapi import _rate_limit_exceeded_handler
 from slowapi.errors import RateLimitExceeded
 
+from src.database import close_db_connection, connect_to_db
 from src.middlewares import rate_limiter
 
 from .configs import settings
@@ -19,6 +20,17 @@ FastAPICache.init(InMemoryBackend())
 
 app.state.limiter = rate_limiter
 app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
+
+
+@app.on_event("startup")
+def startup_event():
+    connect_to_db()
+
+
+@app.on_event("shutdown")
+def shutdown_event():
+    close_db_connection()
+
 
 app.add_middleware(
     CORSMiddleware,

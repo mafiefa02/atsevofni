@@ -1,3 +1,4 @@
+import sqlite3
 from typing import Annotated, List
 
 from fastapi import APIRouter, Depends, Query, Request
@@ -28,11 +29,10 @@ def get_stocks(
     filter_params: Annotated[PriceFilterParams, Query()],
     pagination_params: Annotated[PaginationParams, Depends()],
     sorting_params: Annotated[SortParams, Depends()],
+    db: Annotated[sqlite3.Connection, Depends(get_db_connection)],
 ):
     """Get all stock prices"""
-    conn = get_db_connection()
-    cursor = conn.cursor()
-    print(filter_params)
+    cursor = db.cursor()
 
     base_query = read_query("get_transactions.sql")
     filtered_query, params = apply_filtering(base_query, filter_params)
@@ -45,7 +45,6 @@ def get_stocks(
 
     cursor.execute(final_query, final_params)
     transactions = [dict(row) for row in cursor.fetchall()]
-    conn.close()
 
     meta = {"pagination": generate_pagination_metadata(total_items, pagination_params)}
 

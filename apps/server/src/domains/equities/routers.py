@@ -1,3 +1,4 @@
+import sqlite3
 from typing import Annotated, List
 
 from fastapi import APIRouter, Depends, HTTPException, Request, status
@@ -29,10 +30,10 @@ def get_equities(
     filter_params: Annotated[EquityFilterParams, Depends()],
     pagination_params: Annotated[PaginationParams, Depends()],
     sorting_params: Annotated[SortParams, Depends()],
+    db: Annotated[sqlite3.Connection, Depends(get_db_connection)],
 ):
     """Get all equities"""
-    conn = get_db_connection()
-    cursor = conn.cursor()
+    cursor = db.cursor()
 
     base_query = read_query("get_equities.sql")
     filtered_query, params = apply_filtering(base_query, filter_params)
@@ -45,7 +46,6 @@ def get_equities(
 
     cursor.execute(final_query, final_params)
     equities = [dict(row) for row in cursor.fetchall()]
-    conn.close()
 
     meta = {"pagination": generate_pagination_metadata(total_items, pagination_params)}
 
@@ -59,15 +59,14 @@ def get_equity_by_portid(
     request: Request,
     id: Annotated[str, StringConstraints(to_upper=True)],
     pagination_params: Annotated[PaginationParams, Depends()],
+    db: Annotated[sqlite3.Connection, Depends(get_db_connection)],
 ):
     """Get detailed equity information by its id"""
-    conn = get_db_connection()
-    cursor = conn.cursor()
+    cursor = db.cursor()
 
     query = read_query("get_equity_by_id.sql")
     cursor.execute(query, (id,))
     equity = cursor.fetchone()
-    conn.close()
 
     if not equity:
         raise HTTPException(

@@ -48,8 +48,8 @@ if [ -z "$all_pushed_commits" ]; then
 fi
 
 # Check if any of the collected commits touched the 'apps/web' directory.
-# Using `git show` to list the files changed in the commits.
-if git show --no-patch --oneline --name-only $all_pushed_commits | grep -q '^apps/web/'; then
+# Using `git diff-tree` to list the files changed in the commits.
+if git diff-tree --no-commit-id --name-only -r $all_pushed_commits | grep -q '^apps/web/'; then
   echo "Changes detected in apps/web. Running 'pnpm build:web'."
   pnpm build:web
 else

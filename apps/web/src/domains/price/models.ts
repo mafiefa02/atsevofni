@@ -8,7 +8,7 @@ export class PriceModel {
     this.price = priceResponseToPrice(response);
   }
 
-  public getPrice = <K extends keyof Price>(key: K) => {
+  public getPrice = (key: keyof Price) => {
     return this.price[key];
   };
 }

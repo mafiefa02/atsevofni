@@ -18,7 +18,7 @@ export class BaseEquityModel {
     this.equity = equityResponseToEquity(response);
   }
 
-  public getEquity = <K extends keyof Equity>(key: K) => {
+  public getEquity = (key: keyof Equity) => {
     return this.equity[key];
   };
 }
@@ -33,11 +33,11 @@ export class EquityModel extends BaseEquityModel {
     this.subsector = equityResponseToEquitySubsector(response);
   }
 
-  public getEquitySector = <K extends keyof EquitySector>(key: K) => {
+  public getEquitySector = (key: keyof EquitySector) => {
     return this.sector[key];
   };
 
-  public getEquitySubsector = <K extends keyof EquitySubsector>(key: K) => {
+  public getEquitySubsector = (key: keyof EquitySubsector) => {
     return this.subsector[key];
   };
 }

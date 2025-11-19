@@ -1,3 +1,4 @@
+import { TZDate } from "@date-fns/tz";
 import { type FormatOptions, format } from "date-fns";
 
 export class FormattableDate extends Date {
@@ -5,7 +6,8 @@ export class FormattableDate extends Date {
     dateFormat: string = "yyyy-MM-dd",
     options?: FormatOptions,
   ) => {
-    return format(this, dateFormat, options);
+    const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    return format(new TZDate(this, tz), dateFormat, options);
   };
 }
 

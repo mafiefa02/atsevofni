@@ -7,6 +7,7 @@ export class FormattableDate extends Date {
     options?: FormatOptions,
   ) => {
     const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    console.log({ date: new TZDate(this, tz), tz });
     return format(new TZDate(this, tz), dateFormat, options);
   };
 }

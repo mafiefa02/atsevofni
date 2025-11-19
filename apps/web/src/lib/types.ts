@@ -43,11 +43,11 @@ export interface APIResponse<Data> {
   meta: APIResponseMeta;
 }
 
-export interface PaginationParams {
+export type PaginationParams = {
   enablePagination: boolean | null;
   page: number | null;
   limit: number | null;
-}
+};
 
 export type SortOrder = "asc" | "desc";
 

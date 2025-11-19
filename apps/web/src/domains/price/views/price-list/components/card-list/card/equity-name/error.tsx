@@ -1,3 +1,7 @@
 export const PriceCardEquityNameError = () => {
-  return "Something went wrong!";
+  return (
+    <p className="text-muted-foreground xs:text-sm line-clamp-1 text-xs">
+      Something went wrong!
+    </p>
+  );
 };

@@ -6,6 +6,7 @@ import { usePriceViewFilters } from "../../../filters/hooks";
 import { usePriceViewPagination } from "../../../pagination/hooks";
 import { usePriceViewSort } from "../../../sort/hooks";
 import { PriceCardListCard } from "./card";
+import { PriceCardListEmpty } from "./empty";
 import { PriceCardListPagination } from "./pagination";
 
 export const PriceCardList = () => {
@@ -15,6 +16,11 @@ export const PriceCardList = () => {
   const { data: result } = useSuspenseQuery(
     services.price.query.getAllPrices({ filters, sort, pagination }),
   );
+
+  if (result.data.length === 0) {
+    return <PriceCardListEmpty />;
+  }
+
   return (
     <div className="flex flex-col gap-2">
       <PriceCardListPagination withMeta={false} />

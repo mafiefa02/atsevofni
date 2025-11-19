@@ -1,4 +1,5 @@
 import {
+  type UseQueryStateOptions,
   parseAsArrayOf,
   parseAsBoolean,
   parseAsString,
@@ -18,5 +19,10 @@ const filterQueryStates = {
   latest: parseAsBoolean,
 } satisfies Record<keyof PriceFilter, unknown>;
 
-export const usePriceViewFilters = () =>
-  useQueryStates(filterQueryStates, { history: "replace" });
+export const usePriceViewFilters = (
+  limitUrlUpdates?: UseQueryStateOptions<PriceFilter>["limitUrlUpdates"],
+) =>
+  useQueryStates(filterQueryStates, {
+    history: "replace",
+    limitUrlUpdates,
+  });

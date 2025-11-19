@@ -29,7 +29,7 @@ export const Header = () => {
                 You can set the filters or sorting options for the data here.
               </SheetDescription>
             </SheetHeader>
-            <div className="px-4">
+            <div className="overflow-y-auto px-4">
               <PriceViewControls />
             </div>
           </SheetContent>

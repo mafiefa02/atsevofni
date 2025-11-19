@@ -155,10 +155,10 @@ export const PriceChart = () => {
   return (
     <div className="relative flex size-full flex-col gap-4">
       <div className="relative min-h-0 flex-1">
-        <div className="absolute top-6 left-1/2 z-10 flex -translate-x-1/2 items-center justify-between gap-2 rounded-lg border px-3 text-sm">
+        <div className="absolute top-6 left-1/2 z-10 flex -translate-x-1/2 items-center justify-between gap-2 px-3 text-sm">
           <LegendOrdinal scale={colorScale} labelFormat={(label) => label}>
             {(labels) => (
-              <div className="bg-background flex flex-row gap-4 rounded px-3 py-1">
+              <div className="bg-popover flex flex-row gap-4 rounded-lg border px-5 py-1">
                 {labels.map((label, i) => (
                   <div key={`legend-${i}`} className="flex items-center">
                     <div
@@ -228,7 +228,8 @@ export const PriceChart = () => {
                       clipPath: `url(#${clipPathId})`,
                     }}
                     fillOpacity={0.15}
-                    {...accessors}
+                    xAccessor={accessors.xAccessor}
+                    yAccessor={accessors.yAccessor}
                   />
                 ))}
                 {!isCompact && (

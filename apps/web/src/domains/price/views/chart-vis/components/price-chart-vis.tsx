@@ -10,7 +10,7 @@ export const PriceChartVis = () => {
   return (
     <Suspense fallback={<LoadingPriceChart />}>
       <Card className="overflow-hidden p-0">
-        <CardContent className="h-[28rem] w-full p-0">
+        <CardContent className="h-[28rem] w-full overflow-hidden p-0">
           <ErrorBoundary fallback="Error">
             <PriceChart />
           </ErrorBoundary>

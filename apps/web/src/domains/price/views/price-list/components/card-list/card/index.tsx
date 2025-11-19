@@ -1,6 +1,7 @@
 import { Suspense } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 
+import { EquityIcon } from "-/components/equity-icon";
 import {
   Card,
   CardContent,
@@ -13,7 +14,6 @@ import type { PriceModel } from "-/domains/price/models";
 import { PriceCardEquityName } from "./equity-name";
 import { PriceCardEquityNameError } from "./equity-name/error";
 import { PriceCardEquityNameLoading } from "./equity-name/loading";
-import { PriceCardIcon } from "./icon";
 
 interface PriceCardListCardProps {
   price: PriceModel;
@@ -25,7 +25,7 @@ export const PriceCardListCard = ({ price }: PriceCardListCardProps) => {
       <CardHeader>
         <div className="flex items-center justify-between gap-3">
           <div className="flex items-center gap-3">
-            <PriceCardIcon equityId={price.getPrice("equityId")} />
+            <EquityIcon equityId={price.getPrice("equityId")} />
             <div className="flex flex-col gap-0 text-ellipsis">
               <p className="text-lg font-medium">
                 {price.getPrice("equityId")}

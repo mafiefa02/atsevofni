@@ -2,15 +2,15 @@ import { equityIconPaths } from "-/domains/equity/constants";
 import type { EquityId } from "-/domains/equity/types";
 import { cn } from "-/lib/utils";
 
-interface PriceCardIconProps extends React.ComponentProps<"img"> {
+interface EquityIconProps extends React.ComponentProps<"img"> {
   equityId: EquityId;
 }
 
-export const PriceCardIcon = ({
+export const EquityIcon = ({
   equityId,
   className,
   ...props
-}: PriceCardIconProps) => {
+}: EquityIconProps) => {
   return (
     <img
       className={cn("size-11", className)}

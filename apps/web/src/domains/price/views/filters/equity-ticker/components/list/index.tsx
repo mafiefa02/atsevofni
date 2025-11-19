@@ -2,6 +2,7 @@ import { useSuspenseQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { useDebounce } from "use-debounce";
 
+import { EquityIcon } from "-/components/equity-icon";
 import {
   Tooltip,
   TooltipContent,
@@ -38,6 +39,10 @@ export const EquityTickerList = ({ search }: EquityTickerListProps) => {
           <Tooltip delayDuration={300} key={equity.getEquity("id")}>
             <TooltipTrigger asChild>
               <EquityTickerToggle equity={equity}>
+                <EquityIcon
+                  className="size-4"
+                  equityId={equity.getEquity("id")}
+                />
                 {equity.getEquity("id")}
               </EquityTickerToggle>
             </TooltipTrigger>

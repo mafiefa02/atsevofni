@@ -1,4 +1,5 @@
-import { useQuery } from "@tanstack/react-query";
+import { Suspense } from "react";
+import { ErrorBoundary } from "react-error-boundary";
 
 import {
   Card,
@@ -8,8 +9,10 @@ import {
 } from "-/components/ui/card";
 import { Separator } from "-/components/ui/separator";
 import type { PriceModel } from "-/domains/price/models";
-import { services } from "-/lib/services";
 
+import { PriceCardEquityName } from "./equity-name";
+import { PriceCardEquityNameError } from "./equity-name/error";
+import { PriceCardEquityNameLoading } from "./equity-name/loading";
 import { PriceCardIcon } from "./icon";
 
 interface PriceCardListCardProps {
@@ -17,15 +20,6 @@ interface PriceCardListCardProps {
 }
 
 export const PriceCardListCard = ({ price }: PriceCardListCardProps) => {
-  const {
-    data: equityResult,
-    isPending,
-    isError,
-  } = useQuery(services.equity.query.getEquityById(price.getPrice("equityId")));
-
-  if (isPending) return "loadingss";
-  if (isError) return "error";
-
   return (
     <Card>
       <CardHeader>
@@ -36,9 +30,11 @@ export const PriceCardListCard = ({ price }: PriceCardListCardProps) => {
               <p className="text-lg font-medium">
                 {price.getPrice("equityId")}
               </p>
-              <p className="text-muted-foreground xs:text-sm line-clamp-1 text-xs">
-                {equityResult.data.getEquity("name")}
-              </p>
+              <ErrorBoundary fallback={<PriceCardEquityNameError />}>
+                <Suspense fallback={<PriceCardEquityNameLoading />}>
+                  <PriceCardEquityName equityId={price.getPrice("equityId")} />
+                </Suspense>
+              </ErrorBoundary>
             </div>
           </div>
           <div className="flex flex-col gap-0 text-right text-ellipsis">

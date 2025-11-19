@@ -2,6 +2,7 @@ import { PriceViewControls } from "-/domains/price/views/components/price-view-c
 
 import PanelRightIcon from "./icons/panel-right";
 import { Button } from "./ui/button";
+import { Separator } from "./ui/separator";
 import {
   Sheet,
   SheetContent,
@@ -29,7 +30,8 @@ export const Header = () => {
                 You can set the filters or sorting options for the data here.
               </SheetDescription>
             </SheetHeader>
-            <div className="overflow-y-auto px-4">
+            <Separator />
+            <div className="overflow-y-auto p-4">
               <PriceViewControls />
             </div>
           </SheetContent>

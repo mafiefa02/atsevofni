@@ -1,4 +1,3 @@
-import { Activity } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 
 import { DesktopLayout } from "-/components/layout/desktop";
@@ -14,11 +13,11 @@ export const RootAppView = () => {
 
   return (
     <ErrorBoundary fallback="Root error boundary">
-      <Activity mode={isDesktop ? "visible" : "hidden"}>
+      {isDesktop && (
         <DesktopLayout>
           <DesktopView />
         </DesktopLayout>
-      </Activity>
+      )}
       {isMobile && (
         <MobileLayout>
           <MobileView />

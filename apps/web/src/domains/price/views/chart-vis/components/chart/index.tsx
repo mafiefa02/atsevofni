@@ -9,7 +9,13 @@ import { ParentSize } from "@visx/responsive";
 import { scaleLinear, scaleOrdinal, scaleTime } from "@visx/scale";
 import { AreaClosed } from "@visx/shape";
 import { extent, max, min } from "@visx/vendor/d3-array";
-import { Axis, LineSeries, Tooltip, XYChart } from "@visx/xychart";
+import {
+  AreaSeries,
+  Axis,
+  Tooltip,
+  XYChart,
+  buildChartTheme,
+} from "@visx/xychart";
 import { useId, useMemo, useRef, useState } from "react";
 
 import type { PriceModel } from "-/domains/price/models";
@@ -39,7 +45,7 @@ const accessors = {
   closeAccessor: (d: PriceModel) => d.getPrice("closing").valueOf(),
 };
 
-const chartMargin = { top: 20, right: 20, bottom: 20, left: 65 };
+const chartMargin = { top: 30, right: 30, bottom: 40, left: 90 };
 
 export const PriceChart = () => {
   const [globalFilters] = usePriceViewFilters();
@@ -53,6 +59,18 @@ export const PriceChart = () => {
   const brushRef = useRef<BaseBrush | null>(null);
   const clipPathId = useId();
   const brushPatternId = useId();
+
+  const theme = useMemo(
+    () =>
+      buildChartTheme({
+        backgroundColor: "var(--background)",
+        colors: COLORS,
+        gridColor: "var(--border)",
+        gridColorDark: "var(--border)",
+        tickLength: 6,
+      }),
+    [],
+  );
 
   const { data: queryResult } = useSuspenseQuery(
     services.price.query.getAllPrices({
@@ -137,7 +155,7 @@ export const PriceChart = () => {
   return (
     <div className="relative flex size-full flex-col gap-4">
       <div className="relative min-h-0 flex-1">
-        <div className="absolute top-0 left-1/2 z-10 flex -translate-x-1/2 items-center justify-between gap-2 px-3 text-sm">
+        <div className="absolute top-6 left-1/2 z-10 flex -translate-x-1/2 items-center justify-between gap-2 rounded-lg border px-3 text-sm">
           <LegendOrdinal scale={colorScale} labelFormat={(label) => label}>
             {(labels) => (
               <div className="bg-background flex flex-row gap-4 rounded px-3 py-1">
@@ -157,74 +175,89 @@ export const PriceChart = () => {
           </LegendOrdinal>
         </div>
 
-        <ParentSize debounceTime={15}>
+        <ParentSize debounceTime={0}>
           {({ width, height }) => {
             if (width < 1 || height < 1) return null;
 
-            const innerWidth = width - chartMargin.left - chartMargin.right;
-            const innerHeight = height - chartMargin.top - chartMargin.bottom;
+            const isCompact = width < 768;
+
+            const margin = isCompact
+              ? { top: 0, right: 0, bottom: 0, left: 0 }
+              : chartMargin;
+
+            const innerWidth = width - margin.left - margin.right;
+            const innerHeight = height - margin.top - margin.bottom;
 
             return (
               <XYChart
+                theme={theme}
                 height={height}
                 width={width}
-                margin={chartMargin}
+                margin={margin}
                 xScale={{ type: "time", domain: activeXDomain }}
                 yScale={{ type: "linear", zero: false, domain: yDomain }}
               >
                 <defs>
                   <clipPath id={clipPathId}>
                     <rect
-                      x={chartMargin.left}
-                      y={chartMargin.top}
+                      x={margin.left}
+                      y={margin.top}
                       width={innerWidth}
                       height={innerHeight}
                     />
                   </clipPath>
                 </defs>
+                {!isCompact &&
+                  Object.entries(groupedData).map(([equityId, models]) => (
+                    <CandlestickSeries
+                      key={`candle-${equityId}`}
+                      data={models}
+                      equityId={equityId}
+                      accessors={accessors}
+                      clipPath={`url(#${clipPathId})`}
+                      color={colorScale(equityId)}
+                    />
+                  ))}
                 {Object.entries(groupedData).map(([equityId, models]) => (
-                  <CandlestickSeries
-                    key={`candle-${equityId}`}
-                    data={models}
-                    equityId={equityId}
-                    accessors={accessors}
-                    clipPath={`url(#${clipPathId})`}
-                    color={colorScale(equityId)}
-                  />
-                ))}
-                {Object.entries(groupedData).map(([equityId, models]) => (
-                  <LineSeries
+                  <AreaSeries
                     key={equityId}
                     dataKey={equityId}
                     data={models}
-                    stroke={colorScale(equityId)}
                     clipPath={`url(#${clipPathId})`}
+                    lineProps={{
+                      clipPath: `url(#${clipPathId})`,
+                    }}
+                    fillOpacity={0.15}
                     {...accessors}
                   />
                 ))}
-                <Axis
-                  orientation="left"
-                  tickLabelProps={{ fill: "var(--foreground)" }}
-                  stroke={"var(--border)"}
-                  tickStroke={"var(--border)"}
-                  tickFormat={(value) => {
-                    if (typeof value !== "number") return String(value);
-                    return new Currency(value).format();
-                  }}
-                />
-                <Axis
-                  orientation="bottom"
-                  numTicks={width < 800 ? 3 : 6}
-                  tickLabelProps={{ fill: "var(--foreground)" }}
-                  stroke={"var(--border)"}
-                  tickStroke={"var(--border)"}
-                />
+                {!isCompact && (
+                  <>
+                    <Axis
+                      orientation="left"
+                      tickLabelProps={{ fill: "var(--foreground)" }}
+                      stroke={"var(--border)"}
+                      tickStroke={"var(--border)"}
+                      tickFormat={(value) => {
+                        if (typeof value !== "number") return String(value);
+                        return new Currency(value).format();
+                      }}
+                    />
+                    <Axis
+                      orientation="bottom"
+                      numTicks={width < 800 ? 3 : 6}
+                      tickLabelProps={{ fill: "var(--foreground)" }}
+                      stroke={"var(--border)"}
+                      tickStroke={"var(--border)"}
+                    />
+                  </>
+                )}
                 <Tooltip<PriceModel>
                   snapTooltipToDatumX
                   snapTooltipToDatumY
                   showVerticalCrosshair
                   showSeriesGlyphs
-                  unstyled={true}
+                  unstyled
                   applyPositionStyle={true}
                   style={{ position: "absolute", pointerEvents: "none" }}
                   verticalCrosshairStyle={{
@@ -242,8 +275,8 @@ export const PriceChart = () => {
         </ParentSize>
       </div>
 
-      <div className="h-24 w-full shrink-0">
-        <ParentSize debounceTime={15}>
+      <div className="hidden h-20 w-full shrink-0 xl:block">
+        <ParentSize debounceTime={0}>
           {({ width, height }) => {
             if (width < 1 || height < 1) return null;
 

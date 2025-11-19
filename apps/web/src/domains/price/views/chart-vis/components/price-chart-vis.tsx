@@ -8,14 +8,14 @@ import { LoadingPriceChart } from "./chart/loading";
 
 export const PriceChartVis = () => {
   return (
-    <Card>
-      <CardContent className="h-[28rem] w-full">
-        <ErrorBoundary fallback="Error">
-          <Suspense fallback={<LoadingPriceChart />}>
+    <Suspense fallback={<LoadingPriceChart />}>
+      <Card className="overflow-hidden p-0">
+        <CardContent className="h-[28rem] w-full p-0">
+          <ErrorBoundary fallback="Error">
             <PriceChart />
-          </Suspense>
-        </ErrorBoundary>
-      </CardContent>
-    </Card>
+          </ErrorBoundary>
+        </CardContent>
+      </Card>
+    </Suspense>
   );
 };

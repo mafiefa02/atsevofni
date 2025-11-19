@@ -8,7 +8,10 @@ export class PriceModel {
     this.price = priceResponseToPrice(response);
   }
 
-  public getPrice = (key: keyof Price) => {
+  public getUniqueId = () =>
+    `${this.price.equityId}-${this.price.date.format()}`;
+
+  public getPrice = <K extends keyof Price>(key: K): Price[K] => {
     return this.price[key];
   };
 }

@@ -4,9 +4,9 @@ import type { PriceParams } from "-/domains/price/types";
 import { usePrefetchOnHover } from "-/lib/hooks";
 import { services } from "-/lib/services";
 
-import { usePriceViewFilters } from "../../filters/hooks";
-import { usePriceViewPagination } from "../../pagination/hooks";
-import { usePriceViewSort } from "../../sort/hooks";
+import { usePriceViewFilters } from "./filters/hooks";
+import { usePriceViewPagination } from "./pagination/hooks";
+import { usePriceViewSort } from "./sort/hooks";
 
 type PriceParamsOverride = {
   filters?: Partial<PriceParams["filters"]>;

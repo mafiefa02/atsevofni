@@ -1,4 +1,5 @@
 import { paginationParamsKeyNameMap, sortParamsKeyNameMap } from "./constants";
+import { FormattableDate } from "./models";
 import type {
   APIRawResponse,
   APIResponse,
@@ -36,15 +37,24 @@ export function responseToModel<T, D>(
 export function transformRawResponse<D>(
   response: APIRawResponse<D>,
 ): APIResponse<D> {
-  const { data, meta } = response;
+  if (response.meta.pagination === null) {
+    return {
+      data: response.data,
+      meta: {
+        pagination: null,
+        lastUpdated: new FormattableDate(response.meta.last_updated),
+      },
+    };
+  }
   return {
-    data,
+    data: response.data,
     meta: {
       pagination: {
-        params: meta.pagination.params,
-        totalItems: meta.pagination.total_items,
-        totalPage: meta.pagination.total_pages,
+        params: response.meta.pagination.params,
+        totalItems: response.meta.pagination.total_items,
+        totalPage: response.meta.pagination.total_pages,
       },
+      lastUpdated: new FormattableDate(response.meta.last_updated),
     },
   };
 }

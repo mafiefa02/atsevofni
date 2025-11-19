@@ -1,6 +1,5 @@
 import { Button } from "-/components/ui/button";
-
-import { usePrefetchPrice } from "../../hooks";
+import { usePrefetchPrice } from "-/domains/price/views/hooks";
 
 interface StepButtonProps extends React.ComponentProps<"button"> {
   step: number;

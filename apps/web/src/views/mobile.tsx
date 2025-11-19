@@ -1,9 +1,11 @@
-import { MobileDashboardView } from "./dashboard/mobile";
+import { AppTitle } from "-/components/app-title";
+import { PriceCardList } from "-/domains/price/views/price-list/components/card-list/price-card-list";
 
-export const MobileRootView = () => {
+export const MobileView = () => {
   return (
-    <div className="overflow-x-hidden overflow-y-auto">
-      <MobileDashboardView />
+    <div className="flex flex-col gap-5">
+      <AppTitle />
+      <PriceCardList />
     </div>
   );
 };

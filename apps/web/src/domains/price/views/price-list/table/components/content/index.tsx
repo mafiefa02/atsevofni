@@ -24,9 +24,6 @@ export const PriceListTableContent = () => {
     return <EmptyTableRow numOfColumn={NUM_OF_COLUMNS} />;
 
   return prices.data.map((price) => (
-    <PriceListTableRow
-      key={`${price.getPrice("equityId")}-${price.getPrice("date")}`}
-      price={price}
-    />
+    <PriceListTableRow key={price.getUniqueId()} price={price} />
   ));
 };

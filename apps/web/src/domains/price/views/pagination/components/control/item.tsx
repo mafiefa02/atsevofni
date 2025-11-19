@@ -1,16 +1,15 @@
 import { SelectItem } from "-/components/ui/select";
+import { usePrefetchPrice } from "-/domains/price/views/hooks";
 
-import { usePrefetchPrice } from "../../../hooks";
-
-interface PriceListTableControlItemProps {
+interface PaginationControlItemProps {
   value: string;
   children: React.ReactNode;
 }
 
-export const PriceListTableControlItem = ({
+export const PaginationControlItem = ({
   value,
   children,
-}: PriceListTableControlItemProps) => {
+}: PaginationControlItemProps) => {
   const limit = isNaN(Number(value)) ? null : Number(value);
   const { onMouseEnter, onMouseLeave } = usePrefetchPrice({
     pagination: { limit },

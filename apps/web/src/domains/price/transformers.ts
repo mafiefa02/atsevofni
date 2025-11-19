@@ -1,6 +1,6 @@
 import { parse } from "date-fns";
 
-import { FormattableDate, FormattableNumber } from "-/lib/models";
+import { Currency, FormattableDate, Quantity } from "-/lib/models";
 
 import type { Price, PriceResponse } from "./types";
 
@@ -10,13 +10,13 @@ export const priceResponseToPrice = (response: PriceResponse): Price => {
     date: new FormattableDate(
       parse(response.tradeDate, "yyyy-MM-dd", new Date()),
     ),
-    bid: new FormattableNumber(response.bid),
-    closing: new FormattableNumber(response.closing),
-    high: new FormattableNumber(response.high),
-    low: new FormattableNumber(response.low),
-    offer: new FormattableNumber(response.offer),
-    opening: new FormattableNumber(response.opening),
-    volume: new FormattableNumber(response.volume),
+    bid: new Currency(response.bid),
+    closing: new Currency(response.closing),
+    high: new Currency(response.high),
+    low: new Currency(response.low),
+    offer: new Currency(response.offer),
+    opening: new Currency(response.opening),
+    volume: new Quantity(response.volume),
   } as Price;
 };
 

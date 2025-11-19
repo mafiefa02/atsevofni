@@ -6,6 +6,9 @@ import { Table, TableBody, TableHeader, TableRow } from "-/components/ui/table";
 
 import { priceSortKeyToLabel } from "../../../sort/constants";
 import type { PriceSortKey } from "../../../sort/types";
+import { PriceLastUpdated } from "../../components/last-updated";
+import { PriceLastUpdatedError } from "../../components/last-updated/error";
+import { PriceLastUpdatedLoading } from "../../components/last-updated/loading";
 import { PriceListTableContent } from "./content";
 import { PriceListTableContentError } from "./content/error";
 import { PriceListContentLoading } from "./content/loading";
@@ -45,6 +48,13 @@ export const PriceListTable = () => {
               </ErrorBoundary>
             </TableBody>
           </Table>
+        </div>
+        <div className="-mt-2">
+          <ErrorBoundary fallback={<PriceLastUpdatedError />}>
+            <Suspense fallback={<PriceLastUpdatedLoading />}>
+              <PriceLastUpdated />
+            </Suspense>
+          </ErrorBoundary>
         </div>
       </Card>
       <ErrorBoundary fallback={<PriceListTablePaginationError />}>

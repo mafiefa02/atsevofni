@@ -5,22 +5,24 @@ import { ChevronRightIcon } from "-/components/icons/chevron-right";
 import { DoubleChevronLeftIcon } from "-/components/icons/double-chevron-left";
 import { DoubleChevronRightIcon } from "-/components/icons/double-chevron-right";
 import { ButtonGroup } from "-/components/ui/button-group";
+import { StepButton } from "-/domains/price/views/components/step-button";
+import { usePrefetchPrice } from "-/domains/price/views/hooks";
 import { usePriceViewPagination } from "-/domains/price/views/pagination/hooks";
+import { generatePageSteps } from "-/domains/price/views/utils";
 
-import { usePrefetchPrice } from "../../../hooks";
-import { generatePageSteps } from "../../../utils";
-import { StepButton } from "../step-button";
-import { NavButton } from "./button";
+import { PaginationNavButton } from "./button";
 
-interface PriceListTableNavigationProps {
+interface PaginationNavigationProps {
   currentPage: number;
   totalPage: number;
+  variant?: "card" | "table";
 }
 
-export const PriceListTableNavigation = ({
+export const PaginationNavigation = ({
   currentPage,
   totalPage,
-}: PriceListTableNavigationProps) => {
+  variant = "table",
+}: PaginationNavigationProps) => {
   const [{ enablePagination }, setPagination] = usePriceViewPagination();
 
   const firstPagePrefetch = usePrefetchPrice({ pagination: { page: 1 } });
@@ -58,22 +60,57 @@ export const PriceListTableNavigation = ({
     [currentPage, totalPage],
   );
 
-  if (!enablePagination || totalPage === 1) return null;
+  if (enablePagination === false || totalPage === 1) return null;
+
+  if (variant === "card") {
+    return (
+      <div className="grid w-full grid-flow-col gap-2">
+        {currentPage > 1 && (
+          <PaginationNavButton
+            onClick={handlePrev}
+            prefetch={prevPagePrefetch}
+            size="icon-sm"
+            className="w-full"
+          >
+            <ChevronLeftIcon />
+          </PaginationNavButton>
+        )}
+        {pageSteps.map((step, index) => (
+          <StepButton
+            key={`${step}-${index}-step`}
+            step={step}
+            isActive={currentPage === step}
+            handleNavigate={handleNavigate}
+          />
+        ))}
+        {currentPage < totalPage && (
+          <PaginationNavButton
+            onClick={handleNext}
+            prefetch={nextPagePrefetch}
+            size="icon-sm"
+            className="w-full"
+          >
+            <ChevronRightIcon />
+          </PaginationNavButton>
+        )}
+      </div>
+    );
+  }
 
   return (
     <ButtonGroup>
       {currentPage > 1 && (
         <>
-          <NavButton
+          <PaginationNavButton
             onClick={() => handleNavigate(1)}
             prefetch={firstPagePrefetch}
           >
             <DoubleChevronLeftIcon /> First
-          </NavButton>
+          </PaginationNavButton>
 
-          <NavButton onClick={handlePrev} prefetch={prevPagePrefetch}>
+          <PaginationNavButton onClick={handlePrev} prefetch={prevPagePrefetch}>
             <ChevronLeftIcon /> <span>Previous</span>
-          </NavButton>
+          </PaginationNavButton>
         </>
       )}
 
@@ -88,16 +125,16 @@ export const PriceListTableNavigation = ({
 
       {currentPage < totalPage && (
         <>
-          <NavButton onClick={handleNext} prefetch={nextPagePrefetch}>
+          <PaginationNavButton onClick={handleNext} prefetch={nextPagePrefetch}>
             <span>Next</span> <ChevronRightIcon />
-          </NavButton>
+          </PaginationNavButton>
 
-          <NavButton
+          <PaginationNavButton
             onClick={() => handleNavigate(totalPage)}
             prefetch={lastPagePrefetch}
           >
             Last <DoubleChevronRightIcon />
-          </NavButton>
+          </PaginationNavButton>
         </>
       )}
     </ButtonGroup>

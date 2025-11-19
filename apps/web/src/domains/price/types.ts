@@ -1,4 +1,4 @@
-import type { FormattableDate, FormattableNumber } from "-/lib/models";
+import type { Currency, FormattableDate, Quantity } from "-/lib/models";
 import type { Params, PriceEquityId } from "-/lib/types";
 
 import type { PriceFilter } from "./views/filters/types";
@@ -19,13 +19,13 @@ export interface PriceResponse {
 export interface Price {
   equityId: PriceEquityId;
   date: FormattableDate;
-  opening: FormattableNumber;
-  high: FormattableNumber;
-  low: FormattableNumber;
-  closing: FormattableNumber;
-  bid: FormattableNumber;
-  offer: FormattableNumber;
-  volume: FormattableNumber;
+  opening: Currency;
+  high: Currency;
+  low: Currency;
+  closing: Currency;
+  bid: Currency;
+  offer: Currency;
+  volume: Quantity;
 }
 
 export type PriceParams = Params<PriceFilter, PriceSortKey>;

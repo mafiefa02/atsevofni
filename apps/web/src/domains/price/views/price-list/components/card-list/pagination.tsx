@@ -1,13 +1,15 @@
 import { useSuspenseQuery } from "@tanstack/react-query";
 
 import { usePriceViewFilters } from "-/domains/price/views/filters/hooks";
-import { PaginationControl } from "-/domains/price/views/pagination/components/control";
-import { PaginationNavigation } from "-/domains/price/views/pagination/components/navigation";
 import { usePriceViewPagination } from "-/domains/price/views/pagination/hooks";
 import { usePriceViewSort } from "-/domains/price/views/sort/hooks";
 import { services } from "-/lib/services";
 
-export const PriceListTablePagination = () => {
+import { PaginationControl } from "../../../pagination/components/control";
+import { PaginationNavigation } from "../../../pagination/components/navigation";
+import { PriceLastUpdated } from "../last-updated";
+
+export const PriceCardListPagination = () => {
   const [filters] = usePriceViewFilters();
   const [sort] = usePriceViewSort();
   const [pagination] = usePriceViewPagination();
@@ -19,12 +21,16 @@ export const PriceListTablePagination = () => {
   if (prices.meta.pagination === null) return null;
 
   return (
-    <div className="flex items-center justify-between gap-4 text-sm">
+    <div className="flex w-full flex-col items-center gap-4 text-sm">
       <PaginationNavigation
         currentPage={pagination.page ?? 1}
         totalPage={prices.meta.pagination.totalPage}
+        variant="card"
       />
-      <PaginationControl className="ml-auto" />
+      <div className="flex w-full items-center justify-between gap-4">
+        <PriceLastUpdated />
+        <PaginationControl />
+      </div>
     </div>
   );
 };

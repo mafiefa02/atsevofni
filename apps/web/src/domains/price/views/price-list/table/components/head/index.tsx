@@ -1,11 +1,10 @@
 import { useCallback } from "react";
 
 import { TableSortableHead } from "-/components/ui/table";
+import { usePrefetchPrice } from "-/domains/price/views/hooks";
 import { usePriceViewSort } from "-/domains/price/views/sort/hooks";
 import type { PriceSortKey } from "-/domains/price/views/sort/types";
 import { getNextSortState } from "-/lib/utils";
-
-import { usePrefetchPrice } from "../../hooks";
 
 interface PriceListTableHeadProps {
   sortKey: PriceSortKey;

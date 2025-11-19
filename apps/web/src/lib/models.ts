@@ -9,9 +9,22 @@ export class FormattableDate extends Date {
   };
 }
 
-export class FormattableNumber extends Number {
+export class Quantity extends Number {
   public format = (
-    locales?: Intl.LocalesArgument,
+    locales: Intl.LocalesArgument = "id-ID",
+    options: Intl.NumberFormatOptions = {
+      style: "decimal",
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 0,
+    },
+  ) => {
+    return new Intl.NumberFormat(locales, options).format(this.valueOf());
+  };
+}
+
+export class Currency extends Number {
+  public format = (
+    locales: Intl.LocalesArgument = "id-ID",
     options: Intl.NumberFormatOptions = {
       style: "currency",
       currency: "IDR",

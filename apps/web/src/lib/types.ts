@@ -1,6 +1,8 @@
 import type { EquityId } from "-/domains/equity/types";
 import type { PriceFilter } from "-/domains/price/views/filters/types";
 
+import type { FormattableDate } from "./models";
+
 // Helper types
 export type UniqueBrand<T> = T & { readonly __brand: unique symbol };
 export type ModelConstructor<T, D> = new (data: D, ...args: unknown[]) => T;
@@ -17,6 +19,7 @@ export interface APIRawResponse<Data> {
       total_items: number;
       total_pages: number;
     };
+    last_updated: string;
   };
 }
 
@@ -32,6 +35,7 @@ export type APIResponseMeta = {
     totalItems: number;
     totalPage: number;
   } | null;
+  lastUpdated: FormattableDate;
 };
 
 export interface APIResponse<Data> {

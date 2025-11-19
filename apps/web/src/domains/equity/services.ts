@@ -68,7 +68,6 @@ export class EquityServices {
       );
       throw error;
     }
-
     const result: APIRawResponse<EquityResponse> = await response.json();
     const transformedResponse = transformRawResponse(result);
 

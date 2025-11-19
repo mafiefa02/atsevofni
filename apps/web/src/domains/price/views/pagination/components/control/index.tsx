@@ -11,11 +11,15 @@ import {
 } from "-/components/ui/select";
 import { usePriceViewPagination } from "-/domains/price/views/pagination/hooks";
 
-import { PriceListTableControlItem } from "./item";
+import { PaginationControlItem } from "./item";
 
 const AMOUNTS = [5, 10, 20, 50];
 
-export const PriceListTableControl = () => {
+interface PaginationControlProps {
+  className?: string;
+}
+
+export const PaginationControl = ({ className }: PaginationControlProps) => {
   const [{ limit }, setPagination] = usePriceViewPagination();
   const handleChange = useCallback(
     (value: string) =>
@@ -27,7 +31,7 @@ export const PriceListTableControl = () => {
     [setPagination],
   );
   return (
-    <FieldSet className="ml-auto">
+    <FieldSet className={className}>
       <Field orientation="horizontal">
         <FieldLabel htmlFor="items-per-page">Items per page</FieldLabel>
         <Select value={String(limit)} onValueChange={handleChange}>
@@ -38,12 +42,12 @@ export const PriceListTableControl = () => {
             <SelectGroup>
               <SelectLabel>Amount of items per page</SelectLabel>
               {AMOUNTS.map((amount) => (
-                <PriceListTableControlItem
+                <PaginationControlItem
                   key={`amount-${amount}`}
                   value={String(amount)}
                 >
                   {amount} items
-                </PriceListTableControlItem>
+                </PaginationControlItem>
               ))}
             </SelectGroup>
           </SelectContent>

@@ -1,4 +1,5 @@
 import math
+from datetime import datetime
 from typing import Optional
 
 from src.models import PaginationMeta, PaginationParams, SortParams
@@ -45,3 +46,7 @@ def apply_sorting_and_pagination(
             ]
         )
     return base_query, params
+
+
+def get_current_time():
+    return datetime.now()

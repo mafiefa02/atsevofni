@@ -12,6 +12,7 @@ from src.models import PaginationParams, Response, SortParams
 from src.utils import (
     apply_sorting_and_pagination,
     generate_pagination_metadata,
+    get_current_time,
     get_total_items,
     read_query,
 )
@@ -47,7 +48,10 @@ def get_equities(
     cursor.execute(final_query, final_params)
     equities = [dict(row) for row in cursor.fetchall()]
 
-    meta = {"pagination": generate_pagination_metadata(total_items, pagination_params)}
+    meta = {
+        "pagination": generate_pagination_metadata(total_items, pagination_params),
+        "last_updated": get_current_time(),
+    }
 
     return {"data": equities, "meta": meta}
 
@@ -74,6 +78,9 @@ def get_equity_by_portid(
             detail=f"Equity with id '{id}' not found.",
         )
 
-    meta = {"pagination": generate_pagination_metadata(1, None)}
+    meta = {
+        "pagination": generate_pagination_metadata(1, None),
+        "last_updated": get_current_time(),
+    }
 
     return {"data": dict(equity), "meta": meta}

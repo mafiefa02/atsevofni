@@ -1,3 +1,4 @@
+from datetime import datetime
 from typing import Annotated, Generic, Literal, Optional, TypeVar
 
 from pydantic import BaseModel, Field
@@ -26,6 +27,7 @@ class PaginationMeta(BaseModel):
 
 class ResponseMeta(BaseModel):
     pagination: Optional[PaginationMeta]
+    last_updated: datetime
 
 
 class Response(BaseModel, Generic[T]):

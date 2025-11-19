@@ -6,11 +6,13 @@ from fastapi_cache.decorator import cache
 
 from src.configs import settings
 from src.database import get_db_connection
+from src.domains.transactions.constants import DEFAULT_SORT
 from src.middlewares import rate_limiter
 from src.models import PaginationParams, Response, SortParams
 from src.utils import (
     apply_sorting_and_pagination,
     generate_pagination_metadata,
+    get_current_time,
     get_total_items,
     read_query,
 )
@@ -32,6 +34,9 @@ def get_stocks(
     db: Annotated[sqlite3.Connection, Depends(get_db_connection)],
 ):
     """Get all stock prices"""
+    if sorting_params.sort_by is None:
+        sorting_params.sort_by = DEFAULT_SORT
+
     cursor = db.cursor()
 
     base_query = read_query("get_transactions.sql")
@@ -46,7 +51,10 @@ def get_stocks(
     cursor.execute(final_query, final_params)
     transactions = [dict(row) for row in cursor.fetchall()]
 
-    meta = {"pagination": generate_pagination_metadata(total_items, pagination_params)}
+    meta = {
+        "pagination": generate_pagination_metadata(total_items, pagination_params),
+        "last_updated": get_current_time(),
+    }
 
     return {
         "data": transactions,

@@ -153,7 +153,7 @@ export const PriceChart = () => {
   }
 
   return (
-    <div className="relative flex size-full flex-col gap-4">
+    <div className="relative flex size-full flex-col gap-4 overflow-hidden">
       <div className="relative min-h-0 flex-1">
         <div className="absolute top-6 left-1/2 z-10 flex -translate-x-1/2 items-center justify-between gap-2 px-3 text-sm">
           <LegendOrdinal scale={colorScale} labelFormat={(label) => label}>
@@ -257,8 +257,8 @@ export const PriceChart = () => {
                   snapTooltipToDatumX
                   snapTooltipToDatumY
                   showVerticalCrosshair
-                  showSeriesGlyphs
                   unstyled
+                  showSeriesGlyphs={!isCompact}
                   applyPositionStyle={true}
                   style={{ position: "absolute", pointerEvents: "none" }}
                   verticalCrosshairStyle={{

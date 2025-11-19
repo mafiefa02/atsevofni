@@ -56,8 +56,8 @@ export const PaginationNavigation = ({
   }, [setPagination, nextPagePrefetch]);
 
   const pageSteps = useMemo(
-    () => generatePageSteps(currentPage, totalPage, 5),
-    [currentPage, totalPage],
+    () => generatePageSteps(currentPage, totalPage, variant === "card" ? 3 : 5),
+    [currentPage, totalPage, variant],
   );
 
   if (enablePagination === false || totalPage === 1) return null;

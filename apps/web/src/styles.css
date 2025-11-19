@@ -150,6 +150,10 @@
   --letter-spacing: var(--letter-spacing);
 }
 
+@theme {
+  --breakpoint-xs: 32rem;
+}
+
 .dark {
   --background: oklch(0.145 0 0);
   --foreground: oklch(0.985 0 0);

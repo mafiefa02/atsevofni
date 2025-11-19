@@ -33,7 +33,9 @@ export const PaginationControl = ({ className }: PaginationControlProps) => {
   return (
     <FieldSet className={className}>
       <Field orientation="horizontal">
-        <FieldLabel htmlFor="items-per-page">Items per page</FieldLabel>
+        <FieldLabel className="xs:block hidden" htmlFor="items-per-page">
+          Items per page
+        </FieldLabel>
         <Select value={String(limit)} onValueChange={handleChange}>
           <SelectTrigger id="items-per-page" size="sm">
             <SelectValue />

@@ -36,7 +36,7 @@ export const PriceCardListCard = ({ price }: PriceCardListCardProps) => {
               <p className="text-lg font-medium">
                 {price.getPrice("equityId")}
               </p>
-              <p className="text-muted-foreground line-clamp-1 text-sm">
+              <p className="text-muted-foreground xs:text-sm line-clamp-1 text-xs">
                 {equityResult.data.getEquity("name")}
               </p>
             </div>
@@ -45,7 +45,7 @@ export const PriceCardListCard = ({ price }: PriceCardListCardProps) => {
             <p className="text-lg font-medium">
               {price.getPrice("closing").format()}
             </p>
-            <p className="text-muted-foreground line-clamp-1 text-sm">
+            <p className="text-muted-foreground xs:text-sm line-clamp-1 text-xs">
               {price.getPrice("date").format()}
             </p>
           </div>

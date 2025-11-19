@@ -14,7 +14,7 @@ import {
 
 export const Header = () => {
   return (
-    <header className="w-full border border-b px-6 py-2">
+    <header className="w-full border-b px-6 py-2">
       <div className="flex items-center justify-between gap-4">
         <span className="font-medium">Atsevofni</span>
         <Sheet defaultOpen={false}>

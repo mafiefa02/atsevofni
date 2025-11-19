@@ -9,7 +9,13 @@ import { PaginationControl } from "../../../pagination/components/control";
 import { PaginationNavigation } from "../../../pagination/components/navigation";
 import { PriceLastUpdated } from "../last-updated";
 
-export const PriceCardListPagination = () => {
+interface PriceCardListPaginationProps {
+  withMeta?: boolean;
+}
+
+export const PriceCardListPagination = ({
+  withMeta = true,
+}: PriceCardListPaginationProps) => {
   const [filters] = usePriceViewFilters();
   const [sort] = usePriceViewSort();
   const [pagination] = usePriceViewPagination();
@@ -27,10 +33,12 @@ export const PriceCardListPagination = () => {
         totalPage={prices.meta.pagination.totalPage}
         variant="card"
       />
-      <div className="flex w-full items-center justify-between gap-4">
-        <PriceLastUpdated />
-        <PaginationControl />
-      </div>
+      {withMeta && (
+        <div className="flex w-full items-center justify-between gap-4">
+          <PriceLastUpdated />
+          <PaginationControl />
+        </div>
+      )}
     </div>
   );
 };

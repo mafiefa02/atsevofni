@@ -17,6 +17,7 @@ export const PriceCardList = () => {
   );
   return (
     <div className="flex flex-col gap-2">
+      <PriceCardListPagination withMeta={false} />
       <div className="grid gap-2 md:grid-cols-2 [&>*:last-child:nth-child(odd)]:md:col-span-2">
         {result.data.map((price) => (
           <PriceCardListCard key={price.getUniqueId()} price={price} />

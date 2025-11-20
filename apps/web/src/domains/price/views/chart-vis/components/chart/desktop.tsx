@@ -135,7 +135,9 @@ const DesktopChartBase = ({
           scale={yScale}
           width={innerWidth}
           strokeDasharray="1,3"
-          strokeOpacity={0.2}
+          strokeOpacity={0.25}
+          strokeWidth={1}
+          stroke="var(--foreground)"
           pointerEvents="none"
           left={CHART_MARGIN.left}
         />

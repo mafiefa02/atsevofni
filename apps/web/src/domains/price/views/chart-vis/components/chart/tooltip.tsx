@@ -3,35 +3,19 @@ import type { RenderTooltipParams } from "@visx/xychart/lib/components/Tooltip";
 import { EquityIcon } from "-/components/equity-icon";
 import type { EquityId } from "-/domains/equity/types";
 import type { PriceModel } from "-/domains/price/models";
-import { Currency, FormattableDate } from "-/lib/models";
+import { Currency } from "-/lib/models";
 
-interface PriceChartTooltipProps extends RenderTooltipParams<PriceModel> {
-  accessors: {
-    xAccessor: (d: PriceModel) => FormattableDate;
-    yAccessor: (d: PriceModel) => number;
-  };
-}
+import { accessors, getTooltipItem } from "../../utils";
 
 export const PriceChartTooltip = ({
   tooltipData,
   colorScale,
-  accessors,
-}: PriceChartTooltipProps) => {
+}: RenderTooltipParams<PriceModel>) => {
   if (!tooltipData?.nearestDatum || !tooltipData?.datumByKey) return null;
 
   const date = accessors.xAccessor(tooltipData.nearestDatum.datum);
 
-  const tooltipItems = Object.entries(tooltipData.datumByKey)
-    .map(([key, entry]) => {
-      if (!entry) return null;
-      return {
-        key: key,
-        price: accessors.yAccessor(entry.datum),
-        color: colorScale ? colorScale(key) : "var(--foreground)",
-      };
-    })
-    .filter((item): item is NonNullable<typeof item> => item !== null)
-    .sort((a, b) => b.price - a.price);
+  const tooltipItems = getTooltipItem(tooltipData, colorScale);
 
   return (
     <div className="bg-popover text-popover-foreground min-w-[160px] rounded border px-3 py-2 text-sm shadow-md">

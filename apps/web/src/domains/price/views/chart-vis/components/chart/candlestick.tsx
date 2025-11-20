@@ -5,20 +5,15 @@ import { DataContext } from "@visx/xychart";
 import { useContext } from "react";
 
 import type { PriceModel } from "-/domains/price/models";
-import type { FormattableDate } from "-/lib/models";
+
+import type { Accessors } from "../../types";
+import { getBarAndWickWidth } from "../../utils";
 
 type CandlestickSeriesProps = {
   data: PriceModel[];
   equityId: string;
   color: string;
-  accessors: {
-    xAccessor: (d: PriceModel) => FormattableDate;
-    yAccessor: (d: PriceModel) => number;
-    openAccessor: (d: PriceModel) => number;
-    highAccessor: (d: PriceModel) => number;
-    lowAccessor: (d: PriceModel) => number;
-    closeAccessor: (d: PriceModel) => number;
-  };
+  accessors: Accessors;
   clipPath?: string;
 };
 
@@ -36,21 +31,9 @@ export const CandlestickSeries = ({
   const xS = xScale as ScaleTime<number, number>;
   const yS = yScale as ScaleLinear<number, number>;
 
-  const [startDate, endDate] = xS.domain();
-
   const xRange = xS.range();
-  const currentChartWidth = xRange[1] - xRange[0];
 
-  const msInView = endDate.valueOf() - startDate.valueOf();
-
-  const msPerDay = 1000 * 60 * 60 * 24;
-
-  const daysInView = Math.max(1, msInView / msPerDay);
-
-  const barWidth = Math.max(3, (currentChartWidth / daysInView) * 0.65);
-  const wickWidth = Math.min(12, Math.max(2, barWidth * 0.15));
-
-  const halfWidth = barWidth / 2;
+  const { barWidth, halfWidth, wickWidth } = getBarAndWickWidth(xS);
 
   return (
     <Group key={equityId} clipPath={clipPath}>

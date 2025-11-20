@@ -8,9 +8,9 @@ export const BrushHandle = ({
 }: BrushHandleRenderProps) => {
   const pathWidth = 8;
   const pathHeight = 15;
-  if (!isBrushActive) {
-    return null;
-  }
+
+  if (!isBrushActive) return null;
+
   return (
     <Group left={x + pathWidth / 2} top={(height - pathHeight) / 2}>
       <path

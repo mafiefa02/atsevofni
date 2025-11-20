@@ -5,6 +5,8 @@ import type { TooltipData } from "@visx/xychart";
 import type { PriceModel } from "../../models";
 import type { XDomain, YDomain } from "./types";
 
+export const isCompact = (width: number) => width < 768;
+
 export const accessors = {
   xAccessor: (d: PriceModel) => d.getPrice("date"),
   yAccessor: (d: PriceModel) => d.getPrice("closing").valueOf(),

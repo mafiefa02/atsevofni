@@ -74,8 +74,6 @@ export const ChartBrush = ({
     [height, yDomain],
   );
 
-  if (width < 910 || height < 1) return null;
-
   return (
     <svg width={width} height={height}>
       <PatternLines

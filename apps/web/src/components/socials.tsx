@@ -8,7 +8,7 @@ const SOCIAL_MEDIAS = [
   {
     label: "GitHub",
     icon: <GithubFillIcon />,
-    href: "https://github.com/mafiefa02",
+    href: "https://github.com/mafiefa02/atsevofni",
   },
   {
     label: "LinkedIn",

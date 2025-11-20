@@ -44,6 +44,7 @@ def get_stocks(
 @router.post("/generate", status_code=status.HTTP_200_OK)
 @rate_limiter.limit(settings.app_rate_limit)
 async def generate_pdf(
+    request: Request,
     service: Annotated[TransactionService, Depends(get_transaction_service)],
     payload: GeneratePDFRequest | None = None,
 ):

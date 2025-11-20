@@ -9,18 +9,18 @@ from src.configs import settings
 from src.database import get_db_connection
 from src.middlewares import rate_limiter
 from src.models import CustomResponse, PaginationParams, SortParams
-from src.utils import (
-    apply_sorting_and_pagination,
-    generate_pagination_metadata,
-    get_current_time,
-    get_total_items,
-    read_query,
-)
+from src.utils import generate_pagination_metadata, get_current_time
 
 from .models import Equity, EquityBase, EquityFilterParams
-from .utils import apply_filtering
+from .services import EquityService
 
 router = APIRouter()
+
+
+def get_equity_service(
+    db: Annotated[sqlite3.Connection, Depends(get_db_connection)],
+) -> EquityService:
+    return EquityService(db)
 
 
 @router.get("", response_model=CustomResponse[List[EquityBase]])
@@ -31,29 +31,10 @@ def get_equities(
     filter_params: Annotated[EquityFilterParams, Depends()],
     pagination_params: Annotated[PaginationParams, Depends()],
     sorting_params: Annotated[SortParams, Depends()],
-    db: Annotated[sqlite3.Connection, Depends(get_db_connection)],
+    service: Annotated[EquityService, Depends(get_equity_service)],
 ):
     """Get all equities"""
-    cursor = db.cursor()
-
-    base_query = read_query("get_equities.sql")
-    filtered_query, params = apply_filtering(base_query, filter_params)
-
-    total_items = get_total_items(cursor, filtered_query, params)
-
-    final_query, final_params = apply_sorting_and_pagination(
-        filtered_query, params, sorting_params, pagination_params
-    )
-
-    cursor.execute(final_query, final_params)
-    equities = [dict(row) for row in cursor.fetchall()]
-
-    meta = {
-        "pagination": generate_pagination_metadata(total_items, pagination_params),
-        "last_updated": get_current_time(),
-    }
-
-    return {"data": equities, "meta": meta}
+    return service.list_equities(filter_params, pagination_params, sorting_params)
 
 
 @router.get("/{id}", response_model=CustomResponse[Equity])
@@ -62,15 +43,10 @@ def get_equities(
 def get_equity_by_portid(
     request: Request,
     id: Annotated[str, StringConstraints(to_upper=True)],
-    pagination_params: Annotated[PaginationParams, Depends()],
-    db: Annotated[sqlite3.Connection, Depends(get_db_connection)],
+    service: Annotated[EquityService, Depends(get_equity_service)],
 ):
     """Get detailed equity information by its id"""
-    cursor = db.cursor()
-
-    query = read_query("get_equity_by_id.sql")
-    cursor.execute(query, (id,))
-    equity = cursor.fetchone()
+    equity = service.get_equity_by_id(id)
 
     if not equity:
         raise HTTPException(
@@ -83,4 +59,4 @@ def get_equity_by_portid(
         "last_updated": get_current_time(),
     }
 
-    return {"data": dict(equity), "meta": meta}
+    return {"data": equity, "meta": meta}

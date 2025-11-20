@@ -50,3 +50,32 @@ def apply_sorting_and_pagination(
 
 def get_current_time():
     return datetime.now()
+
+
+def format_idr(value, is_currency=True):
+    """
+    Formats a value to Indonesian standard:
+    - Example: 1234.56 -> 1.234,56 (Currency)
+    - Example: 10000 -> 10.000 (Volume)
+    """
+    if value is None:
+        return "-"
+    try:
+        val = float(value)
+        if is_currency:
+            formatted = f"Rp {val:,.2f}"
+        else:
+            formatted = f"{val:,.0f}"
+
+        # swap US separators to ID separators:
+        # 1. replace comma with temp placeholder 'X'
+        # 2. replace dot with comma
+        # 3. replace placeholder 'X' with dot
+        return formatted.replace(",", "X").replace(".", ",").replace("X", ".")
+    except (ValueError, TypeError):
+        return str(value)
+
+
+# to help safely parse numbers from db rows
+def safe_num(val: int):
+    return val if val is not None else 0

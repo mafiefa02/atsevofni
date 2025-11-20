@@ -30,6 +30,6 @@ class ResponseMeta(BaseModel):
     last_updated: datetime
 
 
-class Response(BaseModel, Generic[T]):
+class CustomResponse(BaseModel, Generic[T]):
     data: T
     meta: ResponseMeta

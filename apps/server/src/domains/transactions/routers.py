@@ -8,7 +8,7 @@ from src.configs import settings
 from src.database import get_db_connection
 from src.domains.transactions.constants import DEFAULT_SORT
 from src.middlewares import rate_limiter
-from src.models import PaginationParams, Response, SortParams
+from src.models import CustomResponse, PaginationParams, SortParams
 from src.utils import (
     apply_sorting_and_pagination,
     generate_pagination_metadata,
@@ -23,7 +23,7 @@ from .utils import apply_filtering
 router = APIRouter()
 
 
-@router.get("", response_model=Response[List[Price]])
+@router.get("", response_model=CustomResponse[List[Price]])
 @cache(expire=180)
 @rate_limiter.limit(settings.app_rate_limit)
 def get_stocks(

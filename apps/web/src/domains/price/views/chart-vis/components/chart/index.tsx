@@ -127,7 +127,7 @@ export const PriceChart = () => {
         </ParentSize>
       </div>
 
-      <div className="hidden h-20 w-full shrink-0 xl:block">
+      <div className="absolute bottom-0 flex h-12 w-full opacity-60">
         <ParentSize debounceTime={0}>
           {(props) => (
             <ChartBrush

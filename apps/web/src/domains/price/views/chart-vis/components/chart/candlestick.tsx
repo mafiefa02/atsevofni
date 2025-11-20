@@ -61,8 +61,8 @@ export const CandlestickSeries = ({
 
       const isBullish = close > open;
       const bodyColor = isBullish
-        ? "var(--color-green-500)"
-        : "var(--destructive)";
+        ? "var(--color-green-600)"
+        : "var(--color-red-600)";
 
       const candleTop = Math.min(yOpen, yClose);
       const candleBottom = Math.max(yOpen, yClose);
@@ -75,7 +75,7 @@ export const CandlestickSeries = ({
             y1={yHigh}
             x2={x}
             y2={yLow}
-            stroke={color}
+            stroke={bodyColor}
             strokeWidth={wickWidth}
             shapeRendering="crispEdges"
           />

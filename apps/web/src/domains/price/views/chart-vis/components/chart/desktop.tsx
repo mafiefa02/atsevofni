@@ -149,7 +149,7 @@ const DesktopChartBase = ({
             data={models}
             clipPath={clipPath}
             lineProps={{ clipPath }}
-            fillOpacity={0.15}
+            fillOpacity={0.1}
             xAccessor={accessors.xAccessor}
             yAccessor={accessors.yAccessor}
           />

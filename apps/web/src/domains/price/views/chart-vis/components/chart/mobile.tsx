@@ -62,7 +62,7 @@ const ChartBackground = memo(
           strokeWidth={2}
           stroke={colorScale(key)}
           fill={colorScale(key)}
-          fillOpacity={0.125}
+          fillOpacity={0.1}
         />
       ))}
     </>

@@ -1,12 +1,9 @@
 import { buildChartTheme } from "@visx/xychart";
 
 export const COLORS = [
-  "#ef4444",
-  "#3b82f6",
-  "#10b981",
-  "#f59e0b",
-  "#8b5cf6",
-  "#ec4899",
+  "var(--color-blue-600)",
+  "var(--color-purple-600)",
+  "var(--color-amber-600)",
 ];
 
 export const CHART_MARGIN = { top: 30, right: 30, bottom: 40, left: 90 };

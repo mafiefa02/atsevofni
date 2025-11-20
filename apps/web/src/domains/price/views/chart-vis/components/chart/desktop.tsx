@@ -1,6 +1,7 @@
+import { GridRows } from "@visx/grid";
 import type { ParentSizeProvidedProps } from "@visx/responsive/lib/components/ParentSize";
 import { scaleLinear, scaleTime } from "@visx/scale";
-import { Bar, Line } from "@visx/shape";
+import { Bar } from "@visx/shape";
 import { TooltipWithBounds, withTooltip } from "@visx/tooltip";
 import type { WithTooltipProvidedProps } from "@visx/tooltip/lib/enhancers/withTooltip";
 import type { ScaleOrdinal } from "@visx/vendor/d3-scale";
@@ -20,6 +21,7 @@ import {
 } from "../../utils";
 import { CandlestickSeries } from "./candlestick";
 import { PriceChartTooltip } from "./tooltip";
+import { ChartTooltipGlyphs } from "./tooltip-glyphs";
 
 interface DesktopChartProps extends ParentSizeProvidedProps {
   colorScale: ScaleOrdinal<string, string, never>;
@@ -129,6 +131,15 @@ const DesktopChartBase = ({
           </clipPath>
         </defs>
 
+        <GridRows
+          scale={yScale}
+          width={innerWidth}
+          strokeDasharray="1,3"
+          strokeOpacity={0.2}
+          pointerEvents="none"
+          left={CHART_MARGIN.left}
+        />
+
         {entries.map(([equityId, models]) => (
           <AreaSeries
             key={`area-${equityId}`}
@@ -155,7 +166,7 @@ const DesktopChartBase = ({
 
         <Axis
           orientation="left"
-          tickClassName="fill-foreground"
+          tickLabelProps={{ fill: "var(--foreground)" }}
           stroke="var(--border)"
           tickStroke="var(--border)"
           tickFormat={renderTickFormat}
@@ -163,7 +174,7 @@ const DesktopChartBase = ({
         <Axis
           orientation="bottom"
           numTicks={numTicks}
-          tickClassName="fill-foreground"
+          tickLabelProps={{ fill: "var(--foreground)" }}
           stroke="var(--border)"
           tickStroke="var(--border)"
         />
@@ -175,14 +186,14 @@ const DesktopChartBase = ({
         className="pointer-events-none absolute top-0 left-0"
       >
         {tooltipData && (
-          <Line
-            from={{ x: tooltipLeft, y: CHART_MARGIN.top }}
-            to={{ x: tooltipLeft, y: innerHeight + CHART_MARGIN.top }}
-            stroke="var(--foreground)"
-            strokeWidth={1.5}
-            strokeOpacity={0.5}
-            strokeDasharray="4,4"
-            pointerEvents="none"
+          <ChartTooltipGlyphs
+            tooltipData={tooltipData}
+            tooltipLeft={tooltipLeft}
+            tooltipTop={CHART_MARGIN.top}
+            innerHeight={innerHeight}
+            data={data}
+            yScale={yScale}
+            colorScale={colorScale}
           />
         )}
 
@@ -207,6 +218,8 @@ const DesktopChartBase = ({
           left={tooltipLeft}
           offsetLeft={12}
           offsetTop={12}
+          unstyled
+          applyPositionStyle
         >
           <PriceChartTooltip tooltipData={tooltipPayload} />
         </TooltipWithBounds>

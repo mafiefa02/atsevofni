@@ -1,10 +1,18 @@
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { type Dispatch, type SetStateAction, useMemo, useState } from "react";
+import {
+  type Dispatch,
+  type SetStateAction,
+  useCallback,
+  useMemo,
+  useState,
+} from "react";
 
 import { services } from "-/lib/services";
 
+import type { PriceModel } from "../../models";
 import { usePriceViewFilters } from "../filters/hooks";
 import type { XDomain } from "./types";
+import { accessors, bisectDate, getTimestamp } from "./utils";
 
 export const useGetChartData = () => {
   const [globalFilters] = usePriceViewFilters();
@@ -46,4 +54,25 @@ export const useGetActiveXDomain = (
   }, [globalXDomain, xRange.start, xRange.end]);
 
   return [activeDomain, setXRange];
+};
+
+export const useSeriesValue = (data: Record<string, PriceModel[]>) => {
+  return useCallback(
+    (key: string, hoveredDate: Date | null) => {
+      if (!hoveredDate) return null;
+
+      const seriesData = data[key];
+      if (!seriesData?.length) return null;
+
+      const index = bisectDate(seriesData, hoveredDate);
+      const point = seriesData[index];
+
+      if (point && getTimestamp(point) === hoveredDate.getTime()) {
+        return accessors.yAccessor(point);
+      }
+
+      return null;
+    },
+    [data],
+  );
 };

@@ -41,7 +41,7 @@ const PriceChartTooltipComponent = ({
   if (!content) return null;
 
   return (
-    <>
+    <div className="bg-popover text-popover-foreground min-w-[160px] rounded border px-3 py-2 text-sm shadow-md">
       <div className="text-muted-foreground mb-2 border-b pb-1 text-xs font-medium">
         {content.dateLabel}
       </div>
@@ -60,7 +60,7 @@ const PriceChartTooltipComponent = ({
           </div>
         ))}
       </div>
-    </>
+    </div>
   );
 };
 

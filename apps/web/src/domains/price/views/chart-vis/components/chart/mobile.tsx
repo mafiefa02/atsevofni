@@ -1,7 +1,7 @@
-import { GridColumns, GridRows } from "@visx/grid";
+import { GridRows } from "@visx/grid";
 import type { ParentSizeProvidedProps } from "@visx/responsive/lib/components/ParentSize";
 import { scaleLinear, scaleTime } from "@visx/scale";
-import { AreaClosed, Bar, Line } from "@visx/shape";
+import { AreaClosed, Bar } from "@visx/shape";
 import { TooltipWithBounds, withTooltip } from "@visx/tooltip";
 import type { WithTooltipProvidedProps } from "@visx/tooltip/lib/enhancers/withTooltip";
 import type {
@@ -17,13 +17,12 @@ import { MOBILE_CHART_MARGIN as margin } from "../../constants";
 import type { XDomain, YDomain } from "../../types";
 import {
   accessors,
-  bisectDate,
   getGraphInnerSize,
-  getTimestamp,
   getTooltipPayload,
   handleChartTooltip,
 } from "../../utils";
 import { PriceChartTooltip } from "./tooltip";
+import { ChartTooltipGlyphs } from "./tooltip-glyphs";
 
 interface MobileChartProps extends ParentSizeProvidedProps {
   colorScale: ScaleOrdinal<string, string, never>;
@@ -41,29 +40,13 @@ interface ChartBackgroundProps {
 }
 
 const ChartBackground = memo(
-  ({
-    xScale,
-    yScale,
-    data,
-    colorScale,
-    innerWidth,
-    innerHeight,
-  }: ChartBackgroundProps) => (
+  ({ xScale, yScale, data, colorScale, innerWidth }: ChartBackgroundProps) => (
     <>
-      <GridColumns
-        scale={xScale}
-        height={innerHeight}
-        strokeDasharray="1,3"
-        strokeOpacity={0.2}
-        pointerEvents="none"
-        top={margin.top}
-        left={0}
-      />
       <GridRows
         scale={yScale}
         width={innerWidth}
         strokeDasharray="1,3"
-        strokeOpacity={0}
+        strokeOpacity={0.2}
         pointerEvents="none"
         left={margin.left}
       />
@@ -143,23 +126,6 @@ const MobileChartBase = ({
     [tooltipData, data],
   );
 
-  const getValueForSeries = useCallback(
-    (key: string, hoveredDate: Date) => {
-      const seriesData = data[key];
-      if (!seriesData?.length) return null;
-
-      const index = bisectDate(seriesData, hoveredDate);
-      const point = seriesData[index];
-
-      if (point && getTimestamp(point) === hoveredDate.getTime()) {
-        return accessors.yAccessor(point);
-      }
-
-      return null;
-    },
-    [data],
-  );
-
   return (
     <div style={{ position: "relative" }}>
       <svg width={width} height={height}>
@@ -186,35 +152,15 @@ const MobileChartBase = ({
         />
 
         {tooltipData && (
-          <g pointerEvents="none">
-            <Line
-              from={{ x: tooltipLeft, y: margin.top }}
-              to={{ x: tooltipLeft, y: innerHeight + margin.top }}
-              stroke="var(--foreground)"
-              strokeWidth={1}
-              strokeOpacity={0.5}
-              strokeDasharray="4,4"
-            />
-            {Object.keys(data).map((key) => {
-              const val = getValueForSeries(
-                key,
-                accessors.xAccessor(tooltipData),
-              );
-              if (val === null) return null;
-
-              return (
-                <circle
-                  key={key}
-                  cx={tooltipLeft}
-                  cy={yScale(val)}
-                  r={4}
-                  fill={colorScale(key)}
-                  stroke="white"
-                  strokeWidth={2}
-                />
-              );
-            })}
-          </g>
+          <ChartTooltipGlyphs
+            tooltipData={tooltipData}
+            tooltipLeft={tooltipLeft}
+            tooltipTop={margin.top}
+            innerHeight={innerHeight}
+            data={data}
+            yScale={yScale}
+            colorScale={colorScale}
+          />
         )}
       </svg>
 
@@ -224,6 +170,8 @@ const MobileChartBase = ({
           left={tooltipLeft}
           offsetLeft={12}
           offsetTop={12}
+          unstyled
+          applyPositionStyle
         >
           <PriceChartTooltip tooltipData={tooltipPayload} />
         </TooltipWithBounds>

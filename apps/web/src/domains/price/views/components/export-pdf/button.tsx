@@ -10,11 +10,22 @@ import { ExportPDFDialog } from "./dialog";
 
 export const DownloadPDFButton = () => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+
+  // acts as a unique key to reset the state inside of dialog
+  const [openCount, setOpenCount] = useState(0);
+
   const [globalFilters] = usePriceViewFilters();
   const [globalSort] = usePriceViewSort();
 
+  const handleOpenChange = (open: boolean) => {
+    setIsDialogOpen(open);
+    if (open) {
+      setOpenCount((prev) => prev + 1);
+    }
+  };
+
   return (
-    <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+    <Dialog open={isDialogOpen} onOpenChange={handleOpenChange}>
       <DialogTrigger asChild>
         <Button variant="outline">
           <DownloadIcon />
@@ -23,6 +34,7 @@ export const DownloadPDFButton = () => {
       </DialogTrigger>
 
       <ExportPDFDialog
+        key={openCount}
         initialFilters={globalFilters}
         initialSort={globalSort}
         setOpen={setIsDialogOpen}

@@ -189,7 +189,7 @@ export const handleChartTooltip = ({
   if (d1) {
     const x0Val = x0.valueOf();
     const d0Val = accessors.xAccessor(d0).valueOf();
-    const d1Val = accessors.xAccessor(d1).valueOf(); // Cache execution
+    const d1Val = accessors.xAccessor(d1).valueOf();
 
     const dLeft = x0Val - d0Val;
     const dRight = d1Val - x0Val;

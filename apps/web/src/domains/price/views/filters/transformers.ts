@@ -39,3 +39,38 @@ export const priceFiltersToParams = (
 
   return params;
 };
+
+export const priceFiltersToBody = (
+  filter: PriceFilter | undefined,
+): Record<string, unknown> => {
+  const body: Record<string, unknown> = {};
+  const getParamName = createValueGetter(priceFilterKeyNameMap);
+
+  if (!filter) return body;
+
+  if (filter.equities && filter.equities.length > 0) {
+    body[getParamName("equities")] = filter.equities;
+  }
+
+  if (filter.equitySector) {
+    body[getParamName("equitySector")] = filter.equitySector;
+  }
+
+  if (filter.equitySubsector) {
+    body[getParamName("equitySubsector")] = filter.equitySubsector;
+  }
+
+  if (typeof filter.latest === "boolean") {
+    body[getParamName("latest")] = filter.latest;
+  }
+
+  if (filter.startDate) {
+    body[getParamName("startDate")] = filter.startDate.format();
+  }
+
+  if (filter.endDate) {
+    body[getParamName("endDate")] = filter.endDate.format();
+  }
+
+  return body;
+};

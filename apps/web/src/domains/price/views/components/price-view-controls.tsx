@@ -3,7 +3,7 @@ import { PriceViewSort } from "../sort/components/price-view-sort";
 
 export const PriceViewControls = () => {
   return (
-    <div className="flex w-full flex-col gap-7">
+    <div className="flex w-full flex-col gap-5">
       <PriceViewSort />
       <PriceViewFilters />
     </div>

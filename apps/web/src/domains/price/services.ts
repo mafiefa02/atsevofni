@@ -1,4 +1,8 @@
-import { type QueryKey, queryOptions } from "@tanstack/react-query";
+import {
+  type QueryKey,
+  mutationOptions,
+  queryOptions,
+} from "@tanstack/react-query";
 
 import {
   paginationParamsToParams,
@@ -11,7 +15,10 @@ import type { APIRawResponse, APIResponse } from "-/lib/types";
 
 import { PriceModel } from "./models";
 import type { PriceParams, PriceResponse } from "./types";
-import { priceFiltersToParams } from "./views/filters/transformers";
+import {
+  priceFiltersToBody,
+  priceFiltersToParams,
+} from "./views/filters/transformers";
 import { priceSortKeyToParamMap } from "./views/sort/constants";
 
 export class PriceServices {
@@ -48,6 +55,46 @@ export class PriceServices {
 
     return responseToModel(transformedResponse, PriceModel);
   };
+
+  private generatePricesPdf = async (
+    params?: Omit<PriceParams, "pagination">,
+  ): Promise<{ blob: Blob; filename: string }> => {
+    const filters = priceFiltersToBody(params?.filters);
+
+    const body = { filters, sort: params?.sort };
+
+    const response = await fetch(`${this.url}/generate`, {
+      method: "POST",
+      body: JSON.stringify(body),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (!response.ok) {
+      const error = new Error(
+        `Network response was not ok: ${response.status} ${response.statusText}`,
+      );
+      throw error;
+    }
+
+    const blob = await response.blob();
+
+    const filename =
+      response.headers.get("Content-Disposition")?.split("filename=")[1] ||
+      "download.pdf";
+
+    return { blob, filename };
+  };
+
+  public get mutation() {
+    return {
+      generatePricesPdf: (params?: Omit<PriceParams, "pagination">) =>
+        mutationOptions({
+          mutationFn: () => this.generatePricesPdf(params),
+        }),
+    };
+  }
 
   public get query() {
     return {

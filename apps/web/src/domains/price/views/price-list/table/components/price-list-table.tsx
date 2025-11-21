@@ -4,6 +4,7 @@ import { ErrorBoundary } from "react-error-boundary";
 import { Card } from "-/components/ui/card";
 import { Table, TableBody, TableHeader, TableRow } from "-/components/ui/table";
 
+import { DownloadPDFButton } from "../../../components/export-pdf/button";
 import { priceSortKeyToLabel } from "../../../sort/constants";
 import type { PriceSortKey } from "../../../sort/types";
 import { PriceLastUpdated } from "../../components/last-updated";
@@ -49,12 +50,13 @@ export const PriceListTable = () => {
             </TableBody>
           </Table>
         </div>
-        <div className="-mt-2">
+        <div className="-mt-2 flex w-full items-center justify-between gap-4">
           <ErrorBoundary fallback={<PriceLastUpdatedError />}>
             <Suspense fallback={<PriceLastUpdatedLoading />}>
               <PriceLastUpdated />
             </Suspense>
           </ErrorBoundary>
+          <DownloadPDFButton />
         </div>
       </Card>
       <ErrorBoundary fallback={<PriceListTablePaginationError />}>

@@ -1,6 +1,6 @@
 import { useQueryClient } from "@tanstack/react-query";
 import { parseAsStringLiteral, useQueryStates } from "nuqs";
-import { useCallback } from "react";
+import { createContext, useCallback, useContext } from "react";
 
 import { DEFAULT_SORT_ORDER } from "-/lib/constants";
 import { useHoverDelayedTrigger } from "-/lib/hooks";
@@ -19,10 +19,51 @@ const sortQueryStates = {
   order: parseAsStringLiteral(["asc", "desc"]).withDefault(DEFAULT_SORT_ORDER),
 } satisfies Record<keyof SortParams<PriceSortKey>, unknown>;
 
-export const usePriceViewSort = () =>
-  useQueryStates(sortQueryStates, {
+type PriceSortSetter = (
+  updater:
+    | Partial<SortParams<PriceSortKey>>
+    | null
+    | ((
+        prev: SortParams<PriceSortKey>,
+      ) => Partial<SortParams<PriceSortKey>> | null),
+) => void;
+
+export const PriceSortLocalContext = createContext<
+  [SortParams<PriceSortKey>, PriceSortSetter] | null
+>(null);
+
+export const useSetSortAdapter = (
+  setSort: React.Dispatch<React.SetStateAction<SortParams<PriceSortKey>>>,
+) =>
+  useCallback(
+    (
+      updater:
+        | Partial<SortParams<PriceSortKey>>
+        | null
+        | ((
+            prev: SortParams<PriceSortKey>,
+          ) => Partial<SortParams<PriceSortKey>> | null),
+    ) => {
+      setSort((prev) => {
+        const newValues =
+          typeof updater === "function" ? updater(prev) : updater;
+        return { ...prev, ...newValues };
+      });
+    },
+    [setSort],
+  );
+
+export const usePriceViewSort = () => {
+  const localContext = useContext(PriceSortLocalContext);
+
+  const urlState = useQueryStates(sortQueryStates, {
     history: "replace",
   });
+
+  if (localContext) return localContext;
+
+  return urlState;
+};
 
 interface UsePrefetchSortProps {
   options?: {

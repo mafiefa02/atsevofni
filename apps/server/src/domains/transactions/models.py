@@ -3,7 +3,7 @@ from itertools import groupby
 from typing import Annotated, Any, Dict, List, Optional
 
 from fpdf import FPDF
-from pydantic import BaseModel, ConfigDict, Field, StringConstraints, model_validator
+from pydantic import BaseModel, Field, StringConstraints, model_validator
 
 from src.domains.transactions.constants import (
     PDF_COLUMNS,
@@ -15,12 +15,8 @@ from src.utils import format_idr, safe_num
 
 
 class Price(BaseModel):
-    model_config = ConfigDict(validate_by_name=True, validate_by_alias=True)
-
-    equity_id: Annotated[
-        str, StringConstraints(to_upper=True, strip_whitespace=True)
-    ] = Field(alias="equityId")
-    trade_date: Annotated[date, Field(alias="tradeDate")]
+    equityId: Annotated[str, StringConstraints(to_upper=True, strip_whitespace=True)]
+    tradeDate: date
     opening: float
     high: float
     low: float
@@ -31,8 +27,6 @@ class Price(BaseModel):
 
 
 class PriceFilterParams(BaseModel):
-    model_config = ConfigDict(validate_by_name=True, validate_by_alias=True)
-
     equities: Optional[
         List[Annotated[str, StringConstraints(to_upper=True, strip_whitespace=True)]]
     ] = None
@@ -43,8 +37,8 @@ class PriceFilterParams(BaseModel):
         Annotated[str, StringConstraints(to_upper=True, strip_whitespace=True)]
     ] = None
     latest: bool = False
-    start_date: Optional[date] = Field(default=None, alias="startDate")
-    end_date: Optional[date] = Field(default=None, alias="endDate")
+    start_date: Optional[date] = Field(default=None)
+    end_date: Optional[date] = Field(default=None)
 
     @model_validator(mode="after")
     def check_dates(self):
